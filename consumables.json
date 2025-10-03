@@ -1,0 +1,302 @@
+[
+  {
+    "id": "b5a4af57-7d0f-5324-a36f-d91262f1b039",
+    "name": "Stride Potion",
+    "descr": "You gain a +1 bonus to your next Agility Roll."
+  },
+  {
+    "id": "38c1356d-b68a-59cd-8f1f-ab8f6ff8c9c2",
+    "name": "Bolster Potion",
+    "descr": "You gain a +1 bonus to your next Strength Roll."
+  },
+  {
+    "id": "2cc7a2a7-8434-526f-8c9e-5b070dac2bc9",
+    "name": "Control Potion",
+    "descr": "You gain a +1 bonus to your next Finesse Roll."
+  },
+  {
+    "id": "98b29793-0ccf-5242-8de5-626af51e3b45",
+    "name": "Attune Potion",
+    "descr": "You gain a +1 bonus to your next Instinct Roll."
+  },
+  {
+    "id": "445f7437-fe2a-5251-b430-75424e86405b",
+    "name": "Charm Potion",
+    "descr": "You gain a +1 bonus to your next Presence Roll."
+  },
+  {
+    "id": "18e17d1f-a27d-5d65-8701-6604539b7ec0",
+    "name": "Enlighten Potion",
+    "descr": "You gain a +1 bonus to your next Knowledge Roll."
+  },
+  {
+    "id": "f0c50c54-c349-576e-8919-b95324f44d1d",
+    "name": "Minor Health Potion",
+    "descr": "Clear 1d4 HP."
+  },
+  {
+    "id": "b93f41de-4219-5d3b-8127-d6985a9a1043",
+    "name": "Minor Stamina Potion",
+    "descr": "Clear 1d4 Stress."
+  },
+  {
+    "id": "151d4bc4-b92a-5c79-884d-332bc702ac2e",
+    "name": "Grindeltooth Venom",
+    "descr": "You can apply this venom to a weapon that deals physical damage to add a d6 to your next damage roll with that weapon."
+  },
+  {
+    "id": "91e4cecb-eb5d-582b-958e-a37cf6a1c679",
+    "name": "Varik Leaves",
+    "descr": "You can eat these paired leaves to immediately gain 2 Hope."
+  },
+  {
+    "id": "f80e80c4-b037-5a76-9ab6-00de0c3b21f7",
+    "name": "Vial Of Moondrip",
+    "descr": "When you drink the contents of this vial, you can see in total darkness until your next rest."
+  },
+  {
+    "id": "dce136f8-6892-5618-8855-a21aa0698236",
+    "name": "Unstable Arcane Shard",
+    "descr": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 1d20 magic damage."
+  },
+  {
+    "id": "29ecb35c-fa58-5ee6-9491-a7ec67963948",
+    "name": "Potion Of Stability",
+    "descr": "You can drink this potion to choose one additional downtime move."
+  },
+  {
+    "id": "d44de66e-d24b-5150-b2ed-4f0399f75122",
+    "name": "Improved Grindeltooth Venom",
+    "descr": "You can apply this venom to a weapon that deals physical damage to add a d8 to your next damage roll with that weapon."
+  },
+  {
+    "id": "0a908115-06b3-5596-bb95-8406ca6d540a",
+    "name": "Morphing Clay",
+    "descr": "You can spend 4 Hope to use this clay, altering your face enough to make you unrecognizable until your next rest."
+  },
+  {
+    "id": "51166031-7c7d-5995-809b-0c5ec77301da",
+    "name": "Vial Of Darksmoke",
+    "descr": "When an adversary attacks you, use this vial and roll a number of d6 equal to your Agility. Add the highest result to your Evasion against the attack."
+  },
+  {
+    "id": "ad90ed30-e01b-52d7-b884-d5589a3e79fb",
+    "name": "Jumping Root",
+    "descr": "Eat this root to leap up to Far range once without needing to roll."
+  },
+  {
+    "id": "35bf5902-1591-56b2-aed3-8e40972d190e",
+    "name": "Snap Powder",
+    "descr": "Mark a Stress and clear a HP."
+  },
+  {
+    "id": "89abcff1-fbcb-52cc-9891-ab1287e81e9f",
+    "name": "Health Potion",
+    "descr": "Clear 1d4+1 HP."
+  },
+  {
+    "id": "6c8623af-9c2a-5927-892a-1f0c345e5b16",
+    "name": "Stamina Potion",
+    "descr": "Clear 1d4+1 Stress."
+  },
+  {
+    "id": "e15f3dd4-d9a7-51a8-919e-65fafb4e0f01",
+    "name": "Armor Stitcher",
+    "descr": "You can use this stitcher to spend any number of Hope and clear that many Armor Slots."
+  },
+  {
+    "id": "2d57ae33-1384-588d-9ad7-ea02bf7548b1",
+    "name": "Gill Salve",
+    "descr": "You can apply this salve to your neck to breathe underwater for a number of minutes equal to your level."
+  },
+  {
+    "id": "06438e38-737d-537c-a593-c58b53b731c8",
+    "name": "Replication Parchment",
+    "descr": "By touching this piece of parchment to another, you can perfectly copy the second parchment’s contents. Once used, this parchment becomes mundane paper."
+  },
+  {
+    "id": "a31627f2-c04f-56de-b9b0-52de7bf7c305",
+    "name": "Improved Arcane Shard",
+    "descr": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 2d20 magic damage."
+  },
+  {
+    "id": "bd04be78-7aa9-5d07-8a99-6efd54e8fa80",
+    "name": "Major Stride Potion",
+    "descr": "You gain a +1 bonus to your Agility until your next rest."
+  },
+  {
+    "id": "d405d94f-50cc-5854-9f1c-a044592901b7",
+    "name": "Major Bolster Potion",
+    "descr": "You gain a +1 bonus to your Strength until your next rest."
+  },
+  {
+    "id": "7db070c9-ab9b-587f-9fe3-1f3163144d13",
+    "name": "Major Control Potion",
+    "descr": "You gain a +1 bonus to your Finesse until your next rest."
+  },
+  {
+    "id": "c949823a-b1e4-592a-a2fa-231622e4607e",
+    "name": "Major Attune Potion",
+    "descr": "You gain a +1 bonus to your Instinct until your next rest."
+  },
+  {
+    "id": "fa6237ae-5286-50f7-8c9d-3e98452b17f8",
+    "name": "Major Charm Potion",
+    "descr": "You gain a +1 bonus to your Presence until your next rest."
+  },
+  {
+    "id": "058e1218-8691-552c-b0f0-b595427660ee",
+    "name": "Major Enlighten Potion",
+    "descr": "You gain a +1 bonus to your Knowledge until your next rest."
+  },
+  {
+    "id": "daa0ab33-c06d-5f04-8300-44193412ca91",
+    "name": "Blood Of The Yorgi",
+    "descr": "You can drink this blood to disappear from where you are and immediately reappear at a point you can see within very Far range."
+  },
+  {
+    "id": "53104936-b917-57b6-9e42-215ed82eeb32",
+    "name": "Hornet’s Secret Potion",
+    "descr": "After drinking this potion, the next successful attack you make critically succeeds."
+  },
+  {
+    "id": "9d716105-ae23-55dd-ad40-c05c6a609f87",
+    "name": "Redthorn Saliva",
+    "descr": "You can apply this saliva to a weapon that deals physical damage to add a d12 to your next damage roll with that weapon."
+  },
+  {
+    "id": "65a3d045-8946-5341-9141-f95c1455082e",
+    "name": "Channelstone",
+    "descr": "You can use this stone to take a spell or grimoire from your vault, use it once, and return it to your vault."
+  },
+  {
+    "id": "72673b28-0f6a-52e0-a64c-a3606cc0d36d",
+    "name": "Mythic Dust",
+    "descr": "You can apply this dust to a weapon that deals magic damage to add a d12 to your next damage roll with that weapon."
+  },
+  {
+    "id": "df25ffc2-e1cf-5472-9a1f-27c92658fd40",
+    "name": "Acidpaste",
+    "descr": "This paste eats away walls and other surfaces in bright flashes."
+  },
+  {
+    "id": "6ffcde69-9b4f-52b8-9cc1-0531ba31b356",
+    "name": "Hopehold Flare",
+    "descr": "When you use this flare, allies within Close range roll a d6 when they spend a Hope. On a result of 6, they gain the effect of that Hope without spending it. The flare lasts until the end of the scene."
+  },
+  {
+    "id": "6aebb32c-0498-571e-9c6f-a2af1b39a3d0",
+    "name": "Major Arcane Shard",
+    "descr": "You can make a Finesse Roll to throw this shard at a group of adversaries within Far range. Targets you succeed against take 4d20 magic damage."
+  },
+  {
+    "id": "d6852de6-6fc8-5500-86ba-cb246a192af5",
+    "name": "Featherbone",
+    "descr": "You can use this bone to control your falling speed for a number of minutes equal to your level."
+  },
+  {
+    "id": "4801df2d-7bea-57b2-a011-b483fa85b834",
+    "name": "Circle Of The Void",
+    "descr": "Mark a Stress to create a void that extends up to Far range. No magic can be cast inside the void, and creatures within the void are immune to magic damage."
+  },
+  {
+    "id": "915d1d38-a06c-5182-b3c0-c0027046f7a5",
+    "name": "Sun Tree Sap",
+    "descr": "Consume this sap to roll a d6. On a result of 5–6, clear 2 HP. On a result of 2–4, clear 3 Stress. On a result of 1, see through the veil of death and return unscathed, gaining one scar."
+  },
+  {
+    "id": "731a0c2b-ce5b-52dd-8a80-ebd608be1466",
+    "name": "Dripfang Poison",
+    "descr": "A creature who consumes this poison takes 2d10 direct magic damage."
+  },
+  {
+    "id": "b94fbd0c-506b-5288-ba74-71fd9f206727",
+    "name": "Major Health Potion",
+    "descr": "Clear 1d4+2 HP."
+  },
+  {
+    "id": "fcfeaafe-1170-5028-8b56-c5377d2938bb",
+    "name": "Major Stamina Potion",
+    "descr": "Clear 1d4+2 Stress."
+  },
+  {
+    "id": "5ff0bc23-8103-5747-a2cf-7e622990c7ee",
+    "name": "Ogre Musk",
+    "descr": "You can use this musk to prevent anyone from tracking you by mundane or magical means until your next rest."
+  },
+  {
+    "id": "5584b5fe-5bc1-5551-9af9-ad1d8720a9cf",
+    "name": "Wingsprout",
+    "descr": "You gain magic wings that allow you to fly for a number of minutes equal to your level."
+  },
+  {
+    "id": "51fd93b8-672b-5d64-bf41-870b7e9e4f79",
+    "name": "Jar Of Lost Voices",
+    "descr": "You can open this jar to release a deafening echo of voices for a number of minutes equal to your Instinct. Creatures within Far range unprepared for the sound take 6d8 magic damage."
+  },
+  {
+    "id": "80f07727-dc7a-5343-b0d5-aff8570d8c49",
+    "name": "Dragonbloom Tea",
+    "descr": "You can drink this tea to unleash a fiery breath attack. Make an Instinct Roll against all adversaries in front of you within Close range. Targets you succeed against take 2d20 physical damage using your Proficiency."
+  },
+  {
+    "id": "e80bf250-986f-5976-bfaa-3cd2d31f86e6",
+    "name": "Bridge Seed",
+    "descr": "Thick vines grow from your location to a point of your choice within Far range, allowing you to climb up or across them. The vines dissipate on your next short rest."
+  },
+  {
+    "id": "3c925b36-8e2d-5c6a-ba75-5d1f0128ac98",
+    "name": "Sleeping Sap",
+    "descr": "You can drink this potion to fall asleep for a full night’s rest. You clear all Stress upon waking."
+  },
+  {
+    "id": "1bab43d9-26da-5a66-8325-1272e23a1fbb",
+    "name": "Feast Of Xurla",
+    "descr": "You can eat this meal to clear all HP and Stress and gain 1d4 Hope."
+  },
+  {
+    "id": "00b26bf2-58d2-54ff-823c-9632d8804654",
+    "name": "Bonding Honey",
+    "descr": "This honey can be used to glue two objects together permanently."
+  },
+  {
+    "id": "57db17b3-3f68-550f-974f-77854b4d709d",
+    "name": "Shrinking Potion",
+    "descr": "You can drink this potion to halve your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Agility and a –1 penalty to your Proficiency."
+  },
+  {
+    "id": "54b761ab-a8e1-53b8-824a-953c372bae0d",
+    "name": "Growing Potion",
+    "descr": "You can drink this potion to double your size until you choose to drop this form or your next rest. While in this form, you have a +2 bonus to Strength and a +1 bonus to your Proficiency."
+  },
+  {
+    "id": "c785da6a-d4e5-5f01-b826-6ab01092730d",
+    "name": "Knowledge Stone",
+    "descr": "If you die while holding this stone, an ally can take a card from your loadout to place in their loadout or vault. After they take this knowledge, the stone crumbles."
+  },
+  {
+    "id": "6764e67d-8a46-52e4-a550-23cc065cd368",
+    "name": "Sweet Moss",
+    "descr": "You can consume this moss during a rest to clear 1d10 HP or 1d10 Stress."
+  },
+  {
+    "id": "8482926e-2d0d-5af4-91e3-781e7769fc1e",
+    "name": "Blinding Orb",
+    "descr": "You can activate this orb to create a flash of bright light. All targets within Close range become Blinded until they mark HP."
+  },
+  {
+    "id": "5509d3d2-00e4-5279-8c79-96c036893b45",
+    "name": "Death Tea",
+    "descr": "After you drink this tea, you instantly kill your target when you critically succeed on an attack. If you don’t critically succeed on an attack before your next long rest, you die."
+  },
+  {
+    "id": "4df0537a-8640-55f1-99fe-e8e7bf9a6598",
+    "name": "Mirror Of Marigold",
+    "descr": "When you take damage, you can spend a Hope to negate that damage, after which the mirror shatters."
+  },
+  {
+    "id": "02a15dbc-8b55-5319-93e8-33a5d160fdd8",
+    "name": "Stardrop",
+    "descr": "You can use this stardrop to summon a hailstorm of comets that deals 8d20 physical damage to all targets within Very Far range."
+  }
+]

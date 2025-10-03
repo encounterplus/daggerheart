@@ -1,0 +1,3186 @@
+[
+  {
+    "id": "9dd4bc61-9a0f-594c-95b9-e3c9bd11b722",
+    "name": "Broadsword",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "e3420475-52c9-5c1d-9ab4-fa5161cb5220",
+    "name": "Longsword",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d10+3",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "3189e775-7fc2-572b-96d2-e5780b73f95a",
+    "name": "Battleaxe",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+3",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "fc6ded22-ee97-5278-987a-7d0701322eda",
+    "name": "Greatsword",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+3",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Massive",
+        "text": "-1 to Evasion; on a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "f5a9cd01-82a5-5a2f-9491-a60a5c91e7b7",
+    "name": "Mace",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+1",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "2c43f086-5ca6-5ea5-8118-db081cb250a4",
+    "name": "Warhammer",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+3",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Heavy",
+        "text": "-1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "d5b61dc4-326b-5154-b9c2-e3b59a8b6273",
+    "name": "Dagger",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+1",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "48198104-c875-5606-9fdb-ccea49e79d19",
+    "name": "Quarterstaff",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d10+3",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "c48608b0-d135-50c6-84a2-3dea62352eb2",
+    "name": "Cutlass",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+1",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "aa2df27d-d617-56bb-845a-e6769fa4ad8a",
+    "name": "Rapier",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "b65f871d-b999-5bed-8558-fdda35421b87",
+    "name": "Halberd",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "veryClose",
+      "damage": "d10+2",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "71f5b9e7-50cd-5997-926d-ffa4f58d356e",
+    "name": "Spear",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "9e87e25a-cde8-52cc-b523-50ca4f091771",
+    "name": "Shortbow",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "far",
+      "damage": "d6+3",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "350d3861-da45-5ac7-a81c-41eb82a555c4",
+    "name": "Crossbow",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+1",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "5be81af8-4928-519b-84c2-4e0cd4cf159c",
+    "name": "Longbow",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "c82cc102-10e9-5ead-b120-8e03345815b5",
+    "name": "Arcane Gauntlets",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+3",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "80627abf-6370-5b00-9493-0b27623cc7ad",
+    "name": "Hallowed Axe",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+1",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "602e40ae-fa44-5f1a-8bb0-894b7f865c1b",
+    "name": "Glowing Rings",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d10+2",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "16a740e0-e98b-57d5-9e68-284ebffb6fd4",
+    "name": "Hand Runes",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "veryClose",
+      "damage": "d10",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "a98c11d7-20d0-5e54-bfb9-1e1c68389b0b",
+    "name": "Returning Blade",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d8",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Returning",
+        "text": "When this weapon is thrown within its range, it appears in your hand immediately after the attack."
+      }
+    }
+  },
+  {
+    "id": "d35316e3-68fb-5794-ad37-67b04e47d86e",
+    "name": "Shortstaff",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "close",
+      "damage": "d8+1",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "5606c7ef-e9e8-578e-8a09-fa4be7a6fa41",
+    "name": "Dualstaff",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+3",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "50196fda-307d-54fb-9154-d7199379cfc7",
+    "name": "Scepter",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Presence, Melee, d8."
+      }
+    }
+  },
+  {
+    "id": "465ef931-435b-5293-80ad-83a50ad438e2",
+    "name": "Wand",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+1",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "2d4aefb9-1f28-5a4c-a64c-97c01d8c6514",
+    "name": "Greatstaff",
+    "data": {
+      "tier": 1,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryFar",
+      "damage": "d6",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "5d88ce37-f255-5b3b-bc47-512e6de1f46e",
+    "name": "Improved Broadsword",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "4907103e-1baa-5c40-a365-0a9ce42ae0a3",
+    "name": "Improved Longsword",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "f1e9541f-8d0b-5469-9096-0135804e88fa",
+    "name": "Improved Battleaxe",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "ae5682a8-e388-5168-af52-0f6a030d531e",
+    "name": "Improved Greatsword",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Massive",
+        "text": "-1 to Evasion; on a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "461ffcc0-a59e-56ef-952a-cc791333fb0d",
+    "name": "Improved Mace",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "d6338d69-1f9b-52aa-8fef-024457b43c0a",
+    "name": "Improved Warhammer",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+6",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Heavy",
+        "text": "-1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "9e18b11a-aa9f-5c3c-9497-87f886b425c1",
+    "name": "Improved Dagger",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "2da9d53e-e73f-5d8d-b56c-6438c85e2958",
+    "name": "Improved Quarterstaff",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "2ba09d65-369a-5cc7-bdd2-8980687899aa",
+    "name": "Improved Cutlass",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "7a802dec-22c8-5cec-8ef6-52eb27fc9cf9",
+    "name": "Improved Rapier",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "cf123766-7938-5968-9eef-e7e91c6d103f",
+    "name": "Improved Halberd",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "veryClose",
+      "damage": "d10+5",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "e6ba0751-5515-5be3-9b5d-76dcb040e260",
+    "name": "Improved Spear",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "18a9df55-dbad-5169-ad37-54af62764911",
+    "name": "Improved Shortbow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "far",
+      "damage": "d6+6",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "faf7dcea-58fb-501f-8b81-493601f6835e",
+    "name": "Improved Crossbow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "fd14a880-c4e4-5930-b3e3-2c74882bc8dd",
+    "name": "Improved Longbow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "2762e8b0-10ca-55d7-a581-d84b6b10703f",
+    "name": "Gilded Falchion",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "23e38b30-c331-5209-bfcf-e06318e22db7",
+    "name": "Knuckle Blades",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Brutal",
+        "text": "When you roll the maximum value on a damage die, roll an additional damage die."
+      }
+    }
+  },
+  {
+    "id": "efcaf94b-28e7-5236-93e6-85359c9d61de",
+    "name": "Urok Broadsword",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Deadly",
+        "text": "When you deal Severe damage, the target must mark an additional HP."
+      }
+    }
+  },
+  {
+    "id": "7cf064bb-44d5-51f5-b6a5-8db3a996f992",
+    "name": "Bladed Whip",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d8+3",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "e14c1899-bd8d-5298-983d-5ff03e9c846d",
+    "name": "Steelforged Halberd",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "veryClose",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Scary",
+        "text": "On a successful attack, the target must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "d2a2f4c9-9b48-518c-8d5f-4b7d25f1556d",
+    "name": "War Scythe",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+5",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "324db949-41e1-50e1-93ed-8c293c35d35e",
+    "name": "Blunderbuss",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reloading",
+        "text": "After you make an attack, roll a d6. On a result of 1, you must mark a Stress to reload this weapon before you can fire it again."
+      }
+    }
+  },
+  {
+    "id": "a34b1c30-d3c1-5155-86eb-285339f710ed",
+    "name": "Greatbow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "far",
+      "damage": "d6+6",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "a443613b-934d-590d-94a4-84aa4b20f3e8",
+    "name": "Finehair Bow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d6+5",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "ffa01e03-796a-5066-a750-39b8529d12c1",
+    "name": "Improved Arcane Gauntlets",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "d5703aa5-2dec-5221-ac25-cf25bf2d65bc",
+    "name": "Improved Hallowed Axe",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "0a303347-37a5-5769-9c04-545be5f73ba2",
+    "name": "Improved Glowing Rings",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d10+5",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "169d0b91-4920-59bc-916a-0f6c6f43ea92",
+    "name": "Improved Hand Runes",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "veryClose",
+      "damage": "d10+3",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "50c90a96-c24e-5ac5-9209-42b3e17f39a6",
+    "name": "Improved Returning Blade",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d8+3",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Returning",
+        "text": "When this weapon is thrown within its range, it appears in your hand immediately after the attack."
+      }
+    }
+  },
+  {
+    "id": "a50812ba-5659-5abf-a73c-09dfcbf5dc88",
+    "name": "Improved Shortstaff",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "close",
+      "damage": "d8+4",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "dbe097e3-d77c-5ff7-b42b-4a499714681c",
+    "name": "Improved Dualstaff",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+6",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "e06c0f14-e00e-5ccf-b7a4-a7fe4447d223",
+    "name": "Improved Scepter",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6+3",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Presence, Melee, d8+3."
+      }
+    }
+  },
+  {
+    "id": "f1b257e2-e898-515a-a2d3-bb5f48255485",
+    "name": "Improved Wand",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "42e9845b-bb4a-5f6b-aa29-f2133edf030e",
+    "name": "Improved Greatstaff",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryFar",
+      "damage": "d6+3",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "40c2f208-a01f-57d6-baba-f3ac8c7bd2d6",
+    "name": "Ego Blade",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d12+4",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Pompous",
+        "text": "You must have a Presence of 0 or lower to use this weapon."
+      }
+    }
+  },
+  {
+    "id": "3ebe10d3-289e-5190-870b-6feb538397b9",
+    "name": "Casting Sword",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+4",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Knowledge, Far, d6+3."
+      }
+    }
+  },
+  {
+    "id": "98feda5b-2443-5dfd-9805-70fb22395b7e",
+    "name": "Devouring Dagger",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Scary",
+        "text": "On a successful attack, the target must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "3f5978fd-0431-5a68-bf54-a91e955f9d95",
+    "name": "Hammer Of Exota",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d8+6",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Eruptive",
+        "text": "On a successful attack against a target within Melee range, all other adversaries within Very Close range must succeed on a reaction roll (14) or take half damage."
+      }
+    }
+  },
+  {
+    "id": "2fce6f2e-2bf9-5a1a-90ea-7b46acf31c50",
+    "name": "Yutari Bloodbow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Brutal",
+        "text": "When you roll the maximum value on a damage die, roll an additional damage die."
+      }
+    }
+  },
+  {
+    "id": "abebb880-da90-5c82-add7-c961d764b76b",
+    "name": "Elder Bow",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "1b9e1d1a-f374-5843-81e7-9e8861535176",
+    "name": "Scepter Of Elias",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6+3",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Invigorating",
+        "text": "On a successful attack, roll a d4. On a result of 4, clear a Stress."
+      }
+    }
+  },
+  {
+    "id": "f5d9246d-54ba-56ac-84b8-68ee6de52432",
+    "name": "Wand Of Enthrallment",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Persuasive",
+        "text": "Before you make a Presence Roll, you can mark a Stress to gain a +2 bonus to the result."
+      }
+    }
+  },
+  {
+    "id": "ef4a2881-c341-5b3d-a15c-f0734c32b7c6",
+    "name": "Keeper’s Staff",
+    "data": {
+      "tier": 2,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+4",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "fba17843-8fde-5e93-89ec-5943926ada10",
+    "name": "Advanced Broadsword",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "03a90077-0e14-501f-bb3d-8abca40ca9ac",
+    "name": "Advanced Longsword",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "96efada2-a5f7-5e2f-98fa-3f31271b701c",
+    "name": "Advanced Battleaxe",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "4a2d9e67-be19-5dbc-a6fe-b6d32df68148",
+    "name": "Advanced Greatsword",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Massive",
+        "text": "-1 to Evasion; on a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "09974616-dd3e-56a4-942e-a30d1e2dd624",
+    "name": "Advanced Mace",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+7",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "bc670c93-7b5c-5d31-ad1e-0bad645eae26",
+    "name": "Advanced Warhammer",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+9",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Heavy",
+        "text": "-1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "dae59888-295a-5204-afff-8f1251ccd44d",
+    "name": "Advanced Dagger",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+7",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "38809feb-6ae4-579d-9dac-e24d3db47d19",
+    "name": "Advanced Quarterstaff",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "6d55fa77-b771-53d6-85a2-906449708ef7",
+    "name": "Advanced Cutlass",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+7",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "1e73d858-0173-5d39-83c8-06ecd64abb6d",
+    "name": "Advanced Rapier",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "43b14868-88c3-5a3e-a619-9c5272c58467",
+    "name": "Advanced Halberd",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "veryClose",
+      "damage": "d10+8",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "87ac9f5f-f907-5403-aa47-04f496805fc9",
+    "name": "Advanced Spear",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "7d7c07a6-5d8e-57cd-9b56-ab1b54ae852e",
+    "name": "Advanced Shortbow",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "far",
+      "damage": "d6+9",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "089b10c6-f832-544e-bf8b-8e0132365e3d",
+    "name": "Advanced Crossbow",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "1271b797-9acb-5866-a9af-9c3b9bacbed0",
+    "name": "Advanced Longbow",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "9958b634-442b-5c90-b292-4c652cb57c7c",
+    "name": "Flickerfly Blade",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+5",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Sharpening",
+        "text": "Gain a bonus to your damage rolls equal to your Agility."
+      }
+    }
+  },
+  {
+    "id": "334b98a1-7098-5c9f-b28c-b617640087a9",
+    "name": "Bravesword",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+7",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Brave",
+        "text": "-1 to Evasion; +3 to Severe damage threshold"
+      }
+    }
+  },
+  {
+    "id": "6a51a2b0-afa3-52c2-889a-bc731f8bfdff",
+    "name": "Hammer Of Wrath",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+7",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Devastating",
+        "text": "Before you make an attack roll, you can mark a Stress to use a d20 as your damage die."
+      }
+    }
+  },
+  {
+    "id": "54599a24-35ab-5174-9eb2-a14fc045bb54",
+    "name": "Labrys Axe",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+7",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Protective",
+        "text": "+1 to Armor Score"
+      }
+    }
+  },
+  {
+    "id": "219bfd72-95eb-5d8c-b6e0-742d4d9181d1",
+    "name": "Meridian Cutlass",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d10+5",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Dueling",
+        "text": "When there are no other creatures within Close range of the target, gain advantage on your attack roll against them."
+      }
+    }
+  },
+  {
+    "id": "021a8980-39ef-5d61-95ee-ecfd00a4286d",
+    "name": "Retractable Saber",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d10+7",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Retractable",
+        "text": "The blade can be hidden in the hilt to avoid detection."
+      }
+    }
+  },
+  {
+    "id": "9dcd7000-a4a2-53e0-8c06-4678b693636f",
+    "name": "Double Flail",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d10+8",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "552ae8ab-657f-5977-b667-0e750bde12f5",
+    "name": "Talon Blades",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d10+7",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Brutal",
+        "text": "When you roll the maximum value on a damage die, roll an additional damage die."
+      }
+    }
+  },
+  {
+    "id": "0daad5df-1e24-5f03-a457-ec3cdc17b666",
+    "name": "Black Powder Revolver",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reloading",
+        "text": "After you make an attack, roll a d6. On a result of 1, you must mark a Stress to reload this weapon before you can fire it again."
+      }
+    }
+  },
+  {
+    "id": "704c2c61-daf8-5520-99ab-c264e54edf96",
+    "name": "Spiked Bow",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d6+7",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Agility, Melee, d10+5."
+      }
+    }
+  },
+  {
+    "id": "e41633ad-21fe-536d-8d01-eed5072c46d1",
+    "name": "Advanced Arcane Gauntlets",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "925df802-3d26-5f47-b506-a17eb7b8cda2",
+    "name": "Advanced Hallowed Axe",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+7",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "76736afa-74c8-5082-b238-44eab32a9020",
+    "name": "Advanced Glowing Rings",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d10+8",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "547f5ecd-d8ed-5244-9e59-010305e55adb",
+    "name": "Advanced Hand Runes",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "veryClose",
+      "damage": "d10+6",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "a6281369-0a8e-576a-9a49-145ee5a3e4b7",
+    "name": "Advanced Returning Blade",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d8+6",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Returning",
+        "text": "When this weapon is thrown within its range, it appears in your hand immediately after the attack."
+      }
+    }
+  },
+  {
+    "id": "3fabe899-8536-5efd-8ab8-705197a50f70",
+    "name": "Advanced Shortstaff",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "close",
+      "damage": "d8+7",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "b98797f2-d480-581f-bac8-32f4ba35e607",
+    "name": "Advanced Dualstaff",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+9",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "cd141a86-e382-539b-94de-2a7f30d84e60",
+    "name": "Advanced Scepter",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6+6",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Presence, Melee, d8+4."
+      }
+    }
+  },
+  {
+    "id": "3d3ccca2-88f2-5187-a869-1d1f78fb6d60",
+    "name": "Advanced Wand",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "66508989-5bec-5703-9230-1d4ac86e696e",
+    "name": "Advanced Greatstaff",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryFar",
+      "damage": "d6+6",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "8e07ee14-11bc-5a27-b67e-49c47b84d364",
+    "name": "Axe Of Fortunis",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+8",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Lucky",
+        "text": "On a failed attack, you can mark a Stress to reroll your attack."
+      }
+    }
+  },
+  {
+    "id": "7dc255ce-67f1-5e1f-9aef-c67f8b6a5744",
+    "name": "Blessed Anlace",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d10+6",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Healing",
+        "text": "During downtime, automatically clear a Hit Point."
+      }
+    }
+  },
+  {
+    "id": "aff7eff9-b91c-553b-ab2e-af5ec2bd4e5a",
+    "name": "Ghostblade",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "physical or magical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d10+7 phy or",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Otherworldly",
+        "text": "On a successful attack, you can deal physical or magic damage."
+      }
+    }
+  },
+  {
+    "id": "c58a9a49-59cf-5d6a-99aa-877c4849950d",
+    "name": "Runes Of Ruination",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryClose",
+      "damage": "d20+4",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Painful",
+        "text": "Each time you make a successful attack, you must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "1db8995e-9d18-53db-b00b-39483da98f57",
+    "name": "Widgast Pendant",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "close",
+      "damage": "d10+5",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Timebending",
+        "text": "You choose the target of your attack after making your attack roll."
+      }
+    }
+  },
+  {
+    "id": "cc8584a2-0c39-531a-9825-ebc7fb90ac91",
+    "name": "Gilded Bow",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Self-Correcting",
+        "text": "When you roll a 1 on a damage die, it deals 6 damage instead."
+      }
+    }
+  },
+  {
+    "id": "967feffe-ec10-5dc1-9d3a-1b54dd147125",
+    "name": "Firestaff",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Burning",
+        "text": "When you roll a 6 on a damage die, the target must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "1e9797b4-41bf-5729-b1b5-e22993f9ea14",
+    "name": "Mage Orb",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "8014e1c8-d815-588e-b113-aee96ea7609d",
+    "name": "Ilmari's Rifle",
+    "data": {
+      "tier": 3,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "veryFar",
+      "damage": "d6+6",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reloading",
+        "text": "After you make an attack, roll a d6. On a result of 1, you must mark a Stress to reload this weapon before you can fire it again."
+      }
+    }
+  },
+  {
+    "id": "d64d1c2c-4830-5789-b119-1672add422cc",
+    "name": "Legendary Broadsword",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "45811765-7ab0-5bed-b50f-da8377ceeab8",
+    "name": "Legendary Longsword",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d10+12",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "25c426a1-a31c-578f-8b35-49217cb7a18c",
+    "name": "Legendary Battleaxe",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+12",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "fe2312b7-9e08-5868-848c-7b88fbb97ca0",
+    "name": "Legendary Greatsword",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+12",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Massive",
+        "text": "-1 to Evasion; on a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "f3b5618f-af55-5120-b91c-7a17c923c5d6",
+    "name": "Legendary Mace",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+10",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "1597ff83-2f9f-5a83-a995-56c49021800b",
+    "name": "Legendary Warhammer",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+12",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Heavy",
+        "text": "-1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "c24fcef3-9212-5e2b-b025-75bc2ac68e39",
+    "name": "Legendary Dagger",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+10",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "0e07cd55-a904-54ef-a22d-efd6882fae12",
+    "name": "Legendary Quarterstaff",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "d10+12",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "75da3282-a593-57a7-ac39-12512eca8ad8",
+    "name": "Legendary Cutlass",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+10",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "0991459c-9719-511e-ad10-eb40f18f70c8",
+    "name": "Legendary Rapier",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "f53f5069-15a0-5f2e-8f8f-45076782ede4",
+    "name": "Legendary Halberd",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "veryClose",
+      "damage": "d10+11",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "e2bfade3-69a4-5d7e-a062-1a5ebc36883d",
+    "name": "Legendary Spear",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+12",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "f6d237ef-e435-58e0-a839-df00b0f21758",
+    "name": "Legendary Shortbow",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "far",
+      "damage": "d6+12",
+      "damageType": "phy",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "f612eba9-31ce-58bb-b4f2-11ab7932a699",
+    "name": "Legendary Crossbow",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+10",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "7989b89e-bc9b-51ba-9788-74bdff495d51",
+    "name": "Legendary Longbow",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "veryFar",
+      "damage": "d8+12",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Cumbersome",
+        "text": "-1 to Finesse"
+      }
+    }
+  },
+  {
+    "id": "875219f5-0366-5d79-af46-8f613b5e0d70",
+    "name": "Dual-ended Sword",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Quick",
+        "text": "When you make an attack, you can mark a Stress to target another creature within range."
+      }
+    }
+  },
+  {
+    "id": "2ca3ed98-f639-57d9-8cc0-8d56ecb6de52",
+    "name": "Impact Gauntlet",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+11",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Concussive",
+        "text": "On a successful attack, you can spend a Hope to knock the target back to Far range."
+      }
+    }
+  },
+  {
+    "id": "49c39257-451a-5297-93d1-3920cc1cbaff",
+    "name": "Sledge Axe",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d12+13",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Destructive",
+        "text": "-1 to Agility; on a successful attack, all adversaries within Very Close range must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "4b742776-053d-50c9-abbb-c4445aedfb35",
+    "name": "Curved Dagger",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Serrated",
+        "text": "When you roll a 1 on a damage die, it deals 8 damage instead."
+      }
+    }
+  },
+  {
+    "id": "ba81f9bf-7519-56a2-b34b-86aedd27e2d2",
+    "name": "Extended Polearm",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d8+10",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Long",
+        "text": "This weapon’s attack targets all adversaries in a line within range."
+      }
+    }
+  },
+  {
+    "id": "7627cdda-c7dd-5075-91a6-0a420a4bc64b",
+    "name": "Swinging Ropeblade",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "close",
+      "damage": "d8+9",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Grappling",
+        "text": "On a successful attack, you can spend a Hope to Restrain the target or pull them into Melee range with you."
+      }
+    }
+  },
+  {
+    "id": "0d05b341-37ea-581b-8ade-31dcc3100a14",
+    "name": "Ricochet Axes",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "far",
+      "damage": "d6+11",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Bouncing",
+        "text": "Mark 1 or more Stress to hit that many targets in range of the attack."
+      }
+    }
+  },
+  {
+    "id": "551ce68d-a6e5-53ca-b840-c2289da959f7",
+    "name": "Aantari Bow",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+11",
+      "damageType": "phy",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "2eb6a673-a751-51dc-a6e9-77ab0fd282da",
+    "name": "Hand Cannon",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryFar",
+      "damage": "d6+12",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reloading",
+        "text": "After you make an attack, roll a d6. On a 1, you must mark a Stress to reload this weapon before you can fire it again."
+      }
+    }
+  },
+  {
+    "id": "222d1668-91a5-5194-8599-64c0ce2e7c43",
+    "name": "Legendary Arcane Gauntlets",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+12",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "d3c50594-c951-5936-b223-4997c8d42fe1",
+    "name": "Legendary Hallowed Axe",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d8+10",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "7379fa21-59fa-5a3a-8b5c-d66c501aa6e1",
+    "name": "Legendary Glowing Rings",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "agility",
+      "range": "veryClose",
+      "damage": "d10+11",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "4fec0ab1-6344-5dba-b282-911fee2add62",
+    "name": "Legendary Hand Runes",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "veryClose",
+      "damage": "d10+9",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "4acb97dc-867c-5353-9a63-5e4a1e04a680",
+    "name": "Legendary Returning Blade",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d8+9",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Returning",
+        "text": "When this weapon is thrown within its range, it appears in your hand immediately after the attack."
+      }
+    }
+  },
+  {
+    "id": "e5ea6209-5e68-5b6f-8a2d-8977a7cbada0",
+    "name": "Legendary Shortstaff",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "close",
+      "damage": "d8+10",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "8935e88e-c0a6-55db-91d3-846690db05bb",
+    "name": "Legendary Dualstaff",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d8+12",
+      "damageType": "mag",
+      "burden": "twoHanded"
+    }
+  },
+  {
+    "id": "e20cc101-be5a-5017-8d25-be7fe87d5fbe",
+    "name": "Legendary Scepter",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "far",
+      "damage": "d6+9",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Presence, Melee, d8+6."
+      }
+    }
+  },
+  {
+    "id": "31b8da75-cac8-5223-8ed2-0a3d60e796ea",
+    "name": "Legendary Wand",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d6+10",
+      "damageType": "mag",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "de00d70f-9df8-5f74-87dc-9b9f619f3329",
+    "name": "Legendary Greatstaff",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryFar",
+      "damage": "d6+9",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "c084abdc-92e7-56f3-a051-f6ec8590340a",
+    "name": "Sword Of Light And Flame",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d10+11",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Hot",
+        "text": "This weapon cuts through solid material."
+      }
+    }
+  },
+  {
+    "id": "090672f8-cf94-57ad-be93-97559afbfa66",
+    "name": "Siphoning Gauntlets",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "presence",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Lifestealing",
+        "text": "On a successful attack, roll a d6. On a result of 6, clear a Hit Point or clear a Stress."
+      }
+    }
+  },
+  {
+    "id": "8647afb9-fdd3-5c0f-bf65-b21155347278",
+    "name": "Midas Scythe",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "melee",
+      "damage": "d10+9",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Greedy",
+        "text": "Spend a handful of gold to gain a +1 bonus to your Proficiency on a damage roll."
+      }
+    }
+  },
+  {
+    "id": "59d5b074-f041-531f-ad7c-b3f5bd898091",
+    "name": "Floating Bladeshards",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "close",
+      "damage": "d8+9",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Powerful",
+        "text": "On a successful attack, roll an additional damage die and discard the lowest result."
+      }
+    }
+  },
+  {
+    "id": "5d3f3658-a31f-5b2b-945b-03b4e6ac1f0f",
+    "name": "Bloodstaff",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d20+7",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Painful",
+        "text": "Each time you make a successful attack, you must mark a Stress."
+      }
+    }
+  },
+  {
+    "id": "b4472bd8-86a8-504d-b037-bec0e00bdbca",
+    "name": "Thistlebow",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "instinct",
+      "range": "far",
+      "damage": "d6+13",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Reliable",
+        "text": "+1 to attack rolls"
+      }
+    }
+  },
+  {
+    "id": "a5468e60-e4ca-548b-8824-94dc29c2d25e",
+    "name": "Wand Of Essek",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "d8+13",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Timebending",
+        "text": "You can choose the target of your attack after making your attack roll."
+      }
+    }
+  },
+  {
+    "id": "46edba0a-f169-5de6-a9b6-528a1f506536",
+    "name": "Magus Revolver",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "finesse",
+      "range": "veryFar",
+      "damage": "d6+13",
+      "damageType": "mag",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Reloading",
+        "text": "After you make an attack, roll a d6. On a result of 1, you must mark a Stress to reload this weapon before you can fire it again."
+      }
+    }
+  },
+  {
+    "id": "c1049dd4-d283-5a8f-9d8e-5f7ff6464f6b",
+    "name": "Fusion Gloves",
+    "data": {
+      "tier": 4,
+      "category": "primary",
+      "type": "magic",
+      "trait": "knowledge",
+      "range": "veryFar",
+      "damage": "d6+9",
+      "damageType": "mag",
+      "burden": "twoHanded",
+      "feature": {
+        "name": "Bonded",
+        "text": "Gain a bonus to your damage rolls equal to your level."
+      }
+    }
+  },
+  {
+    "id": "1b0d690d-4633-59e3-878d-7bd7c802eb77",
+    "name": "Shortsword",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+2 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "f18d12a2-82e6-5190-bc8d-3d09abb65bbb",
+    "name": "Round Shield",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Protective",
+        "text": "+1 to Armor Score"
+      }
+    }
+  },
+  {
+    "id": "ff3b7afa-71fd-54f3-a8c2-d03dcd41b6e3",
+    "name": "Tower Shield",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Barrier",
+        "text": "+2 to Armor Score; -1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "c823b1d7-a72f-57f3-b1e6-fb265ccaaf2e",
+    "name": "Small Dagger",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+2 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "bb1e21ad-b319-59af-a93b-b891d989e13f",
+    "name": "Whip",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "veryClose",
+      "damage": "d6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Startling",
+        "text": "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range."
+      }
+    }
+  },
+  {
+    "id": "66b4f96d-9d6e-5a3c-bdb6-dc69cf27e715",
+    "name": "Grappler",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Hooked",
+        "text": "On a successful attack, you can pull the target into Melee range."
+      }
+    }
+  },
+  {
+    "id": "bdcac202-4b05-56d7-8a45-419c25ec6c13",
+    "name": "Hand Crossbow",
+    "data": {
+      "tier": 1,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+1",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "2a0de2bd-d2ac-5aee-83e3-e1ed02afd6f7",
+    "name": "Improved Shortsword",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+3 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "bdbfb347-6b97-5b34-af97-400e78a7ecbc",
+    "name": "Improved Round Shield",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d4+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Protective",
+        "text": "+2 to Armor Score"
+      }
+    }
+  },
+  {
+    "id": "0649b1f9-596a-5000-b59e-93d5a5bb33ac",
+    "name": "Improved Tower Shield",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Barrier",
+        "text": "+3 to Armor Score; -1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "bc78704b-4a3b-577c-93ef-6a30d3518ed1",
+    "name": "Improved Small Dagger",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+3 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "75709ad1-3828-5458-a50d-26d2d3de743f",
+    "name": "Improved Whip",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "veryClose",
+      "damage": "d6+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Startling",
+        "text": "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range."
+      }
+    }
+  },
+  {
+    "id": "3b998ef2-1c07-5383-ae63-12d39036bc2f",
+    "name": "Improved Grappler",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d6+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Hooked",
+        "text": "On a successful attack, you can pull the target into Melee range."
+      }
+    }
+  },
+  {
+    "id": "5d2cd2e7-6cbc-5f57-9bc7-11e96ddab960",
+    "name": "Improved Hand Crossbow",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+3",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "44702282-4ba5-50e8-b9d4-0c1514359e7d",
+    "name": "Spiked Shield",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Double Duty",
+        "text": "+1 to Armor Score; +1 to primary weapon damage within Melee range"
+      }
+    }
+  },
+  {
+    "id": "8ce7dc70-b62b-52cf-8cd8-dc28ba771c99",
+    "name": "Parrying Dagger",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d6+2",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Parry",
+        "text": "When you are attacked, roll this weapon’s damage dice. If any of the attacker’s damage dice rolled the same value as your dice, the matching results are discarded from the attacker’s damage dice before the damage you take is totaled."
+      }
+    }
+  },
+  {
+    "id": "920c0797-a631-5a3e-bd5c-9a4b567abc4f",
+    "name": "Returning Axe",
+    "data": {
+      "tier": 2,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "close",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Returning",
+        "text": "When this weapon is thrown within its range, it appears in your hand immediately after the attack."
+      }
+    }
+  },
+  {
+    "id": "f5d4a29c-86d8-56de-a32b-3d7678c88c59",
+    "name": "Advanced Shortsword",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+4 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "9ca0f4ac-8de9-5eea-b663-7ff17a677f47",
+    "name": "Advanced Round Shield",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d4+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Protective",
+        "text": "+3 to Armor Score"
+      }
+    }
+  },
+  {
+    "id": "bb7c5e9d-71d0-589c-8efe-f3ca4f92d88a",
+    "name": "Advanced Tower Shield",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Barrier",
+        "text": "+4 to Armor Score; –1 to Evasion"
+      }
+    }
+  },
+  {
+    "id": "afbe69ef-9b93-5143-9b11-4d5e98d76362",
+    "name": "Advanced Small Dagger",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+4 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "fa432f02-247f-5c25-b1dc-e870d62976aa",
+    "name": "Advanced Whip",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "veryClose",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Startling",
+        "text": "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range."
+      }
+    }
+  },
+  {
+    "id": "efd648f1-8820-5c4f-9231-7c03013efcc7",
+    "name": "Advanced Grappler",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Hooked",
+        "text": "On a successful attack, you can pull the target into Melee range."
+      }
+    }
+  },
+  {
+    "id": "9c46ed2e-a402-54b3-a912-211aeec80cc8",
+    "name": "Advanced Hand Crossbow",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+5",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "3e0c9cf3-4993-5381-a579-b5324c4e5455",
+    "name": "Buckler",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d4+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Deflecting",
+        "text": "When you are attacked, you can mark an Armor Slot to gain a bonus to your Evasion equal to your available Armor Slots against the attack."
+      }
+    }
+  },
+  {
+    "id": "1a346283-0a26-57a8-b198-e47223b68049",
+    "name": "Powered Gauntlet",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "knowledge",
+      "range": "close",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Charged",
+        "text": "Mark a Stress to gain a +1 bonus to your Proficiency on a primary weapon attack."
+      }
+    }
+  },
+  {
+    "id": "38c74ce0-1fb3-57d7-9cf9-f0063191157e",
+    "name": "Hand Sling",
+    "data": {
+      "tier": 3,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "veryClose",
+      "damage": "d6+4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Versatile",
+        "text": "This weapon can also be used with these statistics—Finesse, Close, d8+4."
+      }
+    }
+  },
+  {
+    "id": "da37759c-4cbb-566c-985c-d7105231c62f",
+    "name": "Legendary Shortsword",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+5 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "cc84bb8a-813c-5ba7-af4c-d814eb794521",
+    "name": "Legendary Round Shield",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d4+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Protective",
+        "text": "+4 to Armor Score"
+      }
+    }
+  },
+  {
+    "id": "f3a03d3b-d340-5178-b272-b7cb92364dd5",
+    "name": "Legendary Tower Shield",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Barrier",
+        "text": "+5 to Armor Score; –1 to Evasion."
+      }
+    }
+  },
+  {
+    "id": "929ec97d-79bc-5317-b7f1-87b43e56489d",
+    "name": "Legendary Small Dagger",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "melee",
+      "damage": "d8+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Paired",
+        "text": "+5 to primary weapon damage to targets within Melee range"
+      }
+    }
+  },
+  {
+    "id": "9ca11d9d-8ffb-5f16-9e56-18dbd7d9bba4",
+    "name": "Legendary Whip",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "presence",
+      "range": "veryClose",
+      "damage": "d6+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Startling",
+        "text": "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range."
+      }
+    }
+  },
+  {
+    "id": "a2bbf274-760e-5ae4-9434-a6c344a0b714",
+    "name": "Legendary Grappler",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "close",
+      "damage": "d6+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Hooked",
+        "text": "On a successful attack, you can pull the target into Melee range."
+      }
+    }
+  },
+  {
+    "id": "e9875fa2-17e5-541c-bc3b-9fd09a09c71f",
+    "name": "Legendary Hand Crossbow",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "finesse",
+      "range": "far",
+      "damage": "d6+7",
+      "damageType": "phy",
+      "burden": "oneHanded"
+    }
+  },
+  {
+    "id": "00c89e32-a23c-56bf-9baa-4a1e9643963b",
+    "name": "Braveshield",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "agility",
+      "range": "melee",
+      "damage": "d4+6",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Sheltering",
+        "text": "When you mark an Armor Slot, it reduces damage for you and all allies within Melee range of you who took the same damage."
+      }
+    }
+  },
+  {
+    "id": "647b38b0-8566-57c7-b58e-485950c7285a",
+    "name": "Knuckle Claws",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "strength",
+      "range": "melee",
+      "damage": "d6+8",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Doubled Up",
+        "text": "When you make an attack with your primary weapon, you can deal damage to another target within Melee range."
+      }
+    }
+  },
+  {
+    "id": "37d3bf17-5e61-57f5-8aab-33b78d1ba618",
+    "name": "Primer Shard",
+    "data": {
+      "tier": 4,
+      "category": "secondary",
+      "type": "physical",
+      "trait": "instinct",
+      "range": "veryClose",
+      "damage": "d4",
+      "damageType": "phy",
+      "burden": "oneHanded",
+      "feature": {
+        "name": "Locked On",
+        "text": "On a successful attack, your next attack against the same target with your primary weapon automatically succeeds."
+      }
+    }
+  }
+]
