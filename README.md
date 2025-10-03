@@ -1,4 +1,4 @@
-![Daggerheart Game System Encounter+](daggerheart-banner-unofficial.jpg)
+![Daggerheart Game System Encounter+](images/daggerheart-banner-unofficial.jpg)
 
-# daggerheart
+# Daggerheart game system for Encounter+
 Game system for a collaborative fantasy roleplaying game of incredible magic and heroic adventure.
