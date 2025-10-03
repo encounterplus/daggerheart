@@ -1,0 +1,173 @@
+{
+  "id": "card",
+  "title": "Card",
+  "custom": {
+    "icon": "text.page",
+    "scrollAnchor": "center",
+  },
+  "type": "vStack",
+  "alignment": "center",
+  "width": -1,
+  "spacing": 8,
+  "padding": [ 16 ],
+  "views": [
+    {
+      "type": "vStack",
+      "spacing": 0,
+      "alignment": "top",
+      // dynamic maximum width
+      "frame": {
+        "maxWidth": 360,
+        // fit aspect ratio to maintain maximum card height
+        "aspectFit": 0.71345
+      },
+      "borderWidth": 2,
+      "borderColor": "#fde07d",
+      "bgColor": "#fff",
+      "cornerRadius": 20,
+      "bgViews": [
+        {
+          "type": "image",
+          "value": "{{image|default: '/images/empty.png'}}",
+          "alignment": "top",
+          "imageResizeMode": "aspectFill",
+          "frame": {
+            "maxHeight": 240,
+          }
+        },
+      ],
+      "views": [
+        // banner
+        {
+          "type": "hStack",
+          "padding": [ 0, 20 ],
+          "views": [
+            {
+              "type": "image",
+              "value": "/images/banners/subclass/{{data.class|lowercase}}-banner.webp",
+              "width": 75
+            },
+            {
+              "type": "spacer"
+            },
+          ]
+        },
+        {
+          "type": "vStack",
+          "spacing": 0,
+          "views": [
+            {
+              "type": "spacer",
+              "frame": {
+                "maxHeight": 110,
+                "layoutPriority": 2.0
+              }
+            },
+            {
+              "type": "zStack",
+              "alignment": "center",
+              "views": [
+                {
+                  "type": "image",
+                  "value": "/images/dividers/subclass/{{data.class}}-divider.webp",
+                  "alignment": "center",
+                  // "imageResizeMode": "aspectFill",
+                },
+                {
+                  "style": "card-type",
+                  "value": "{{data.class}}",
+                  "width": -1
+                }
+              ]
+            },
+            {
+              "type": "vStack",
+              "alignment": "top",
+              "spacing": 0,
+              "bgColor": "#fff",
+              "height": 0,
+              "padding": [ 2, 12, 12, 12 ],
+              "views": [
+                {
+                  "style": "card-title",
+                  "alignment": "center",
+                  "value": "{{name}}",
+                },
+                {
+                  "style": "card-subtitle",
+                  "alignment": "center",
+                  "value": "{{ui.selectedCard|default: 'foundation'|capitalize}}",
+                },
+                {
+                  "type": "text",
+                  "padding": [ 4, 0, 0, 0 ],
+                  "style": "card-spellcast-trait",
+                  "visibleIf": "ui.selectedCard != 'mastery' and ui.selectedCard != 'specialization' and data.spellcastTrait ",
+                  "value": "**{{'Subclass.SpellcastTrait'|l}}:** {{data.spellcastTrait|map: 'Trait'}}",
+                },
+                {
+                  "type": "text",
+                  "style": "card-body",
+                  "padding": [ 8, 0 ],
+                  "visibleIf": "ui.selectedCard != 'mastery' and ui.selectedCard != 'specialization' ",
+                  "value": "{% for feature in data.foundations %}***{{feature.name}}:*** {{feature.text}}\n\n{% endfor %}",
+                },
+                {
+                  "type": "text",
+                  "style": "card-body",
+                  "visibleIf": "ui.selectedCard == 'specialization'",
+                  "padding": [ 8, 0 ],
+                  "value": "{% for feature in data.specializations %}***{{feature.name}}:*** {{feature.text}}\n\n{% endfor %}",
+                },
+                {
+                  "type": "text",
+                  "style": "card-body",
+                  "padding": [ 8, 0 ],
+                  "attribute": "data.masteries",
+                  "visibleIf": "ui.selectedCard == 'mastery'",
+                  "value": "{% for feature in data.masteries %}***{{feature.name}}:*** {{feature.text}}\n\n{% endfor %}",
+                },
+              ]
+            },
+          ]
+        }
+      ]
+    },
+    {
+      "type": "menuButton",
+      "value": "{{ui.selectedCard|default: 'foundation'|uppercase}}",
+      "style": "plain",
+      "alignment": "center",
+      "width": -1,
+      "views": [
+        {
+          "type": "button",
+          "title": "Foundation",
+          "action": {
+            "set": {
+              "ui.selectedCard": "foundation"
+            }
+          }
+        },
+        {
+          "type": "button",
+          "title": "Specialization",
+          "action": {
+            "set": {
+              "ui.selectedCard": "specialization"
+            }
+          }
+        },
+        {
+          "type": "button",
+          "title": "Mastery",
+          "action": {
+            "set": {
+              "ui.selectedCard": "mastery"
+            }
+          }
+        },
+      ]
+    },
+  ]
+}

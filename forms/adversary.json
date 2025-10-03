@@ -1,0 +1,146 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "data.tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.Type",
+          "type": "form",
+          "text": "{{data.type|map: 'AdversaryType'}} {{data.typeDetail|brackets}}",
+          "form": {
+            "title": "Common.Type",
+            "sections": [
+              {
+                "title": "Common.Type",
+                "type": "picker",
+                "attribute": "data.type",
+                "attributeType": "AdversaryType",
+              },
+              {
+                "title": "Common.Detail",
+                "visibleIf": "data.type",
+                "fields": [
+                  {
+                    "placeholder": "Common.Detail",
+                    "type": "textArea",
+                    "attribute": "data.typeDetail"
+                  }
+                ]
+              },
+            ]
+          }
+        },
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Adversary.MotivesAndTactics",
+          "attribute": "data.motivesAndTactics"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Adversary.Difficulty",
+          "attribute": "data.difficulty"
+        },
+        {
+          "title": "Common.MajorThreshold",
+          "type": "number",
+          "attribute": "data.thresholds.major"
+        },
+        {
+          "title": "Common.SevereThreshold",
+          "type": "number",
+          "attribute": "data.thresholds.severe"
+        },
+        {
+          "title": "Common.HitPoints",
+          "type": "number",
+          "attribute": "data.hp"
+        },
+        {
+          "title": "Common.Stress",
+          "type": "number",
+          "attribute": "data.stress"
+        },
+        {
+          "title": "Common.AttackModifier",
+          "type": "number",
+          "attribute": "data.attackModifier"
+        },
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Adversary.StandardAttack",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "data.attack.name"
+        },
+        {
+          "title": "Common.Range",
+          "type": "picker",
+          "attribute": "data.attack.range",
+          "attributeType": "Range"
+        },
+        {
+          "title": "Common.Damage",
+          "attribute": "data.attack.damage"
+        },
+        {
+          "title": "Common.DamageType",
+          "type": "picker",
+          "attribute": "data.attack.damageType",
+          "attributeType": "Damage"
+        },
+      ]
+    },
+    {
+      "title": "Common.Experience",
+      "type": "list",
+      "attribute": "data.experience",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        },
+        {
+          "placeholder": "Common.Modifier",
+          "type": "number",
+          "attribute": "modifier"
+        },
+      ]
+    },
+    {
+      "title": "Adversary.Features",
+      "type": "list",
+      "attribute": "data.features",
+      "form": {
+        "title": "Adversary.Feature",
+        "partial": "adversary-feature"
+      }
+    },
+  ]
+}

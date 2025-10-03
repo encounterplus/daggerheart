@@ -1,0 +1,108 @@
+{
+  "AdversaryType": {
+    "bruiser": "AdversaryType.Bruiser",
+    "horde": "AdversaryType.Horde",
+    "leader": "AdversaryType.Leader",
+    "minion": "AdversaryType.Minion",
+    "ranged": "AdversaryType.Ranged",
+    "skulk": "AdversaryType.Skulk",
+    "social": "AdversaryType.Social",
+    "solo": "AdversaryType.Solo",
+    "standard": "AdversaryType.Standard",
+    "support": "AdversaryType.Support"
+  },
+  "AdversaryFeatureType": {
+    "action": "AdversaryFeatureType.Action",
+    "reaction": "AdversaryFeatureType.Reaction",
+    "passive": "AdversaryFeatureType.Passive",
+  },
+  "SpellType": {
+    "fire": "SpellType.Fire",
+    "wind": "SpellType.Wind",
+    "earth": "SpellType.Earth",
+    "water": "SpellType.Water"
+  },
+  "ItemType": {
+    "armor": "ItemType.Armor",
+    "weapon": "ItemType.Weapon",
+    "potion": "ItemType.Potion",
+    "scroll": "ItemType.Scroll"
+  },
+  "Tier": {
+    "1": "Tier.Tier1",
+    "2": "Tier.Tier2",
+    "3": "Tier.Tier3",
+    "4": "Tier.Tier4"
+  },
+  "TierLevels": {
+    "1": "TierLevels.Tier1",
+    "2": "TierLevels.Tier2",
+    "3": "TierLevels.Tier3",
+    "4": "TierLevels.Tier4"
+  },
+  "Range": {
+    "melee": "Range.Melee",
+    "veryClose": "Range.VeryClose",
+    "close": "Range.Close",
+    "far": "Range.Far",
+    "veryFar": "Range.VeryFar"
+  },
+  "Damage": {
+    "phy": "DamageType.Physical",
+    "mag": "DamageType.Magical"
+  },
+  "EnvironmentType": {
+    "exploration": "EnvironmentType.Exploration",
+    "social": "EnvironmentType.Social",
+    "traversal": "EnvironmentType.Traversal",
+    "event": "EnvironmentType.Event",
+  },
+  "Trait": {
+    "agility": "Trait.Agility",
+    "strength": "Trait.Strength",
+    "finesse": "Trait.Finesse",
+    "instinct": "Trait.Instinct",
+    "presence": "Trait.Presence",
+    "knowledge": "Trait.Knowledge",
+  },
+  "WeaponCategory": {
+    "primary": "WeaponCategory.PrimaryWeapon",
+    "secondary": "WeaponCategory.SecondaryWeapon"
+  },
+  "WeaponType": {
+    "physical": "WeaponType.Physical",
+    "magic": "WeaponType.Magic"
+  },
+  "WeaponBurden": {
+    "oneHanded": "WeaponBurden.OneHanded",
+    "twoHanded": "WeaponBurden.TwoHanded"
+  },
+  "Rarity": {
+    "common": "Rarity.Common",
+    "uncommon": "Rarity.Uncommon",
+    "rare": "Rarity.Rare",
+    "legendary": "Rarity.Legendary"
+  },
+  "RuleType": {
+    "condition": "RuleType.Condition",
+    "source": "Common.Source",
+    "other": "RuleType.Other"
+  },
+  "Domain": {
+    "arcana": "Domain.Arcana",
+    "blade": "Domain.Blade",
+    "bone": "Domain.Bone",
+    "codex": "Domain.Codex",
+    "grace": "Domain.Grace",
+    "midnight": "Domain.Midnight",
+    "sage": "Domain.Sage",
+    "splendor": "Domain.Splendor",
+    "valor": "Domain.Valor"
+  },
+  "DomainCardType": {
+    "ability": "DomainCardType.Ability",
+    "spell": "DomainCardType.Spell",
+    "grimoire": "DomainCardType.Grimoire"
+  }
+
+}

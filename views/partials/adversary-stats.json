@@ -1,0 +1,77 @@
+{
+  "views": [
+    {
+      "type": "hStack",
+      "alignment": "top",
+      "width": 0,
+      "views": [
+        {
+          "type": "vStack",
+          "alignment": "leading",
+          "spacing": 0,
+          "width": 0,
+          "views": [
+            {
+              "style": "stats-title",
+              "value": "{{name}}",
+              "link": "https://www.google.com/search?tbm=isch&q=daggerheart+{{name}}"
+            },
+            {
+              "style": "stats-subtitle",
+              "value": "{{data.tier|map: 'Tier'}} {{data.type|map: 'AdversaryType'}} {{data.typeDetail|brackets}}",
+            },
+          ]
+        },
+        {
+          "type": "image",
+          "value": "{{token}}",
+          "link": "{{token}}",
+          "height": 60
+        },
+      ]
+    },
+    {
+      "value": "{% if descr %}_{{descr}}_\n{% endif %}{% if data.motivesAndTactics %}**{{'Adversary.MotivesAndTactics'|l}}:** {{data.motivesAndTactics}}{% endif %}"
+    },
+    {
+      "type": "vStack",
+      "spacing": 0,
+      "bgColor": "#FFFFFF",
+      "borderWidth": 2,
+      "borderColor": "#D1C1A3",
+      "borderEdges": [ "top", "bottom" ],
+      "views": [
+        {
+          "type": "text",
+          "value": "{% include \"adversary-primary.md\" %}",
+          "padding": [ 8, 10 ]
+        },
+        {
+          "type": "divider",
+          "style": "stats",
+          "visibleIf": "data.experience",
+          "padding": [ 0 ]
+        },
+        {
+          "type": "text",
+          "visibleIf": "data.experience",
+          "value": "**{{'Common.Experience'|l}}:** {% for exp in data.experience %}{{exp.name}} {{exp.modifier|signed}},  {% endfor %}",
+          "padding": [ 8, 10 ]
+        }
+      ]
+    },
+    {
+      "title": "Adversary.Features",
+      "type": "list",
+      "style": "stats-section",
+      "attribute": "data.features",
+      "views": [
+        {
+          "type": "text",
+          "style": "stats-feature",
+          "value": "{% if name %}***{{name}}{{nameDetail|brackets|prefix: ' '}} - {{type|default: 'action'|map: 'AdversaryFeatureType'}}:***{% endif %} {{text}}"
+        }
+      ]
+    },
+  ]
+}

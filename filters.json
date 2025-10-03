@@ -1,0 +1,251 @@
+{
+  "Adversary": {
+    "params": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "TierLevels",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "AdversaryType",
+        "title": "Common.Type"
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "AdversaryType",
+        "title": "Common.Type"
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      }
+    ]
+  },
+  "Environment": {
+    "params": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "TierLevels",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "EnvironmentType",
+        "title": "Common.Type"
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "EnvironmentType",
+        "title": "Common.Type"
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      }
+    ]
+  },
+  "Armor": {
+    "params": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "TierLevels",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      }
+    ]
+  },
+  "Weapon": {
+    "params": [
+      {
+        "attribute": "data.category",
+        "attributeType": "WeaponCategory",
+        "title": "Common.Category",
+      },
+      {
+        "attribute": "data.tier",
+        "attributeType": "TierLevels",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "WeaponType",
+        "title": "Common.Type",
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+      {
+        "attribute": "data.tier",
+        "attributeType": "Tier",
+        "title": "Common.Tier",
+      }
+    ]
+  },
+  "Subclass": {
+    "params": [
+      {
+        "attribute": "data.class",
+        "attributeType": "Class",
+        "title": "Entity.Class",
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.class",
+        "attributeType": "Class",
+        "title": "Entity.Class",
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+    ]
+  },
+  "DomainCard": {
+    "params": [
+      {
+        "attribute": "data.domain",
+        "attributeType": "Domain",
+        "title": "Common.Domain",
+      },
+      {
+        "attribute": "data.level",
+        "title": "Common.Level",
+      },
+      {
+        "attribute": "data.type",
+        "attributeType": "DomainCardType",
+        "title": "Common.Type",
+      },
+      {
+        "attribute": "source",
+        "title": "Common.Source",
+        "dynamic": true
+      }
+    ],
+    "group": [
+      {
+        "attribute": "data.domain",
+        "attributeType": "Domain",
+        "title": "Common.Domain",
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name"
+      }
+    ],
+    "sort": [
+      {
+        "attribute": "data.level",
+        "title": "Common.Level",
+      },
+      {
+        "attribute": "name",
+        "title": "Common.Name",
+      },
+    ]
+  },
+}

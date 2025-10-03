@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        },
+        {
+          "title": "Common.Detail",
+          "attribute": "nameDetail"
+        },
+        {
+          "title": "Common.Type",
+          "type": "picker",
+          "attribute": "type",
+          "attributeType": "AdversaryFeatureType"
+        }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "text",
+          "custom": {
+            "lines": 10
+          }
+        }
+      ]
+    }
+  ]
+}

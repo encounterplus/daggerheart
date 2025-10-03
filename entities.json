@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Adversary",
+    "label": "adversary",
+    "collection": {
+      "label": "adversaries"
+    },
+    "loadable": true,
+    // "renderer": "html"
+  },
+  {
+    "name": "Environment",
+    "label": "environment",
+    "collection": {
+      "label": "environments"
+    },
+    "loadable": true
+  },
+  {
+    "name": "Armor",
+    "label": "armor",
+    "collection": {
+      "label": "armor"
+    },
+  },
+  {
+    "name": "Weapon",
+    "label": "weapon",
+    "collection": {
+      "label": "weapons"
+    },
+  },
+  {
+    "name": "Item",
+    "label": "item",
+    "collection": {
+      "label": "items"
+    },
+  },
+  {
+    "name": "Consumable",
+    "label": "consumable",
+    "collection": {
+      "label": "consumables"
+    },
+  },
+  {
+    "name": "Ancestry",
+    "label": "ancestry",
+    "collection": {
+      "label": "ancestries"
+    },
+    "loadable": true
+  },
+  {
+    "name": "Community",
+    "label": "community",
+    "collection": {
+      "label": "communities"
+    },
+  },
+  {
+    "name": "Class",
+    "label": "class",
+    "collection": {
+      "label": "classes"
+    }
+  },
+  {
+    "name": "Subclass",
+    "label": "subclass",
+    "collection": {
+      "label": "subclasses"
+    },
+  },
+  {
+    "name": "DomainCard",
+    "label": "domain-card",
+    "collection": {
+      "label": "domain-cards"
+    },
+  },
+  {
+    "name": "Character",
+    "label": "character",
+    "collection": {
+      "label": "characters"
+    },
+    "loadable": true,
+    "standalone": true
+  },
+  {
+    "name": "Rule",
+    "label": "rule",
+    "collection": {
+      "label": "rules"
+    },
+    "dynamic": true 
+  },
+  {
+    "name": "Table",
+    "label": "table",
+    "collection": {
+      "label": "tables"
+    },
+  },
+]

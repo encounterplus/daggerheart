@@ -1,0 +1,153 @@
+{
+  "debug": false,
+  "padding": [ 16 ],
+  "custom": {
+    "scrollAnchor": "center",
+    "theme": "card",
+  },
+  "width": -1,
+  "views": [
+    {
+      "type": "vStack",
+      "spacing": 0,
+      "alignment": "top",
+      // dynamic maximum width
+      "frame": {
+        "maxWidth": 360,
+        // fit aspect ratio to maintain maximum card height
+        "aspectFit": 0.71345
+      },
+      "borderWidth": 2,
+      "borderColor": "#fde07d",
+      "cornerRadius": 20,
+      "bgColor": "#FFFFFF",
+      "bgViews": [
+        {
+          "type": "image",
+          "value": "{{image|default: '/images/empty.png'}}",
+          "alignment": "top",
+          "imageResizeMode": "aspectFill",
+          // "width": 360,
+          "frame": {
+            "maxHeight": 240,
+            // "maxWidth": 360,
+            // "height": 300,
+            // "height": 220,
+            // "layoutPriority": 10.0
+          }
+        },
+      ],
+      "views": [
+        // banner, level and recall
+        {
+          "type": "hStack",
+          "padding": [
+            0,
+            20
+          ],
+          "views": [
+            {
+              "type": "zStack",
+              "width": 75,
+              "alignment": "top",
+              "views": [
+                {
+                  "type": "image",
+                  "value": "/images/banners/banner-{{data.domain}}.webp",
+                },
+                {
+                  "style": "level",
+                  "alignment": "center",
+                  "padding": [ 20, 0 ],
+                  "value": "{{data.level}}",
+                  "hiddenIf": "data.domain == 'bone'"
+                },
+                {
+                  "style": "level-dark",
+                  "alignment": "center",
+                  "padding": [ 20, 0 ],
+                  "value": "{{data.level}}",
+                  "visibleIf": "data.domain == 'bone' or data.domain == 'splendor'"
+                }
+              ]
+            },
+            {
+              "type": "spacer"
+            },
+            {
+              "type": "zStack",
+              "padding": [
+                20,
+                0
+              ],
+              "width": 40,
+              "views": [
+                {
+                  "type": "image",
+                  "value": "/images/cost.webp",
+                  "height": 40,
+                  "width": 40,
+                },
+                {
+                  "style": "recall",
+                  "value": "{{data.recall}}",
+                  "alignment": "center",
+                  "padding": [ 0, 0, 0, 11 ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "vStack",
+          "spacing": 0,
+          "views": [
+            {
+              "type": "spacer",
+              "frame": {
+                "maxHeight": 100,
+                "layoutPriority": 2.0
+              }
+            },
+            {
+              "type": "zStack",
+              "alignment": "center",
+              "views": [
+                {
+                  "type": "image",
+                  "value": "/images/dividers/domain-divider-{{data.domain}}.png",
+                  "alignment": "center",
+                  // "imageResizeMode": "aspectFill",
+                },
+                {
+                  "style": "type",
+                  "value": "{{data.type}}",
+                  "width": -1
+                }
+              ]
+            },
+            {
+              "type": "vStack",
+              "alignment": "top",
+              "spacing": 6,
+              "bgColor": "#fff",
+              "height": 0,
+              "padding": [ 6, 12, 12, 12 ],
+              "views": [
+                {
+                  "style": "title",
+                  "alignment": "center",
+                  "value": "{{name}}",
+                },
+                {
+                  "type": "text",
+                  "value": "{{descr}}",
+                },
+              ]
+            },
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "debug": false,
+  "type": "tabs",
+  "custom": {
+    "theme": "ancestry"
+  },
+  "padding": [ 0 ],
+  "views": [
+    // text tab
+    {
+      "type": "partial",
+      "value": "community-text",
+    },
+    // card tab
+    {
+      "type": "partial",
+      "value": "community-card",
+    }
+  ]
+}

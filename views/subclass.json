@@ -1,0 +1,19 @@
+{
+  "padding": [ 0 ],
+  "type": "tabs",
+  "custom": {
+    "theme": "class"
+  },
+  "views": [
+    // main tab
+    {
+      "type": "partial",
+      "value": "subclass-text"
+    },
+    // card tab
+    {
+      "type": "partial",
+      "value": "subclass-card"
+    },
+  ]
+}

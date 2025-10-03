@@ -1,0 +1,96 @@
+{
+  "sections": [
+    {
+      "title": "Common.ShortDescription",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "data.descr",
+          "custom": {
+            "lines": 2,
+          },
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Class.Domains",
+          "type": "multiPicker",
+          "attribute": "data.domains",
+          "attributeType": "Domain"
+        },
+        {
+          "title": "Class.StartingEvasion",
+          "type": "number",
+          "attribute": "data.evasion"
+        },
+        {
+          "title": "Class.StartingHitPoints",
+          "type": "number",
+          "attribute": "data.hp"
+        },
+        {
+          "title": "Class.ClassItems",
+          "attribute": "data.items"
+        },
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Class.HopeFeature",
+      "fields": [
+        {
+          "type": "form",
+          "title": "{{data.hopeFeature.name | default: 'None'}}",
+          "attribute": "data.hopeFeature",
+          "form": {
+            "title": "Class.HopeFeature",
+            "partial": "generic-feature"
+          }
+        },
+      ]
+    },
+    {
+      "title": "Class.ClassFeatures",
+      "type": "list",
+      "attribute": "data.features",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "generic-feature"
+      }
+    },
+    {
+      "title": "Class.BackgroundQuestions",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "data.background"
+        }
+      ]
+    },
+    {
+      "title": "Class.Connections",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "data.connections"
+        }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+  ]
+}

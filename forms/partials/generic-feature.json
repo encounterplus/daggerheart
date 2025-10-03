@@ -1,0 +1,27 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        },
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "text",
+          "custom": {
+            "lines": 10
+          }
+        }
+      ]
+    }
+  ]
+}

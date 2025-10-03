@@ -1,0 +1,33 @@
+{
+  "sections": [
+    {
+      "title": "Common.ShortDescription",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "data.descr"
+        }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "title": "Common.Features",
+      "type": "list",
+      "attribute": "data.features",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "generic-feature"
+      }
+    }
+  ]
+}

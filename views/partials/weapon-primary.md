@@ -1,0 +1,2 @@
+**{{'Common.Trait'|l}}:** {{data.trait|map: 'Trait'|default: '-'}} | **{{'Common.Range'|l}}:** {{data.range|map: 'Range'|default: '-'}} | **{{'Common.Damage'|l}}:** {{data.damage}}{{data.damageType|prefix: ' '}} | **{{'Weapon.Burden'|l}}:** {{data.burden|map: 'WeaponBurden'|default: '-'}}
+{% if data.feature.name %}***{{data.feature.name}}:*** {{data.feature.text}}{% endif %}

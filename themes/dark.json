@@ -1,0 +1,52 @@
+{
+  "tintColor": "#FFFFFF",
+  "primaryColor": "#FFFFFF",
+  "textColor": "#FFFFFF",
+  "dividerColor": "#cccccc",
+  "bgColor": "#000000",
+  "textStyles": {
+    "body": {
+      "font": "Open Sans",
+      "size": 14,
+      "paragraphHeadIndent": 11
+    },
+    "title": {
+      "font": "Eveleth Clean Thin",
+      "case": "uppercase",
+      "size": 40,
+    },
+    "subtitle": {
+      "font": "Open Sans Italic",
+      "size": 14
+    },
+    "heading1": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 28
+    },
+    "heading2": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 25,
+    },
+    "heading3": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 22
+    },
+    "heading4": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "size": 17
+    },
+    "heading5": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 17
+    },
+    "heading6": {
+      "font": "Open Sans ExtraBold",
+      "size": 14
+    }
+  }
+}

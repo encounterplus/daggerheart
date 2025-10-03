@@ -1,0 +1,61 @@
+{
+  "id": "text",
+  "title": "Text",
+  "custom": {
+    "icon": "note.text",
+  },
+  "type": "vStack",
+  "spacing": 8,
+  "padding": [ 16 ],
+  "bgImage": "/images/paper.jpg",
+  "views": [
+    {
+      "style": "title2",
+      "value": "{{name}}",
+      "link": "https://www.google.com/search?tbm=isch&q=daggerheart+{{name}}",
+      "width": 0,
+      "bgColor": "#F4EFE4",
+      "padding": [ 2, 6 ]
+    },
+    {
+      "style": "subtitle",
+      "value": "{{descr}}",
+    },
+    {
+      "type": "text",
+      "value": "{% include 'subclass-primary.md' %}",
+    },
+    {
+      "type": "divider",
+      "visibleIf": "data.extras"
+    },
+    {
+      "title": "Subclass.Extras",
+      "type": "text",
+      "value": "{{data.extras}}",
+    },
+    {
+      "type": "text",
+      "title": "Common.Notes",
+      "value": "{{notes}}",
+    },
+    {
+      "type": "spacer",
+      "height": 4
+    },
+    {
+      "type": "image",
+      "value": "{{image}}",
+      "link": "{{image}}",
+      "cornerRadius": 8,
+    },
+    {
+      "type": "text",
+      "value": "{{footer}}"
+    },
+    {
+      "type": "tags",
+      "attribute": "tags"
+    }
+  ]
+}

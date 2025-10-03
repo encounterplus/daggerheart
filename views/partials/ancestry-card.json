@@ -1,0 +1,101 @@
+{
+  "id": "card",
+  "title": "Card",
+  "custom": {
+    "icon": "text.page",
+    "scrollAnchor": "center",
+  },
+  "type": "vStack",
+  "width": -1,
+  "padding": [ 16 ],
+  "alignment": "center",
+  "views": [
+    {
+      "type": "vStack",
+      "spacing": 0,
+      "alignment": "top",
+      // dynamic maximum width
+      "frame": {
+        "maxWidth": 360,
+        // fit aspect ratio to maintain maximum card height
+        "aspectFit": 0.71345
+      },
+      "borderWidth": 2,
+      "borderColor": "#fde07d",
+      "cornerRadius": 20,
+      "bgColor": "#FFFFFF",
+      "bgViews": [
+        {
+          "type": "image",
+          "value": "{{image|default: '/images/empty.png'}}",
+          "alignment": "top",
+          "imageResizeMode": "aspectFill",
+          // "width": 360,
+          "frame": {
+            "maxHeight": 240,
+            // "layoutPriority": 10.0
+          },
+        },
+      ],
+      "views": [
+        {
+          "type": "vStack",
+          "spacing": 0,
+          "views": [
+            {
+              "type": "spacer",
+              "frame": {
+                "maxHeight": 210,
+                "layoutPriority": 2.0
+              }
+            },
+            {
+              "type": "vStack",
+              "alignment": "top",
+              "spacing": 6,
+              // "bgColor": "#fff",
+              "height": 0,
+              "padding": [ 36, 16, 16, 16 ],
+              "views": [
+                {
+                  "style": "card-title",
+                  "value": "{{name}}",
+                  "padding": [ 0, 0, 0, 50 ]
+                },
+                {
+                  "type": "text",
+                  "style": "card-subtitle",
+                  "value": "{{data.descr}}",
+                },
+                {
+                  "type": "text",
+                  "style": "card-body",
+                  "value": "{% for feature in data.features %}***{{feature.name}}:*** {{feature.text}}\n\n{% endfor %} "
+                },
+              ],
+              "bgViews": [
+                {
+                  "type": "vStack",
+                  "views": [
+                    {
+                      "type": "image",
+                      "value": "/images/dividers/ancestry-divider.png",
+                      "alignment": "top",
+                      "imageResizeMode": "aspectFit",
+                      "width": -1
+                      // "width": 360,
+                    },
+                    {
+                      "type": "spacer",
+                      "bgColor": "#FFFFFF"
+                    }
+                  ]
+                },
+              ]
+            },
+          ]
+        }
+      ]
+    }
+  ]
+}

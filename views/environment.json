@@ -1,0 +1,46 @@
+{
+  "debug": false,
+  "spacing": 8,
+  "padding": [ 16 ],
+  "views": [
+    {
+      "type": "vStack",
+      "spading": 4,
+      "bgColor": "#EBECEC",
+      "borderWidth": 2,
+      "cornerRadius": 8,
+      "borderColor": "#9EA0A3",
+      "padding": [ 12 ],
+      "views": [
+        {
+          "type": "partial",
+          "value": "environment-stats"
+        }
+      ]
+    },
+    {
+      "type": "vStack",
+      "spacing": 8,
+      "views": [
+        {
+          "type": "text",
+          "title": "Common.Notes",
+          "value": "{{notes}}",
+        },
+        {
+          "type": "image",
+          "value": "{{image}}",
+          "link": "{{image}}"
+        },
+        {
+          "type": "text",
+          "value": "{{footer}}"
+        }, 
+        {
+          "type": "tags",
+          "attribute": "tags"
+        }
+      ]
+    }
+  ],
+}

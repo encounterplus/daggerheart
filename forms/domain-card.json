@@ -1,0 +1,31 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Domain",
+          "type": "picker",
+          "attribute": "data.domain",
+          "attributeType": "Domain"
+        },
+        {
+          "title": "Common.Type",
+          "type": "picker",
+          "attribute": "data.type",
+          "attributeType": "DomainCardType"
+        },
+        {
+          "title": "Common.Level",
+          "type": "number",
+          "attribute": "data.level"
+        },
+        {
+          "title": "Common.Recall",
+          "type": "number",
+          "attribute": "data.recall"
+        },
+      ]
+    }
+  ]
+}

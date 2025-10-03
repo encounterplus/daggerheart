@@ -1,0 +1,55 @@
+{
+  "entities": {
+    "Default": {
+      "combatant": {
+        "bars": [
+          {
+            "attribute": "data.hp",
+            "title": "Common.HitPoints",
+            "label": "Common.HP",
+            "temporary": false
+          },
+          {
+            "attribute": "data.stress",
+            "title": "Common.Stress",
+            "label": "Common.Stress",
+            "temporary": false
+          }
+        ]
+      }
+    },
+    "Adversary": {
+      "role": "enemy",
+       "collection": {
+        "detail": "{{data.tier|map: 'Tier'}} {{data.type|map: 'AdversaryType'}} {{data.typeDetail|brackets}}"
+      }
+    },
+    "Environment": {
+      "role": "enemy",
+       "collection": {
+        "detail": "{{data.tier|map: 'Tier'}} {{data.type|map: 'EnvironmentType'}} {{data.typeDetail|brackets}}"
+      }
+    },
+    "Weapon": {
+       "collection": {
+        "detail": "{% if data.category %}{{data.category|map: 'WeaponCategory'}}{% else %}{{'Entity.Weapon'|l}}{% endif %} - {{data.tier|map: 'Tier'}}"
+      }
+    },
+    "DomainCard": {
+       "collection": {
+        "detail": "{{'Common.Level'|l}} {{data.level}} {{data.type|map: 'DomainCardType'}}"
+      }
+    },
+    "Character": {
+      "role": "friendly",
+      "collection": {
+        "detail": "{{data.class.name|default: 'Custom'}}"
+      }
+    }
+  },
+  "combat": {
+    "initiative": {
+      "mode": "fixed"
+    }
+  }
+}

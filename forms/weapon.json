@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Category",
+          "type": "picker",
+          "attribute": "data.category",
+          "attributeType": "WeaponCategory"
+        },
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "data.tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.Type",
+          "type": "picker",
+          "attribute": "data.type",
+          "attributeType": "WeaponType"
+        }
+      ]
+    },
+    { 
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Trait",
+          "type": "picker",
+          "attribute": "data.trait",
+          "attributeType": "Trait"
+        },
+        {
+          "title": "Common.Range",
+          "type": "picker",
+          "attribute": "data.range",
+          "attributeType": "Range"
+        },
+        {
+          "title": "Common.Damage",
+          "attribute": "data.damage"
+        },
+        {
+          "title": "Common.DamageType",
+          "type": "picker",
+          "attribute": "data.damageType",
+          "attributeType": "Damage"
+        },
+        {
+          "title": "Weapon.Burden",
+          "type": "picker",
+          "attribute": "data.burden",
+          "attributeType": "WeaponBurden"
+        }
+      ]
+    },
+    {
+      "title": "Common.Feature",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "data.feature.name"
+        },
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "data.feature.text",
+        }
+      ]
+    },
+  ]
+}

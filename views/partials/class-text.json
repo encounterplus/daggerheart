@@ -1,0 +1,45 @@
+{
+  "views": [
+    {
+      "type": "hStack",
+      "views": [
+        {
+          "type": "vStack",
+          "spacing": 0,
+          "views": [
+            {
+              "style": "title3",
+              "value": "{{name}}",
+              "link": "https://www.google.com/search?tbm=isch&q=daggerheart+{{name}}",
+              "color": "#ffffff"
+            },
+            {
+              "style": "subtitle",
+              "value": "{{data.descr}}",
+              "color": "#ffffff"
+            },
+          ]
+        },
+        {
+          "type": "image",
+          "value": "{{image}}",
+          "link": "{{image}}",
+          "cornerRadius": 8,
+          "height": 80,
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "value": "{{descr}}",
+      "style": "body-white"
+    },
+    {
+      "type": "text",
+      "value": "{% include 'class-primary.md' %}",
+      "custom": {
+        "theme": "dark"
+      }
+    },
+  ]
+}

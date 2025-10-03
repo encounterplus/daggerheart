@@ -1,0 +1,68 @@
+{
+  "sections": [
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Entity.Class",
+          "type": "picker",
+          "attribute": "data.class",
+          "attributeType": "Class"
+        },
+        {
+          "title": "Subclass.SpellcastTrait",
+          "type": "picker",
+          "attribute": "data.spellcastTrait",
+          "attributeType": "Trait"
+        },
+      ]
+    },
+    {
+      "title": "Subclass.FoundationFeatures",
+      "type": "list",
+      "attribute": "data.foundations",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "generic-feature"
+      }
+    },
+    {
+      "title": "Subclass.SpecializationFeatures",
+      "type": "list",
+      "attribute": "data.specializations",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "generic-feature"
+      }
+    },
+    {
+      "title": "Subclass.MasteryFeatures",
+      "type": "list",
+      "attribute": "data.masteries",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "generic-feature"
+      }
+    },
+    {
+      "title": "Subclass.Extras",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "data.extras"
+        }
+      ]
+    },
+  ]
+}

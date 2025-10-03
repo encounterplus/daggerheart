@@ -1,0 +1,17 @@
+{
+  "debug": false,
+  "type": "tabs",
+  "padding": [ 0 ],
+  "views": [
+    // main tab
+    {
+      "type": "partial",
+      "value": "ancestry-text",
+    },
+    // card tab
+    {
+      "type": "partial",
+      "value": "ancestry-card",
+    },
+  ],
+}

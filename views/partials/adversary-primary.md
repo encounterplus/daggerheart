@@ -1,0 +1,2 @@
+**{{'Adversary.Difficulty'|l}}:** {{data.difficulty|default: 0}} | **{{'Common.Thresholds'|l}}:** {{data.thresholds.major|default: '-'}} / {{data.thresholds.severe|default: '-'}} | **{{'Common.HP'|l}}:** {{data.hp|default: 0}} | **{{'Common.Stress'|l}}:** {{data.stress|default: 0}}
+**{{'Abr.ATK'|l}}:** {{data.attackModifier|default: 0|signed}}{% if data.attack.name %} | **{{data.attack.name}}:** {{data.attack.range|map: 'Range'}} | {{data.attack.damage}} {{data.attack.damageType}}{% endif %}

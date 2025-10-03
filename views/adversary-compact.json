@@ -1,0 +1,47 @@
+{
+  "debug": false,
+  "spacing": 8,
+  "type": "compactTabs",
+  "padding": [ 0 ],
+  "views": [
+    {
+      "title": "Stats",
+      "type": "vStack",
+      "spacing": 4,
+      "padding": [12],
+      "bgColor": "#F4EFE5",
+      "views": [
+        {
+          "type": "partial",
+          "value": "adversary-stats"
+        }
+      ]
+    },
+    {
+      "title": "Other",
+      "type": "vStack",
+      "spacing": 8,
+      "padding": [16],
+      "views": [
+        {
+          "type": "text",
+          "title": "Common.Notes",
+          "value": "{{notes}}",
+        },
+        {
+          "type": "image",
+          "value": "{{image}}",
+          "link": "{{image}}"
+        },
+        {
+          "type": "text",
+          "value": "{{footer}}"
+        }, 
+        {
+          "type": "tags",
+          "attribute": "tags"
+        }
+      ]
+    }
+  ]
+}

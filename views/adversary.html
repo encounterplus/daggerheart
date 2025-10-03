@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <base href="{{BASE_URL|default: '../'}}" /> -->
+        <!-- <base href="local://" /> -->
+        <title>{{name}}</title>
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/css/global.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="adversary" class="container-fluid" style="padding: 10px">
+          <div class="stat-block" style="padding: 10px; background-color: #F4EFE5; border-radius: 16px; border: 2px solid #D1C1A3;">
+            {% if token %}
+            <a class="float-right"  href="/adversaries/{{token}}" target="_blank"><img src="/adversaries/{{token}}" width="80", height="80" /></a>
+            {% endif %}
+
+            <h1 class="title">{{name}}</h1>
+            <span>{{data.tier|map: 'Tier'}} {{data.type|map: 'AdversaryType'}} {{data.typeDetail|brackets}}</span>
+            
+            {% if descr %}
+            <p><em>{{descr}}</em></p>
+            {% endif %}
+            {% if data.motivesAndTactics %}
+            <p><strong>{{'Adversary.MotivesAndTactics'|l}}:</strong> {{data.motivesAndTactics}}</p>
+            {% endif %}
+
+            <div style="padding: 10px; background-color: white; border-top: 1px solid; border-bottom: 1px solid;"">
+              {% markdown -%}
+              {% include "adversary-primary.md" %}
+              {% endmarkdown %}
+              {% if data.experience %}
+              <hr>
+              <strong>{{'Common.Experience'|l}}:</strong>{% for exp in data.experience %}{{exp.name}} {{exp.modifier|signed}},  {% endfor %}
+            {% endif %}
+            </div>
+            
+            <h4>{{ 'Adversary.Features'|l }}</h4>
+
+            {% for feature in data.features %}
+            {% markdown -%}
+            {% if name %}***{{feature.name}}{{feature.nameDetail|brackets|prefix: ' '}} - {{feature.type|default: 'action'|map: 'AdversaryFeatureType'}}:***{% endif %} {{feature.text}}
+            {% endmarkdown %}
+            {% endfor %}
+            
+          </div>
+
+          {% if notes %}
+          <h3>{{'Common.Notes'|l}}</h3>
+          {{notes|md}}
+          {% endif %}
+
+          {% if image %}
+          <a href="/adversaries/{{image}}" target="_blank"><img style="width: 100%" src="/adversaries/{{image}}" /></a>
+          {% endif %}
+
+        </div>
+    </body>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/character.js"></script>
+    <script>
+        
+    </script>
+</html>

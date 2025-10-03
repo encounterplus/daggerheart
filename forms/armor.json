@@ -1,0 +1,45 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "data.tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.MajorThreshold",
+          "type": "number",
+          "attribute": "data.thresholds.major"
+        },
+        {
+          "title": "Common.SevereThreshold",
+          "type": "number",
+          "attribute": "data.thresholds.severe"
+        },
+        {
+          "title": "Armor.BaseScore",
+          "type": "number",
+          "attribute": "data.score"
+        },
+      ]
+    },
+    {
+      "title": "Common.Feature",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "data.feature.name"
+        },
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "data.feature.text",
+        }
+      ]
+    },
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "data.tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.Type",
+          "type": "form",
+          "text": "{{data.type|map: 'EnvironmentType'}} {{data.typeDetail|brackets}}",
+          "form": {
+            "title": "Common.Type",
+            "sections": [
+              {
+                "title": "Common.Type",
+                "type": "picker",
+                "attribute": "data.type",
+                "attributeType": "EnvironmentType",
+              },
+              {
+                "title": "Common.Detail",
+                "visibleIf": "data.type",
+                "fields": [
+                  {
+                    "placeholder": "Common.Detail",
+                    "type": "textArea",
+                    "attribute": "data.typeDetail"
+                  }
+                ]
+              },
+            ]
+          }
+        },
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Environment.Impulses",
+          "attribute": "data.impulses"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Environment.Difficulty",
+          "attribute": "data.difficulty"
+        },
+        {
+          "title": "Environment.PotentialAdversaries",
+          "attribute": "data.adversaries"
+        },
+      ]
+    },
+    {
+      "title": "Adversary.Features",
+      "type": "list",
+      "attribute": "data.features",
+      "form": {
+        "title": "Adversary.Feature",
+        "partial": "adversary-feature"
+      }
+    },
+  ]
+}

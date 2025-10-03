@@ -1,0 +1,89 @@
+{
+  "debug": false,
+  "spacing": 0,
+  "padding": [ 0 ],
+  "views": [
+    {
+      "type": "vStack",
+      "spacing": 8,
+      "bgColor": "#1C2917",
+      "padding": [ 16 ],
+      "views": [
+        {
+          "type": "partial",
+          "value": "class-text",
+        }
+      ]
+    },
+    {
+      "type": "vStack",
+      "spacing": 8,
+      "padding": [ 16 ],
+      "bgImage": "/images/paper.jpg",
+      "views": [
+        {
+          "value": "{{name}} {{'Entity.Subclass.many'|l}}",
+          "style": "heading2"
+        },
+        {
+          "id": "mainTabs",
+          "type": "tabs",
+          "custom": {
+            "query": {
+              "entity": "Subclass"
+            },
+            "filter": "data.class == '{{name}}'",
+            "buttonStyle": {
+              "default": "default",
+              "selected": "prominent"
+            },
+          },
+          "views": [
+            {
+              "type": "text",
+              "value": "{{descr}}",
+            },
+            {
+              "type": "text",
+              "value": "{% include 'subclass-primary.md' %}",
+            },
+            {
+              "type": "image",
+              "value": "~/subclasses/{{image}}",
+              "link": "{{image}}",
+              "cornerRadius": 8,
+            },
+            {
+              "type": "divider",
+              "visibleIf": "data.extras"
+            },
+            {
+              "title": "Subclass.Extras",
+              "type": "text",
+              "value": "{{data.extras}}",
+            },
+          ]
+        },
+        {
+          "type": "text",
+          "title": "Common.Notes",
+          "value": "{{notes}}",
+        },
+        {
+          "type": "text",
+          "value": "{{footer}}"
+        },
+        {
+          "type": "tags",
+          "attribute": "tags"
+        },
+      ]
+    },
+    {
+      "type": "text",
+      "value": "{% include 'class-questions.md' %}",
+      "bgColor": "#EBE4D3",
+      "padding": [ 16 ]
+    },
+  ]
+}

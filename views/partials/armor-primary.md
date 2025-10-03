@@ -1,0 +1,2 @@
+**{{'Armor.BaseThresholds'|l}}:** {{data.thresholds.major|default: '-'}} / {{data.thresholds.severe|default: '-'}} | **{{'Armor.BaseScore'|l}}:** {{data.score|default: '-'}}
+{% if data.feature.name %}***{{data.feature.name}}:*** {{data.feature.text}}{% endif %}

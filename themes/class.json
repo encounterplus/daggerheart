@@ -1,0 +1,150 @@
+{
+  "tintColor": "#84733D",
+  "primaryColor": "#D2B25F",
+  "textColor": "#000000",
+  "dividerColor": "#cccccc",
+  "buttonStyles": {
+    "default": {
+      "color": "#84733D",
+      "bgColor": "#F5EFE3",
+      "body": {
+        "font": "Eveleth Clean Thin",
+        "case": "uppercase",
+        "size": 18,
+        "padding": [4, 6],
+      }
+    },
+    "prominent": {
+      "color": "#fff",
+      "bgColor": "#84733D",
+      "body": {
+        "font": "Eveleth Clean Thin",
+        "case": "uppercase",
+        "size": 18,
+        "alignment": "center",
+        "padding": [4, 6],
+      }
+    },
+    "plain": {
+      "color": "#FFFFFF",
+      "borderWidth": 1,
+      "borderColor": "#FFFFFF",
+      "cornerRadius": 12,
+      "padding": [4, 16],
+      "body": {
+        "font": "Eveleth Clean Thin",
+        "size": 12,
+      }
+    },
+  },
+  "tableStyles": {
+    "default": {
+      "rowStyle": "odd",
+      "head": {
+        "font": "Open Sans Bold",
+        "case": "uppercase",
+        "size": 16,
+        "color": "#FFFFFF",
+        "bgColor": "#84733D"
+      }
+    },
+  },
+  "textStyles": {
+    "body": {
+      "font": "Open Sans",
+      "size": 14
+    },
+    "body-white": {
+      "font": "Open Sans",
+      "size": 14,
+      "color": "#FFFFFF",
+    },
+    "title": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 26,
+    },
+    "title2": {
+      "font": "Eveleth Clean Thin",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 24,
+    },
+    "title3": {
+      "font": "Eveleth Clean Thin",
+      "case": "uppercase",
+      "color": "#FFFFFF",
+      "size": 40,
+    },
+    "subtitle": {
+      "font": "Open Sans Italic",
+      "size": 14
+    },
+    "card-body": {
+      "font": "Open Sans",
+      "size": 12,
+      "lineHeight": 14
+    },
+    "card-title": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 24,
+    },
+    "card-subtitle": {
+      "font": "Open Sans Italic",
+      "size": 12,
+      "lineHeight": 14
+    },
+    "card-spellcast-trait": {
+      "font": "Open Sans",
+      "case": "uppercase",
+      "color": "#000",
+      "size": 13,
+      "alignment": "center"
+    },
+    "card-type": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#FFFFFF",
+      "size": 12,
+    },
+    "heading1": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 28
+    },
+    "heading2": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 22,
+    },
+    "heading3": {
+      "font": "Eveleth Clean Thin",
+      "color": "#84733D",
+      "case": "uppercase",
+      "size": 18,
+    },
+    "heading4": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 18,
+      "prefix": "▇  ",
+      "tintColor": "#D2B25F",
+    },
+    "heading5": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#84733D",
+      "size": 16
+    },
+    "heading6": {
+      "font": "Open Sans Bold",
+      "color": "#84733D",
+      "size": 14
+    }
+  }
+}

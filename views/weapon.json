@@ -1,0 +1,47 @@
+{
+  "debug": false,
+  "spacing": 8,
+  "padding": [16],
+  "views": [
+    {
+      "type": "vStack",
+      "spacing": -1,
+      "views": [
+        {
+          "style": "title",
+          "value": "{{name}}",
+          "link": "https://www.google.com/search?tbm=isch&q=daggerheart+{{name}}"
+        },
+        {
+          "value": "_{% if data.category %}{{data.category|map: 'WeaponCategory'}}{% else %}{{'Entity.Weapon'|l}}{% endif %} - {% if data.type %}{{data.type|map: 'WeaponType'}} - {% endif %}{{data.tier|map: 'Tier'}}_",
+        },
+      ]
+    },
+    {
+      "type": "text",
+      "value": "{% include \"weapon-primary.md\" %}",
+    },
+    {
+      "type": "text",
+      "value": "{{descr}}",
+    },
+    {
+      "type": "text",
+      "title": "Common.Notes",
+      "value": "{{notes}}",
+    },
+    {
+      "type": "image",
+      "value": "{{image}}",
+      "link": "{{image}}"
+    },
+    {
+      "type": "text",
+      "value": "{{footer}}"
+    },
+    {
+      "type": "tags",
+      "attribute": "tags"
+    }
+  ]
+}

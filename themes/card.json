@@ -1,0 +1,127 @@
+{
+  "tintColor": "#8E7E49",
+  "primaryColor": "#D2B25F",
+  "textColor": "#000000",
+  "dividerColor": "#cccccc",
+  "dividerStyles": {
+    "stats": {
+      "shape": "line",
+      "color": "#D1C1A3",
+    }
+  },
+  "tableStyles": {
+    "default": {
+      "rowStyle": "odd",
+      "rowColor": "#F6E7DB",
+      "head": {
+        "font": "Open Sans Bold",
+        "case": "uppercase",
+        "size": 16,
+        "color": "#FFFFFF",
+        "bgColor": "#C3703C"
+      }
+    },
+  },
+  "buttonStyles": {
+    "plain": {
+      "color": "#FFFFFF",
+      "borderWidth": 1,
+      "borderColor": "#FFFFFF",
+      "cornerRadius": 12,
+      "padding": [4, 16],
+      "body": {
+        "font": "Eveleth Clean Thin",
+        "size": 12,
+      }
+    },
+  },
+  "textStyles": {
+    "body": {
+      "font": "Open Sans",
+      "size": 12,
+      "lineHeight": 14
+    },
+    "title": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 20,
+    },
+    "title2": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 24,
+    },
+    "title3": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "size": 11,
+    },
+    "subtitle": {
+      "font": "Open Sans Italic",
+      "size": 12,
+      "lineHeight": 14
+    },
+    "level": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#FFFFFF",
+      "size": 18,
+    },
+    "level-dark": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#000",
+      "size": 18,
+    },
+    "recall": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#FFFFFF",
+      "size": 14,
+    },
+    "type": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "color": "#FFFFFF",
+      "size": 12,
+    },
+    "spellcastTrait": {
+      "font": "Open Sans",
+      "case": "uppercase",
+      "color": "#000",
+      "size": 13,
+      "alignment": "center"
+    },
+    "heading1": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 28
+    },
+    "heading2": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 22,
+    },
+    "heading3": {
+      "font": "Open Sans ExtraBold",
+      "case": "uppercase",
+      "size": 20
+    },
+    "heading4": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "size": 18,
+      "prefix": "▇  ",
+      "tintColor": "#D2B25F",
+    },
+    "heading5": {
+      "font": "Open Sans Bold",
+      "case": "uppercase",
+      "size": 16
+    },
+    "heading6": {
+      "font": "Open Sans Bold",
+      "size": 14
+    }
+  }
+}
