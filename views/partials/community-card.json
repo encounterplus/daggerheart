@@ -12,7 +12,7 @@
   "alignment": "center",
   "views": [
     {
-      "type": "vStack",
+      "type": "zStack",
       "spacing": 0,
       "alignment": "top",
       // dynamic maximum width
@@ -25,7 +25,7 @@
       "borderColor": "#fde07d",
       "cornerRadius": 20,
       "bgColor": "#fff",
-      "bgViews": [
+      "views": [
         {
           "type": "image",
           "value": "{{image|default: '/images/empty.png'}}",
@@ -37,15 +37,16 @@
             // "layoutPriority": 10.0
           }
         },
-      ],
-      "views": [
+        // content
         {
           "type": "vStack",
           "spacing": 0,
+          "padding": [0, 0, 12, 0],
           "views": [
             {
               "type": "spacer",
               "frame": {
+                "minHeight": 120,
                 "maxHeight": 170,
                 "layoutPriority": 2.0
               }

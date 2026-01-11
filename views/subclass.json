@@ -4,6 +4,7 @@
   "custom": {
     "theme": "class"
   },
+  "debug": false,
   "views": [
     // main tab
     {

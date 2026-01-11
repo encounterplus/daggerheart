@@ -1,15 +1,16 @@
 {
   "debug": false,
   "spacing": 8,
-  "type": "compactTabs",
-  "padding": [ 0 ],
+  "padding": [ 8 ],
   "views": [
     {
-      "title": "Stats",
       "type": "vStack",
       "spacing": 4,
-      "padding": [12],
       "bgColor": "#F4EFE5",
+      "borderWidth": 2,
+      "cornerRadius": 8,
+      "borderColor": "#D1C1A3",
+      "padding": [ 12 ],
       "views": [
         {
           "type": "partial",
@@ -21,7 +22,7 @@
       "title": "Other",
       "type": "vStack",
       "spacing": 8,
-      "padding": [16],
+      "padding": [0, 8],
       "views": [
         {
           "type": "text",
