@@ -49,7 +49,7 @@
             },
             {
               "type": "image",
-              "value": "~/subclasses/{{image}}",
+              "value": "{{image}}",
               "link": "{{image}}",
               "cornerRadius": 8,
             },
@@ -58,7 +58,6 @@
               "visibleIf": "data.extras"
             },
             {
-              "title": "Subclass.Extras",
               "type": "text",
               "value": "{{data.extras}}",
             },

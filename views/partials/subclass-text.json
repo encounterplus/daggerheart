@@ -30,7 +30,6 @@
       "visibleIf": "data.extras"
     },
     {
-      "title": "Subclass.Extras",
       "type": "text",
       "value": "{{data.extras}}",
     },

@@ -120,7 +120,7 @@
                 },
                 {
                   "style": "type",
-                  "value": "{{data.type}}",
+                  "value": "{{data.type|map:'DomainCardType'}}",
                   "width": -1
                 }
               ]
