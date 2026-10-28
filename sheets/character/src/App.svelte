@@ -11,6 +11,7 @@
   import DomainCards from './components/DomainCards.svelte'
   import Inventory from './components/Inventory.svelte'
   import Background from './components/Background.svelte'
+  import Advancement from './components/Advancement.svelte'
   import Footer from './components/Footer.svelte'
   import Status from './components/Status.svelte'
   import ConfirmDialog from './lib/ConfirmDialog.svelte'
@@ -26,7 +27,8 @@
     { id: 'features', title: t('Common.Features'), component: Features },
     { id: 'cards', title: t('Entity.DomainCard.many'), component: DomainCards },
     { id: 'inventory', title: t('Character.Inventory'), component: Inventory },
-    { id: 'background', title: 'Background', component: Background }
+    { id: 'background', title: 'Background', component: Background },
+    { id: 'advancement', title: t('Character.Advancement'), component: Advancement }
   ])
 
   /** The open section; one remembered from an earlier sheet that no longer exists opens Main. */

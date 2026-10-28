@@ -1600,6 +1600,27 @@ section.questions {
   }
 }
 
+/* the sheet's form controls (and its confirmation's) light in either color scheme, as the rest of
+   the sheet: Pico's light scheme values, which its dark scheme would replace */
+#character.sheet,
+dialog.confirm {
+  --pico-muted-color: #646b79;
+  --pico-form-element-background-color: rgb(251, 251.5, 252.25);
+  --pico-form-element-selected-background-color: #dfe3eb;
+  --pico-form-element-border-color: #cfd5e2;
+  --pico-form-element-color: #23262c;
+  --pico-form-element-placeholder-color: var(--pico-muted-color);
+  --pico-form-element-active-background-color: #fff;
+  --pico-form-element-invalid-border-color: rgb(183.5, 105.5, 106.5);
+  --pico-form-element-invalid-active-border-color: rgb(200.25, 79.25, 72.25);
+  --pico-form-element-valid-border-color: rgb(76, 154.5, 137.5);
+  --pico-form-element-valid-active-border-color: rgb(39, 152.75, 118.75);
+  --pico-switch-background-color: #bfc7d9;
+  --pico-dropdown-background-color: #fff;
+  --pico-dropdown-border-color: #eff1f4;
+  --pico-dropdown-hover-background-color: #eff1f4;
+}
+
 /* the character sheet (sheets/character): as wide as it reads well, centred in a wide window;
    track colors from the source material: HP brick, Stress slate, Hope gold, armor brass */
 #character.sheet {
@@ -1674,6 +1695,25 @@ section.questions {
 
   .markdown > :last-child {
     margin-bottom: 0;
+  }
+}
+
+/* the sheet's tabs on one line, scrolling sideways when they don't fit the width */
+#character.sheet .tab-bar.band-tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  button {
+    flex: 1 0 auto;
+    min-width: max-content;
+    overflow-wrap: normal;
+    white-space: nowrap;
   }
 }
 
