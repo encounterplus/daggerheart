@@ -1988,7 +1988,7 @@ dialog.confirm {
   }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 720px) {
   #character .sheet-header {
     .defense { grid-column: 1 / span 5; }
     .traits { grid-column: 6 / -1; }
@@ -2181,7 +2181,6 @@ dialog.confirm {
     align-items: center;
     gap: 0.5rem;
     min-width: 0;
-    padding-top: 0.6rem;
 
     > .label {
       padding: 0.1rem 0.8rem;
@@ -2202,9 +2201,11 @@ dialog.confirm {
     }
   }
 
+  /* three a row, four rows at most, as the printed sheet's */
   .pips {
     --pip-color: var(--armor-color);
-    max-width: 10rem;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
 
     input[type=checkbox] {
       width: 1.1rem;
@@ -2801,7 +2802,7 @@ dialog.confirm {
   }
 }
 
-/* a phone: three traits a row, the slots under their names, the panel buttons under the heading */
+/* a phone: three traits a row, the panel buttons under the heading */
 @media (max-width: 599px) {
   #character.sheet {
     --panel-gap: 1.4rem;
@@ -2827,15 +2828,23 @@ dialog.confirm {
 
   #character .traits {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .verbs {
+      display: none;
+    }
+  }
+
+  /* the traits first, then Evasion, Armor and the slots in their three columns */
+  #character .sheet-header {
+    .traits { order: 1; }
+    .defense { order: 2; }
   }
 
   #character .defense {
-    flex-wrap: wrap;
-
-    .armor-slots {
-      flex-basis: 100%;
-      padding-top: 0;
-    }
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 0.4rem;
+    justify-items: center;
   }
 
   #character .health .track {

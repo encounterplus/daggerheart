@@ -29,10 +29,10 @@
     </div>
     <div class="shield armor">
       <div class="value">{view.armorScore ?? 0}</div>
-      <div class="label">{t('Character.ArmorScore')}</div>
+      <div class="label">{t('Entity.Armor')}</div>
     </div>
     <div class="armor-slots">
-      <div class="label">Armor Slots <small>{data.armor?.marked ?? 0} / {view.armorScore ?? 0}</small></div>
+      <!-- <div class="label">Armor Slots <small>{data.armor?.marked ?? 0} / {view.armorScore ?? 0}</small></div> -->
       {#if data.armor && view.armorScore}
         <Pips value={data.armor.marked} boxes={view.armorScore} label="Armor Slots" onchange={(count) => set(character, 'data.armor.marked', count)} />
       {:else}
