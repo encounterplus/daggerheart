@@ -1,0 +1,25 @@
+{
+  // a feature as the character carries it: generic-feature plus its tokens and spent usage limit
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        { "placeholder": "Common.Name", "attribute": "name" }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        { "title": "Character.Tokens", "type": "number", "attribute": "tokens" },
+        { "title": "Character.Used", "type": "toggle", "attribute": "used" }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        { "type": "textArea", "attribute": "text", "custom": { "lines": 10 } }
+      ]
+    }
+  ]
+}

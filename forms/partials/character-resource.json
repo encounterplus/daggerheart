@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        },
+        {
+          "title": "Common.Current",
+          "type": "number",
+          "attribute": "current"
+        },
+        {
+          "title": "Common.Maximum",
+          "type": "number",
+          "attribute": "maximum"
+        },
+        {
+          "title": "Character.Die",
+          "attribute": "die"
+        }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "text"
+        }
+      ]
+    }
+  ]
+}

@@ -121,6 +121,21 @@
     "ability": "DomainCardType.Ability",
     "spell": "DomainCardType.Spell",
     "grimoire": "DomainCardType.Grimoire"
+  },
+  "SubclassRank": {
+    "foundation": "SubclassRank.Foundation",
+    "specialization": "SubclassRank.Specialization",
+    "mastery": "SubclassRank.Mastery"
+  },
+  "CompanionUpgrade": {
+    "intelligent": "CompanionUpgrade.Intelligent",
+    "lightInTheDark": "CompanionUpgrade.LightInTheDark",
+    "creatureComfort": "CompanionUpgrade.CreatureComfort",
+    "armored": "CompanionUpgrade.Armored",
+    "vicious": "CompanionUpgrade.Vicious",
+    "resilient": "CompanionUpgrade.Resilient",
+    "bonded": "CompanionUpgrade.Bonded",
+    "aware": "CompanionUpgrade.Aware"
   }
 
 }

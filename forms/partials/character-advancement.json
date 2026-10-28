@@ -1,0 +1,82 @@
+{
+  "sections": [
+    {
+      "title": "Character.Advancements",
+      "type": "group",
+      "fields": [
+        {
+          "type": "form",
+          "title": "Tier.Tier2",
+          "attribute": "data.advancements.tier2",
+          "form": {
+            "title": "Tier.Tier2",
+            "partial": "character-advancements"
+          }
+        },
+        {
+          "type": "form",
+          "title": "Tier.Tier3",
+          "attribute": "data.advancements.tier3",
+          "form": {
+            "title": "Tier.Tier3",
+            "partial": "character-advancements"
+          }
+        },
+        {
+          "type": "form",
+          "title": "Tier.Tier4",
+          "attribute": "data.advancements.tier4",
+          "form": {
+            "title": "Tier.Tier4",
+            "partial": "character-advancements"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Character.Multiclass",
+      "type": "group",
+      "fields": [
+        {
+          "type": "form",
+          "title": "{{data.multiclass.class.name}}",
+          "attribute": "data.multiclass.class",
+          "attributeType": "Class",
+          "custom": {
+            "map": {
+              "features": "data.features"
+            }
+          },
+          "form": {
+            "title": "Entity.Class",
+            "partial": "character-multiclass"
+          }
+        },
+        {
+          "title": "Common.Domain",
+          "type": "picker",
+          "attribute": "data.multiclass.domain",
+          "attributeType": "Domain"
+        },
+        {
+          "type": "form",
+          "title": "{{data.multiclass.subclass.name}}",
+          "attribute": "data.multiclass.subclass",
+          "attributeType": "Subclass",
+          "custom": {
+            "map": {
+              "spellcastTrait": "data.spellcastTrait",
+              "foundations": "data.foundations",
+              "specializations": "data.specializations",
+              "masteries": "data.masteries"
+            }
+          },
+          "form": {
+            "title": "Entity.Subclass",
+            "partial": "character-subclass"
+          }
+        }
+      ]
+    }
+  ]
+}

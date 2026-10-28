@@ -1,47 +1,292 @@
-// Minimal Daggerheart character, for testing schemas, the sheet SDK and client-side rendering.
-// Not the full character sheet: a few core values, an entity copy and two lists.
+// The character: what forms/character.json edits and the sheet writes back.
 //
-// Only what the player or the GM writes is declared. Values the sheet derives belong to
-// views/transforms.
+// Only what the player or the GM writes is declared. Values the sheet derives (tier, Evasion,
+// Armor Score, damage thresholds, the Hope maximum) come from views/transforms/character.json.
+// HP and Stress maximums are written, not derived: advancements and cards raise them, and the
+// combatant bars read data.hp and data.stress (config.json).
 {
   "defs": {
     // A marked track the combatant bars read: data.hp and data.stress in config.json.
     "Track": {
-      "current": { "type": "integer", "min": 0, "max": 12, "play": true },
+      "current": { "type": "integer", "min": 0, "max": 12 },
       "maximum": { "type": "integer", "min": 0, "max": 12 }
+    },
+
+    // Advancement slots marked in one tier, by option (Leveling Up, Step Two). Proficiency and
+    // multiclass take both of a level's advancements and mark two slots.
+    "TierAdvancements": {
+      "traits": { "type": "integer", "min": 0, "max": 3 },
+      "hp": { "type": "integer", "min": 0, "max": 2 },
+      "stress": { "type": "integer", "min": 0, "max": 2 },
+      "experiences": { "type": "integer", "min": 0, "max": 2 },
+      "domainCard": { "type": "integer", "min": 0, "max": 2 },
+      "evasion": { "type": "integer", "min": 0, "max": 2 },
+      "subclass": { "type": "integer", "min": 0, "max": 2 },
+      "proficiency": { "type": "integer", "min": 0, "max": 2 },
+      "multiclass": { "type": "integer", "min": 0, "max": 2 }
+    },
+
+    // A class tracker the schema has no field for: Favor, Prayer Dice, a Rally or Unstoppable
+    // Die, a target Marked for Death or Hexed.
+    "Resource": {
+      "name": "string",
+      "current": { "type": "integer", "min": 0 },
+      "maximum": { "type": "integer", "min": 0 },
+      "die": "dice",
+      "text": "text"
+    },
+
+    // A feature as the character carries it: the library's name and text, plus the tokens placed
+    // on it and whether its usage limit (once per rest, scene…) is spent. The sheet reads the limit
+    // from the text; a rest clears used, tokens are cleared by hand.
+    "TrackedFeature": {
+      "name": "string",
+      "text": "text",
+      "tokens": { "type": "integer", "min": 0 },
+      "used": "boolean"
     },
 
     "InventoryItem": {
       "name": "string",
-      "quantity": { "type": "integer", "min": 0, "default": 1, "play": true },
+      "quantity": { "type": "integer", "min": 0, "default": 1 },
       "text": "text"
     }
   },
 
   "data": {
     "level": { "type": "integer", "min": 1, "max": 10, "default": 1, "label": "Common.Level" },
+    "pronouns": "string",
+    // who plays the character
+    "player": "string",
 
-    // copied from the chosen class by forms/character.json
+    // HERITAGE: copies of the chosen ancestry and community, see custom.map in
+    // forms/character.json. A mixed ancestry renames the copy and swaps one of its two features.
+    "ancestry": {
+      "ref": "Ancestry",
+      "properties": { "features": ["TrackedFeature"] }
+    },
+    "community": {
+      "ref": "Community",
+      "properties": { "features": ["TrackedFeature"] }
+    },
+
+    // CLASS AND SUBCLASS: copies, see custom.map in forms/character.json
     "class": {
       "ref": "Class",
       "properties": {
         "domains": ["Domain"],
-        "evasion": "integer"
+        "evasion": "integer",
+        "hp": "integer",
+        "hopeFeature": "TrackedFeature",
+        "features": ["TrackedFeature"]
+      }
+    },
+    // rank: the last subclass card taken, which unlocks its features and those before it
+    "subclass": {
+      "ref": "Subclass",
+      "properties": {
+        "rank": "SubclassRank",
+        "spellcastTrait": "Trait",
+        "foundations": ["TrackedFeature"],
+        "specializations": ["TrackedFeature"],
+        "masteries": ["TrackedFeature"]
+      }
+    },
+    // the multiclass advancement (level 5 or later): a second class's feature, one of its
+    // domains and a foundation card from one of its subclasses
+    "multiclass": {
+      "properties": {
+        "class": {
+          "ref": "Class",
+          "properties": { "features": ["TrackedFeature"] }
+        },
+        "domain": "Domain",
+        "subclass": {
+          "ref": "Subclass",
+          "properties": {
+            "rank": "SubclassRank",
+            "spellcastTrait": "Trait",
+            "foundations": ["TrackedFeature"],
+            "specializations": ["TrackedFeature"],
+            "masteries": ["TrackedFeature"]
+          }
+        }
+      }
+    },
+    // at most one, kept with the heritage cards outside the loadout
+    "transformation": {
+      "ref": "Transformation",
+      "properties": { "features": ["TrackedFeature"] }
+    },
+
+    // TRAITS: starting values are +2, +1, +1, +0, +0, -1; advancements raise them and mark them
+    // until the next tier achievement (levels 5 and 8) clears the marks
+    "traits": { "map": { "type": "integer", "min": -5, "max": 10 }, "keys": "Trait" },
+    "markedTraits": ["Trait"],
+
+    // 1 at level 1; tier achievements (levels 2, 5, 8) and the advancement raise it
+    "proficiency": { "type": "integer", "min": 1, "max": 6, "default": 1 },
+
+    // permanent bonuses from advancements, cards and features (Stoneskin, a shield), added to
+    // the class's Evasion and the armor's score and thresholds by views/transforms/character.json
+    "bonuses": {
+      "properties": {
+        "evasion": "integer",
+        "armorScore": "integer",
+        "majorThreshold": "integer",
+        "severeThreshold": "integer"
       }
     },
 
-    // starting values are +2, +1, +1, +0, +0, -1; advancements raise them
-    "traits": { "map": { "type": "integer", "min": -5, "max": 10 }, "keys": "Trait" },
-    "evasion": { "type": "integer", "min": 0 },
-
+    // DAMAGE AND HEALTH
     "hp": "Track",
     "stress": "Track",
-    "hope": { "type": "integer", "min": 0, "max": 6, "default": 2, "play": true },
+    // 7 with the companion's Light in the Dark
+    "hope": { "type": "integer", "min": 0, "max": 7, "default": 2 },
+    // Hope slots crossed out by Avoid Death; the last one ends the character's journey
+    "scars": { "type": "integer", "min": 0, "max": 6 },
+
+    "conditions": {
+      "properties": {
+        "hidden": "boolean",
+        "restrained": "boolean",
+        "vulnerable": "boolean"
+      }
+    },
+    // special conditions and temporary tags, as their features name them
+    "otherConditions": ["string"],
 
     // items addressed by id: a sheet edits them one by one
     "experiences": { "type": ["Experience"], "ids": true },
 
+    // EQUIPMENT: one armor at a time (armor can't be carried), its marked slots kept with it
+    "armor": {
+      "ref": "Armor",
+      "properties": {
+        "tier": "Tier",
+        "score": "integer",
+        "thresholds": "Thresholds",
+        "feature": "TrackedFeature",
+        "marked": { "type": "integer", "min": 0, "max": 12 }
+      }
+    },
+    // active and inventory weapons in one list: equipped ones are the Active Weapons, by their
+    // category; the others are the (up to two) Inventory Weapons. Swapping flips equipped.
+    "weapons": [{
+      "ref": "Weapon",
+      "properties": {
+        "equipped": "boolean",
+        "category": "WeaponCategory",
+        "tier": "Tier",
+        "type": "WeaponType",
+        "trait": "Trait",
+        "range": "Range",
+        "damage": "dice",
+        "damageType": "Damage",
+        "burden": "WeaponBurden",
+        "feature": "TrackedFeature"
+      }
+    }],
+
+    // 10 handfuls make a bag, 10 bags a chest
+    "gold": {
+      "properties": {
+        "handfuls": { "type": "integer", "min": 0, "max": 9 },
+        "bags": { "type": "integer", "min": 0, "max": 9 },
+        "chests": { "type": "integer", "min": 0 }
+      }
+    },
     // items addressed by position
-    "inventory": ["InventoryItem"]
+    "inventory": ["InventoryItem"],
+
+    // DOMAIN CARDS: up to five in the loadout, the rest in the vault
+    "domainCards": {
+      "type": [{
+        "ref": "DomainCard",
+        "properties": {
+          "domain": "Domain",
+          "type": "DomainCardType",
+          "level": "integer",
+          "recall": "integer",
+          "descr": "text",
+          "vault": "boolean",
+          "tokens": { "type": "integer", "min": 0 },
+          "used": "boolean"
+        }
+      }],
+      "ids": true
+    },
+
+    // LEVELING UP
+    "advancements": {
+      "properties": {
+        "tier2": "TierAdvancements",
+        "tier3": "TierAdvancements",
+        "tier4": "TierAdvancements"
+      }
+    },
+
+    // CLASS MODULES: filled in only by the classes and subclasses that use them
+
+    // Druid: the Beastform the character is in, empty when not transformed
+    "beastform": {
+      "ref": "Beastform",
+      "properties": {
+        "tier": "Tier",
+        "trait": "Trait",
+        "traitModifier": "integer",
+        "evasionModifier": "integer",
+        "attack": "Attack",
+        "advantages": ["BeastformAdvantage"],
+        "features": ["TrackedFeature"]
+      }
+    },
+    // Ranger (Beastbound)
+    "companion": {
+      "properties": {
+        "name": "string",
+        "evasion": { "type": "integer", "min": 0, "default": 10 },
+        "stress": "Track",
+        "experiences": { "type": ["Experience"], "ids": true },
+        "attack": "Attack",
+        // times each level-up option was chosen
+        "upgrades": { "map": { "type": "integer", "min": 0, "max": 3 }, "keys": "CompanionUpgrade" },
+        "text": "text"
+      }
+    },
+    // Brawler (Martial Artist): the stances the character knows, the active one and Focus
+    "stances": {
+      "properties": {
+        "known": ["TrackedFeature"],
+        "active": "string",
+        "focus": { "type": "integer", "min": 0, "max": 6 }
+      }
+    },
+    // Warlock
+    "patron": {
+      "properties": {
+        "name": "string",
+        "spheres": "string",
+        "favor": { "type": "integer", "min": 0 }
+      }
+    },
+    // Wizard: the Strange Patterns number
+    "strangePattern": { "type": "integer", "min": 1, "max": 12 },
+    // any other class tracker
+    "resources": { "type": ["Resource"], "ids": true },
+
+    // STORY
+    "appearance": {
+      "properties": {
+        "clothes": "string",
+        "eyes": "string",
+        "body": "string",
+        "skin": "string",
+        "attitude": "string"
+      }
+    },
+    // the answers to the class's background questions, and the connections with the other PCs
+    "background": "text",
+    "connections": "text"
   }
 }

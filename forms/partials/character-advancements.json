@@ -1,0 +1,54 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Advancement.Traits",
+          "type": "number",
+          "attribute": "traits"
+        },
+        {
+          "title": "Advancement.Hp",
+          "type": "number",
+          "attribute": "hp"
+        },
+        {
+          "title": "Advancement.Stress",
+          "type": "number",
+          "attribute": "stress"
+        },
+        {
+          "title": "Advancement.Experiences",
+          "type": "number",
+          "attribute": "experiences"
+        },
+        {
+          "title": "Advancement.DomainCard",
+          "type": "number",
+          "attribute": "domainCard"
+        },
+        {
+          "title": "Advancement.Evasion",
+          "type": "number",
+          "attribute": "evasion"
+        },
+        {
+          "title": "Advancement.Subclass",
+          "type": "number",
+          "attribute": "subclass"
+        },
+        {
+          "title": "Advancement.Proficiency",
+          "type": "number",
+          "attribute": "proficiency"
+        },
+        {
+          "title": "Advancement.Multiclass",
+          "type": "number",
+          "attribute": "multiclass"
+        }
+      ]
+    }
+  ]
+}

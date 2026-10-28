@@ -1481,6 +1481,23 @@ html:has(dialog[open]) {
   --primary-color: var(--brass-color);
 }
 
+#character {
+  /* ancestry · community · pronouns · domains under the title */
+  .heritage {
+    font-style: italic;
+    margin-bottom: 0.2rem;
+
+    span:not(:last-child)::after {
+      content: " ·";
+    }
+  }
+
+  /* names in a line, comma separated: traits, experiences, features, the loadout */
+  .list>span:not(:last-child)::after {
+    content: ", ";
+  }
+}
+
 #table {
   --primary-color: var(--sienna-color);
 }

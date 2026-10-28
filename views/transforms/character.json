@@ -1,0 +1,19 @@
+{
+  //computed attributes
+  "attributes": [
+    {
+      // Tier 1 is level 1, Tier 2 levels 2–4, Tier 3 levels 5–7, Tier 4 levels 8–10
+      "data.tier": "#{% if data.level >= 8 %}4{% elif data.level >= 5 %}3{% elif data.level >= 2 %}2{% else %}1{% endif %}",
+      // the class's starting Evasion, permanent bonuses and the Beastform's while in one
+      "data.evasion": "#{{data.class.evasion|default: 0}} + {{data.bonuses.evasion|default: 0}} + {{data.beastform.evasionModifier|default: 0}}",
+      // the armor's base score and permanent bonuses; 0 unarmored
+      "data.armorScore": "#{{data.armor.score|default: 0}} + {{data.bonuses.armorScore|default: 0}}",
+      // the armor's base thresholds plus the level; unarmored, Major is the level and Severe
+      // twice the level
+      "data.thresholds.major": "#{{data.armor.thresholds.major|default: 0}} + {{data.level|default: 1}} + {{data.bonuses.majorThreshold|default: 0}}",
+      "data.thresholds.severe": "#{% if data.armor.thresholds.severe %}{{data.armor.thresholds.severe}}{% else %}{{data.level|default: 1}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.severeThreshold|default: 0}}",
+      // six slots, less the scars, and the companion's Light in the Dark
+      "data.hopeMaximum": "#6 - {{data.scars|default: 0}} + {{data.companion.upgrades.lightInTheDark|default: 0}}"
+    }
+  ]
+}

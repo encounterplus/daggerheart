@@ -1,0 +1,103 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.Trait",
+          "type": "picker",
+          "attribute": "trait",
+          "attributeType": "Trait"
+        },
+        {
+          "title": "Beastform.TraitBonus",
+          "type": "number",
+          "attribute": "traitModifier"
+        },
+        {
+          "title": "Beastform.EvasionBonus",
+          "type": "number",
+          "attribute": "evasionModifier"
+        }
+      ]
+    },
+    {
+      "title": "Common.Attack",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "attack.name"
+        },
+        {
+          "title": "Common.Trait",
+          "type": "picker",
+          "attribute": "attack.trait",
+          "attributeType": "Trait"
+        },
+        {
+          "title": "Common.Range",
+          "type": "picker",
+          "attribute": "attack.range",
+          "attributeType": "Range"
+        },
+        {
+          "title": "Common.Damage",
+          "attribute": "attack.damage"
+        },
+        {
+          "title": "Common.DamageType",
+          "type": "picker",
+          "attribute": "attack.damageType",
+          "attributeType": "Damage"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Beastform.Advantages",
+          "type": "multiPicker",
+          "attribute": "advantages",
+          "attributeType": "BeastformAdvantage"
+        }
+      ]
+    },
+    {
+      "title": "Beastform.BeastformFeatures",
+      "type": "list",
+      "attribute": "features",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Beastform"
+        }
+      ]
+    }
+  ]
+}

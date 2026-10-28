@@ -1,0 +1,2 @@
+{# a feature in a loop, linked to the card it comes from: included with that card's copy #}
+<span>{% if reference %}<a href="{{reference}}">{{feature.name}}</a>{% else %}{{feature.name}}{% endif %}</span>

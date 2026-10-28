@@ -1,0 +1,114 @@
+{
+  "sections": [
+    {
+      "title": "Entity.Beastform",
+      "type": "group",
+      "fields": [
+        {
+          "type": "form",
+          "title": "{{data.beastform.name}}",
+          "attribute": "data.beastform",
+          "attributeType": "Beastform",
+          "custom": {
+            "map": {
+              "tier": "data.tier",
+              "trait": "data.trait",
+              "traitModifier": "data.traitModifier",
+              "evasionModifier": "data.evasionModifier",
+              "attack": "data.attack",
+              "advantages": "data.advantages",
+              "features": "data.features"
+            }
+          },
+          "form": {
+            "title": "Entity.Beastform",
+            "partial": "character-beastform"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Character.Companion",
+      "type": "group",
+      "fields": [
+        {
+          "type": "form",
+          "title": "{{data.companion.name}}",
+          "attribute": "data.companion",
+          "form": {
+            "title": "Character.Companion",
+            "partial": "character-companion"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Character.MartialStances",
+      "type": "group",
+      "fields": [
+        {
+          "title": "Character.ActiveStance",
+          "type": "text",
+          "attribute": "data.stances.active"
+        },
+        {
+          "title": "Character.Focus",
+          "type": "number",
+          "attribute": "data.stances.focus"
+        }
+      ]
+    },
+    {
+      "title": "Character.KnownStances",
+      "type": "list",
+      "attribute": "data.stances.known",
+      "form": {
+        "title": "Character.Stance",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "title": "Character.Patron",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "data.patron.name"
+        },
+        {
+          "title": "Character.Spheres",
+          "type": "text",
+          "attribute": "data.patron.spheres"
+        },
+        {
+          "title": "Character.Favor",
+          "type": "number",
+          "attribute": "data.patron.favor"
+        }
+      ]
+    },
+    {
+      "title": "Character.StrangePatterns",
+      "type": "group",
+      "fields": [
+        {
+          "title": "Character.StrangePatterns",
+          "type": "number",
+          "attribute": "data.strangePattern"
+        }
+      ]
+    },
+    {
+      "title": "Character.Resources",
+      "type": "list",
+      "attribute": "data.resources",
+      "custom": {
+        "itemDetail": "{{ current|default: 0 }}{{ maximum|prefix: ' / ' }}{{ die|prefix: ' ' }}"
+      },
+      "form": {
+        "title": "Character.Resource",
+        "partial": "character-resource"
+      }
+    }
+  ]
+}

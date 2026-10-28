@@ -1,0 +1,33 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "title": "Class.ClassFeatures",
+      "type": "list",
+      "attribute": "features",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Class"
+        }
+      ]
+    }
+  ]
+}
