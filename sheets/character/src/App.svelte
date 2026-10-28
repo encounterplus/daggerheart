@@ -48,9 +48,19 @@
       <Vitals {character} snapshot={$character} />
     </div>
 
-    <div class="tab-bar band-tabs" role="tablist">
+    <!-- the tabs; on a phone a menu that the round button in the corner opens (default.css) -->
+    <button class="sections-button" popovertarget="sections" aria-label="Sections" title="Sections">
+      <!-- the icon: Lucide's layout-grid (ISC) -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect width="7" height="7" x="3" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="3" rx="1" />
+        <rect width="7" height="7" x="14" y="14" rx="1" />
+        <rect width="7" height="7" x="3" y="14" rx="1" />
+      </svg>
+    </button>
+    <div class="tab-bar band-tabs" role="tablist" id="sections" popover="auto">
       {#each sections as { id, title }}
-        <button role="tab" id="tab-{id}" aria-controls={id} aria-selected={open === id} onclick={() => openSection(id)}>{title}</button>
+        <button role="tab" id="tab-{id}" aria-controls={id} aria-selected={open === id} popovertarget="sections" popovertargetaction="hide" onclick={() => openSection(id)}>{title}</button>
       {/each}
     </div>
 

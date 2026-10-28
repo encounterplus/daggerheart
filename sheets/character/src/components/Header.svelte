@@ -19,11 +19,10 @@
 
 <header class="sheet-title">
   {#if portrait}<img class="portrait" alt="portrait" src={portrait}>{/if}
-  <div>
+  <div class="name">
     <hgroup>
       <h1 class="title">{model.name ?? ''}</h1>
       <p class="subtitle">
-        {t('Common.Level')} {view.level ?? 1}
         {#if view.class?.name}<Reference entry={view.class} />{/if}
         {#if view.subclass?.name}(<Reference entry={view.subclass} />){/if}
         {#if view.multiclass?.class?.name} / <Reference entry={view.multiclass.class} />
@@ -36,5 +35,10 @@
       {#if view.pronouns}<span>{view.pronouns}</span>{/if}
       {#if domains.length}<span>{domains.join(' & ')}</span>{/if}
     </p>
+  </div>
+  <!-- the level on a shield in the corner, as the printed sheet's -->
+  <div class="level shield">
+    <div class="value">{view.level ?? 1}</div>
+    <div class="label">{t('Common.Level')}</div>
   </div>
 </header>

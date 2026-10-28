@@ -5,6 +5,7 @@
   import { label, t } from '../lib/labels.svelte'
   import { actionRoll, damageRoll, reset, signed } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
+  import Pips from '../lib/Pips.svelte'
   import Reference from '../lib/Reference.svelte'
   import RemoveButton from '../lib/RemoveButton.svelte'
   import RollLink from '../lib/RollLink.svelte'
@@ -52,6 +53,11 @@
 
 <section class="panel">
   <h3>Active Weapons</h3>
+  <!-- the dice of a damage roll, as on the printed sheet's Active Weapons -->
+  <div class="proficiency">
+    <span class="label">{t('Common.Proficiency')}</span>
+    <Pips value={proficiency} boxes={6} shape="round" label={t('Common.Proficiency')} onchange={(count) => set(character, 'data.proficiency', Math.max(count, 1))} />
+  </div>
   {#if view.beastform?.name}
     <!-- a Beastform can't use weapons: its attack instead -->
     {@const attack = view.beastform.attack ?? {}}
