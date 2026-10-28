@@ -2,6 +2,19 @@
 .gitattributes  export-ignore
 .gitignore      export-ignore
 .github/        export-ignore
-scripts/        export-ignore
+# the sheet SDK (scripts/ep.js, ep-ui.js) ships: sheets load it from the system
+scripts/*.sh    export-ignore
+scripts/*.py    export-ignore
+scripts/*.d.ts  export-ignore
 rules/          export-ignore
 README.md       export-ignore
+
+# Sheet sources: the app serves only each sheet's sheet.json and dist/
+sheets/*/src/               export-ignore
+sheets/*/index.html         export-ignore
+sheets/*/README.md          export-ignore
+sheets/*/package.json       export-ignore
+sheets/*/package-lock.json  export-ignore
+sheets/*/svelte.config.js   export-ignore
+sheets/*/tsconfig.json      export-ignore
+sheets/*/vite.config.ts     export-ignore

@@ -1,0 +1,4 @@
+{
+  // the sheet is its own build project: the app serves only its build output
+  "root": "dist"
+}

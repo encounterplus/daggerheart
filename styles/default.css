@@ -16,6 +16,7 @@
    9. cards: playing card, domain, ancestry, community, subclass, tier picker
   10. card button, card stage & card modal
   11. entity themes & special sections
+  12. character card & sheet
  */
 
 /******** 1. Fonts ********/
@@ -1572,4 +1573,663 @@ section.questions {
   margin: calc(-1 * var(--pico-spacing));
   padding: var(--pico-spacing);
   margin-block: calc(2 * var(--pico-spacing));
+}
+
+
+/******** 12. Character Card & Sheet ********/
+
+/* the GM card's way to the sheet (views/character.html): a round button fixed in the top right corner */
+#character .open-sheet {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--dark-color);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--brass-color);
+  }
+}
+
+/* the character sheet (sheets/character): as wide as it reads well, centred in a wide window;
+   track colors from the source material: HP brick, Stress slate, Hope gold, armor brass */
+#character.sheet {
+  --hp-color: var(--brick-color);
+  --stress-color: var(--slate-color);
+  --hope-color: var(--gold-color);
+  --armor-color: var(--brass-color);
+  --panel-gap: 0.75rem;
+
+  max-width: 60rem;
+  margin-inline: auto;
+
+  /* compact form controls: Pico's are sized for forms, the sheet has many in a row */
+  input:not([type=checkbox], [type=radio]),
+  select,
+  textarea {
+    margin-bottom: 0;
+    padding: 0.3rem 0.5rem;
+    height: auto;
+    font-size: 0.95rem;
+  }
+
+  button {
+    margin-bottom: 0;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  h3 {
+    margin-bottom: 0.5rem;
+    font-family: "Eveleth Clean", var(--pico-font-family);
+    --pico-font-weight: 100;
+    text-transform: uppercase;
+
+    small {
+      font-family: var(--pico-font-family);
+      font-size: 0.8rem;
+      text-transform: none;
+      opacity: 0.75;
+    }
+  }
+
+  h4 {
+    margin: 0.75rem 0 0.4rem;
+    font-size: 1rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .empty,
+  .note {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  .over,
+  .warning {
+    color: var(--brick-color);
+    opacity: 1;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .markdown > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* the header: portrait and name, then the traits and vitals, always in view of the tabs below */
+#character .sheet-header {
+  margin-bottom: var(--panel-gap);
+}
+
+#character .sheet-title {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  .portrait {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--brass-color);
+  }
+
+  hgroup {
+    margin-bottom: 0;
+  }
+
+  /* Svelte leaves no space between the spans, which the GM card's template does */
+  .heritage {
+    margin-bottom: 0;
+
+    span:not(:last-child)::after {
+      content: " · ";
+    }
+  }
+}
+
+/* the six traits in a row; three a row on a phone. A dot marks a trait raised this tier */
+#character .traits {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-bottom: var(--panel-gap);
+
+  .trait {
+    position: relative;
+    padding: 0.4rem 0.2rem;
+    border: 2px solid var(--dark-color);
+    border-radius: 0.5rem;
+    text-align: center;
+    background-color: var(--light-bg-color);
+  }
+
+  .trait.marked::after {
+    content: "";
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background-color: var(--brass-color);
+  }
+
+  .label {
+    font-size: 0.65rem;
+    overflow-wrap: anywhere;
+  }
+
+  .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+#character .vitals {
+  display: grid;
+  gap: var(--panel-gap);
+
+  .defense {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .stat {
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--primary-bg-color);
+    text-align: center;
+
+    .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+  }
+
+  .stat.armor .pips input:checked {
+    --pip-color: var(--armor-color);
+  }
+
+  /* 1 | major | 2 | severe | 3: the marked HP between the thresholds */
+  .thresholds .value {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 1.1rem;
+
+    span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  .tracks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--panel-gap);
+  }
+
+  .tracks .pips {
+    justify-content: flex-start;
+  }
+
+  .track:nth-child(1) .pips input:checked {
+    --pip-color: var(--hp-color);
+  }
+
+  .track:nth-child(2) .pips input:checked {
+    --pip-color: var(--stress-color);
+  }
+
+  .track.hope .pips input:checked {
+    --pip-color: var(--hope-color);
+  }
+}
+
+#character .track .label small {
+  font-weight: 400;
+  text-transform: none;
+}
+
+/* counts across checkboxes (lib/Pips): slots, Hope, Proficiency, gold, advancements; past the
+   maximum faded, a scar's Hope slot crossed out */
+#character .pips {
+  --pip-color: var(--dark-color);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+
+  input[type=checkbox] {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0;
+    border: 2px solid var(--dark-color);
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: none;
+  }
+
+  input[type=checkbox]:checked {
+    border-color: var(--pip-color);
+    background-color: var(--pip-color);
+    background-image: none;
+  }
+
+  input[type=checkbox]:disabled {
+    opacity: 0.25;
+  }
+
+  input[type=checkbox].crossed {
+    opacity: 0.6;
+    background-image: linear-gradient(45deg, transparent 44%, var(--dark-color) 44% 56%, transparent 56%),
+      linear-gradient(-45deg, transparent 44%, var(--dark-color) 44% 56%, transparent 56%);
+  }
+
+  &.round input[type=checkbox] {
+    border-radius: 50%;
+  }
+
+  &.diamond {
+    gap: 0.45rem;
+    padding-inline: 0.2rem;
+
+    input[type=checkbox] {
+      transform: rotate(45deg) scale(0.85);
+      border-radius: 2px;
+    }
+  }
+}
+
+/* a tab's sections: tinted panels one below another */
+#character .panel {
+  margin-bottom: var(--panel-gap);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary-bg-color);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+#character .panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  h3 {
+    margin-bottom: 0;
+  }
+
+  select {
+    width: auto;
+  }
+}
+
+/* a row of inputs: a name that fills it, short numbers, the remove button */
+#character .row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+
+  input[type=text] {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .modifier {
+    flex: 0 0 4.5rem;
+    width: 4.5rem;
+  }
+
+  button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+}
+
+#character .grid-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+#character label.text {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* the active weapons: name, then its rolls */
+#character .weapon {
+  padding-block: 0.4rem;
+  border-bottom: 1px solid var(--sand-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .rolls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+
+    a {
+      font-weight: 700;
+    }
+  }
+}
+
+#character .feature,
+#character .feature .markdown,
+#character .feature .markdown p {
+  display: inline;
+  font-size: 0.9rem;
+}
+
+#character .conditions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    margin: 0;
+  }
+}
+
+#character .tags {
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+
+  button.tag {
+    width: auto;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6rem;
+    cursor: pointer;
+  }
+}
+
+#character .resets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+/* a feature or domain card (lib/FeatureCard), faded once its use is spent */
+#character .feature-card {
+  margin: 0 0 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--sand-color);
+  border-radius: 0.5rem;
+  background-color: var(--light-bg-color);
+  box-shadow: none;
+
+  > header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0 0 0.3rem;
+    padding: 0;
+    border: none;
+    background: none;
+
+    small {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+  }
+
+  .markdown {
+    font-size: 0.92rem;
+  }
+
+  > footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.4rem 0 0;
+    padding: 0.4rem 0 0;
+    border-top: 1px dotted var(--sand-color);
+    background: none;
+  }
+
+  .tokens {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+
+    button {
+      width: 1.8rem;
+      padding: 0.1rem;
+    }
+  }
+
+  label.used {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  &.used {
+    opacity: 0.6;
+  }
+}
+
+#character .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0 0.6rem;
+}
+
+#character .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+
+  button {
+    width: auto;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+#character table.weapons {
+  margin-bottom: 0.5rem;
+
+  td {
+    vertical-align: top;
+    font-size: 0.9rem;
+  }
+
+  td small {
+    display: block;
+    opacity: 0.7;
+  }
+
+  tr.equipped td:first-child {
+    box-shadow: inset 3px 0 var(--brass-color);
+  }
+}
+
+#character .gold {
+  display: grid;
+  gap: 0.4rem;
+
+  .coin {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+
+    .pips {
+      justify-content: flex-start;
+    }
+
+    button {
+      width: 2rem;
+      padding: 0.1rem;
+    }
+  }
+}
+
+#character .item {
+  margin-bottom: 0.4rem;
+}
+
+#character .marked-traits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+#character .advancements .advancement,
+#character .upgrades .upgrade {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+
+  .pips {
+    justify-content: flex-start;
+  }
+}
+
+#character .upgrades .upgrade {
+  grid-template-columns: 1fr auto;
+}
+
+/* removing from a list: a quiet trash icon, which asks first (dialog.confirm) */
+#character button.remove {
+  display: inline-flex;
+  width: auto;
+  margin: 0;
+  padding: 0.2rem;
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: var(--light-brown-color);
+  line-height: 1;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:hover {
+    color: var(--brick-color);
+  }
+}
+
+/* the sheet's confirmation: a small card over the dimmed sheet, its action in brick */
+dialog.confirm {
+  --pico-modal-overlay-backdrop-filter: none;
+
+  article {
+    max-width: 24rem;
+    padding: 1.25rem 1.5rem 1rem;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+
+    button {
+      width: auto;
+      margin: 0;
+    }
+  }
+
+  .danger {
+    --pico-background-color: var(--brick-color);
+    --pico-border-color: var(--brick-color);
+  }
+}
+
+/* a phone: three traits a row, the defense two a row, the tracks one below another */
+@media (max-width: 575px) {
+  #character .traits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #character .vitals {
+    .defense {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tracks {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  #character .resets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

@@ -45,6 +45,11 @@
     },
     "Character": {
       "role": "friendly",
+      // opens as the GM card (views/character.html), whose "Open sheet" button opens sheets/character
+      "view": {
+        "renderer": "html",
+        "sheet": "character"
+      },
       "collection": {
         "detail": "{{data.class.name|default: 'Custom'}}"
       }

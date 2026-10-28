@@ -1,0 +1,16 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "types": ["vite/client"],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  // the SDK's types live beside it in the system; the model's are the app's export in cache/
+  "include": ["src/**/*.ts", "src/**/*.svelte", "../../scripts/ep.d.ts"]
+}

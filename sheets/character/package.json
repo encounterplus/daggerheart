@@ -1,0 +1,21 @@
+{
+  "name": "daggerheart-character-sheet",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The Daggerheart character sheet: Svelte over the Encounter+ sheet SDK (scripts/ep.js).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tsconfig/svelte": "^5.0.8",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.7.7",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.5"
+  }
+}

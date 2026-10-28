@@ -14,6 +14,34 @@
       "data.thresholds.severe": "#{% if data.armor.thresholds.severe %}{{data.armor.thresholds.severe}}{% else %}{{data.level|default: 1}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.severeThreshold|default: 0}}",
       // six slots, less the scars, and the companion's Light in the Dark
       "data.hopeMaximum": "#6 - {{data.scars|default: 0}} + {{data.companion.upgrades.lightInTheDark|default: 0}}"
+    },
+    // DISPLAY: what a static sheet (sheets/character) can't render itself — Markdown, with its
+    // dice links. Templates use the filters directly.
+    {
+      "descrHTML": "{{descr|md}}",
+      "notesHTML": "{{notes|md}}",
+      "data.backgroundHTML": "{{data.background|md}}",
+      "data.connectionsHTML": "{{data.connections|md}}",
+      "data.class.hopeFeature.textHTML": "{{data.class.hopeFeature.text|md}}",
+      "data.armor.feature.textHTML": "{{data.armor.feature.text|md}}",
+      "data.class.features": { "attribute": "data.class.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.subclass.foundations": { "attribute": "data.subclass.foundations", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.subclass.specializations": { "attribute": "data.subclass.specializations", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.subclass.masteries": { "attribute": "data.subclass.masteries", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.multiclass.class.features": { "attribute": "data.multiclass.class.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.multiclass.subclass.foundations": { "attribute": "data.multiclass.subclass.foundations", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.multiclass.subclass.specializations": { "attribute": "data.multiclass.subclass.specializations", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.multiclass.subclass.masteries": { "attribute": "data.multiclass.subclass.masteries", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.ancestry.features": { "attribute": "data.ancestry.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.community.features": { "attribute": "data.community.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.transformation.features": { "attribute": "data.transformation.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.beastform.features": { "attribute": "data.beastform.features", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.stances.known": { "attribute": "data.stances.known", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.weapons": { "attribute": "data.weapons", "map": { "featureHTML": "{{self.feature.text|md}}" } },
+      "data.domainCards": { "attribute": "data.domainCards", "map": { "descrHTML": "{{self.descr|md}}" } },
+      "data.inventory": { "attribute": "data.inventory", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.resources": { "attribute": "data.resources", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.companion.textHTML": "{{data.companion.text|md}}"
     }
   ]
 }
