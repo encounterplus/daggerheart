@@ -1,0 +1,17 @@
+{
+  "data": {
+    "tier": "Tier",
+    "type": "AdversaryType",
+    "typeDetail": "text",
+    "motivesAndTactics": "string",
+    "difficulty": { "type": "integer", "min": 0 },
+    "thresholds": "Thresholds",
+    // the combatant bars read these as maximums
+    "hp": { "type": "integer", "min": 0 },
+    "stress": { "type": "integer", "min": 0 },
+    "attackModifier": "integer",
+    "attack": "Attack",
+    "experience": ["Experience"],
+    "features": ["AdversaryFeature"]
+  }
+}

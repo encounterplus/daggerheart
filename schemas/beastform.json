@@ -1,0 +1,12 @@
+{
+  "data": {
+    "tier": "Tier",
+    "examples": "string",
+    "trait": "Trait",
+    "traitModifier": "integer",
+    "evasionModifier": "integer",
+    "attack": "Attack",
+    "advantages": ["BeastformAdvantage"],
+    "features": ["Feature"]
+  }
+}

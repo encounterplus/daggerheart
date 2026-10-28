@@ -1,0 +1,8 @@
+{
+  "data": {
+    "domain": "Domain",
+    "type": "DomainCardType",
+    "level": { "type": "integer", "min": 1, "max": 10 },
+    "recall": { "type": "integer", "min": 0, "description": "Stress to mark to swap the card into the loadout" }
+  }
+}

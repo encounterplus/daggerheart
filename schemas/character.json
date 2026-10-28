@@ -1,0 +1,47 @@
+// Minimal Daggerheart character, for testing schemas, the sheet SDK and client-side rendering.
+// Not the full character sheet: a few core values, an entity copy and two lists.
+//
+// Only what the player or the GM writes is declared. Values the sheet derives belong to
+// views/transforms.
+{
+  "defs": {
+    // A marked track the combatant bars read: data.hp and data.stress in config.json.
+    "Track": {
+      "current": { "type": "integer", "min": 0, "max": 12, "play": true },
+      "maximum": { "type": "integer", "min": 0, "max": 12 }
+    },
+
+    "InventoryItem": {
+      "name": "string",
+      "quantity": { "type": "integer", "min": 0, "default": 1, "play": true },
+      "text": "text"
+    }
+  },
+
+  "data": {
+    "level": { "type": "integer", "min": 1, "max": 10, "default": 1, "label": "Common.Level" },
+
+    // copied from the chosen class by forms/character.json
+    "class": {
+      "ref": "Class",
+      "properties": {
+        "domains": ["Domain"],
+        "evasion": "integer"
+      }
+    },
+
+    // starting values are +2, +1, +1, +0, +0, -1; advancements raise them
+    "traits": { "map": { "type": "integer", "min": -5, "max": 10 }, "keys": "Trait" },
+    "evasion": { "type": "integer", "min": 0 },
+
+    "hp": "Track",
+    "stress": "Track",
+    "hope": { "type": "integer", "min": 0, "max": 6, "default": 2, "play": true },
+
+    // items addressed by id: a sheet edits them one by one
+    "experiences": { "type": ["Experience"], "ids": true },
+
+    // items addressed by position
+    "inventory": ["InventoryItem"]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "data": {
+    "tier": "Tier",
+    "thresholds": "Thresholds",
+    "score": { "type": "integer", "min": 0, "description": "Base armor score" },
+    "feature": "Feature"
+  }
+}

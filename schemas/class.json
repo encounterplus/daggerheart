@@ -1,0 +1,13 @@
+{
+  "data": {
+    "descr": "text",
+    "domains": ["Domain"],
+    "evasion": { "type": "integer", "min": 0 },
+    "hp": { "type": "integer", "min": 0 },
+    "items": "string",
+    "hopeFeature": "Feature",
+    "features": ["Feature"],
+    "background": "text",
+    "connections": "text"
+  }
+}

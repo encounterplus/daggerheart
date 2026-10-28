@@ -1,0 +1,13 @@
+{
+  "data": {
+    "category": "WeaponCategory",
+    "tier": "Tier",
+    "type": "WeaponType",
+    "trait": "Trait",
+    "range": "Range",
+    "damage": "dice",
+    "damageType": "Damage",
+    "burden": "WeaponBurden",
+    "feature": "Feature"
+  }
+}

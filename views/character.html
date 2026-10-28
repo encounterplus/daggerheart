@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<main id="character" class="container-fluid">
+
+  <section class="stat-block">
+    {% if token %}
+    <a class="token" href="{{token|resolvePath}}" target="_blank"><img src="{{token|resolvePath}}" width="80" height="80" /></a>
+    {% endif %}
+
+    <hgroup>
+      <h1 class="title">{{name}}</h1>
+      <p class="subtitle">{{'Common.Level'|l}} {{data.level|default: 1}}{% if data.class.name %} {{data.class.name}}{% endif %}{% if data.class.domains %} ({% for domain in data.class.domains %}{{domain|map: 'Domain'}}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}</p>
+    </hgroup>
+
+    <div class="stats">
+      {% markdown -%}
+**{{'Common.Evasion'|l}}:** {{data.evasion|default: '-'}} | **{{'Common.HP'|l}}:** {{data.hp.current|default: 0}} / {{data.hp.maximum|default: 0}} | **{{'Common.Stress'|l}}:** {{data.stress.current|default: 0}} / {{data.stress.maximum|default: 0}} | **{{'Common.Hope'|l}}:** {{data.hope|default: 2}}
+      {% endmarkdown %}
+      <hr>
+      {% markdown -%}
+**{{'Trait.Agility'|l}}** {{data.traits.agility|default: 0|signed}} | **{{'Trait.Strength'|l}}** {{data.traits.strength|default: 0|signed}} | **{{'Trait.Finesse'|l}}** {{data.traits.finesse|default: 0|signed}} | **{{'Trait.Instinct'|l}}** {{data.traits.instinct|default: 0|signed}} | **{{'Trait.Presence'|l}}** {{data.traits.presence|default: 0|signed}} | **{{'Trait.Knowledge'|l}}** {{data.traits.knowledge|default: 0|signed}}
+      {% endmarkdown %}
+      {% if data.experiences %}
+      <hr>
+      <strong>{{'Character.Experiences'|l}}:</strong> {% for experience in data.experiences %}{{experience.name}} {{experience.modifier|default: 0|signed}}{% if not forloop.last %}, {% endif %}{% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  {% if data.inventory %}
+  <h3>{{'Character.Inventory'|l}}</h3>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr><th>{{'Common.Name'|l}}</th><th>{{'Common.Quantity'|l}}</th><th>{{'Common.Description'|l}}</th></tr>
+      </thead>
+      <tbody>
+        {% for item in data.inventory %}
+        <tr><td>{{item.name}}</td><td>{{item.quantity|default: 1}}</td><td>{{item.text|md}}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  {% if descr %}
+  <h3>{{'Common.Description'|l}}</h3>
+  {{descr|md}}
+  {% endif %}
+
+  {% if image %}
+  <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+    <a href="{{image|resolvePath}}" target="_blank"><img style="height: 100%; max-height: 512px;" src="{{image|resolvePath}}" /></a>
+  </div>
+  {% endif %}
+
+  {% include "footer.html" %}
+</main>
+{% endblock %}

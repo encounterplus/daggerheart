@@ -1,0 +1,144 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Level",
+          "type": "number",
+          "attribute": "data.level"
+        },
+        {
+          "title": "Common.Evasion",
+          "type": "number",
+          "attribute": "data.evasion"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Character.Class",
+      "fields": [
+        {
+          "type": "form",
+          "title": "{{ data.class.name }}",
+          "attribute": "data.class",
+          "attributeType": "Class",
+          "custom": {
+            "map": {
+              "domains": "data.domains",
+              "evasion": "data.evasion"
+            }
+          },
+          "form": {
+            "title": "Common.Class",
+            "sections": [
+              {
+                "type": "group",
+                "fields": [
+                  { "placeholder": "Common.Name", "attribute": "name" },
+                  { "title": "Common.Class", "type": "reference", "attribute": "reference", "attributeType": "Class" }
+                ]
+              },
+              {
+                "type": "group",
+                "fields": [
+                  { "title": "Class.Domains", "type": "multiPicker", "attribute": "domains", "attributeType": "Domain" },
+                  { "title": "Class.StartingEvasion", "type": "number", "attribute": "evasion" }
+                ]
+              }
+            ]
+          }
+        },
+      ]
+    },
+    {
+      "title": "Character.Traits",
+      "type": "group",
+      "fields": [
+        { "title": "Trait.Agility", "type": "number", "attribute": "data.traits.agility" },
+        { "title": "Trait.Strength", "type": "number", "attribute": "data.traits.strength" },
+        { "title": "Trait.Finesse", "type": "number", "attribute": "data.traits.finesse" },
+        { "title": "Trait.Instinct", "type": "number", "attribute": "data.traits.instinct" },
+        { "title": "Trait.Presence", "type": "number", "attribute": "data.traits.presence" },
+        { "title": "Trait.Knowledge", "type": "number", "attribute": "data.traits.knowledge" }
+      ]
+    },
+    {
+      "title": "Common.HitPoints",
+      "type": "group",
+      "fields": [
+        { "title": "Common.Current", "type": "number", "attribute": "data.hp.current" },
+        { "title": "Common.Maximum", "type": "number", "attribute": "data.hp.maximum" }
+      ]
+    },
+    {
+      "title": "Common.Stress",
+      "type": "group",
+      "fields": [
+        { "title": "Common.Current", "type": "number", "attribute": "data.stress.current" },
+        { "title": "Common.Maximum", "type": "number", "attribute": "data.stress.maximum" }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        { "title": "Common.Hope", "type": "number", "attribute": "data.hope" }
+      ]
+    },
+    {
+      "title": "Character.Experiences",
+      "type": "list",
+      "attribute": "data.experiences",
+      "custom": {
+        "itemDetail": "{{ modifier|signed }}"
+      },
+      "form": {
+        "title": "Common.Experience",
+        "sections": [
+          {
+            "type": "group",
+            "fields": [
+              { "placeholder": "Common.Name", "attribute": "name" },
+              { "title": "Common.Modifier", "type": "number", "attribute": "modifier" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Character.Inventory",
+      "type": "list",
+      "attribute": "data.inventory",
+      "custom": {
+        "itemDetail": "{{ quantity|default: 1 }}×"
+      },
+      "form": {
+        "title": "Common.Item",
+        "sections": [
+          {
+            "type": "group",
+            "fields": [
+              { "placeholder": "Common.Name", "attribute": "name" },
+              { "title": "Common.Quantity", "type": "number", "attribute": "quantity" }
+            ]
+          },
+          {
+            "title": "Common.Description",
+            "type": "group",
+            "fields": [
+              { "type": "textArea", "attribute": "text" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        { "type": "textArea", "attribute": "descr" }
+      ]
+    }
+  ]
+}

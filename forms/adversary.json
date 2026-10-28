@@ -62,6 +62,7 @@
       "fields": [
         {
           "title": "Adversary.Difficulty",
+          "type": "number",
           "attribute": "data.difficulty"
         },
         {

@@ -1,0 +1,11 @@
+{
+  "data": {
+    // the name of the class it belongs to, as the class picker stores it
+    "class": "string",
+    "spellcastTrait": "Trait",
+    "foundations": ["Feature"],
+    "specializations": ["Feature"],
+    "masteries": ["Feature"],
+    "extras": "text"
+  }
+}
