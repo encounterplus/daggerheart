@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
+  import { set } from '../lib/change'
   import { t } from '../lib/labels.svelte'
   import { actionRoll, signed, traits } from '../lib/rules'
   import RollLink from '../lib/RollLink.svelte'
 
-  let { snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
+  let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
 
   const data = $derived(snapshot.model.data)
   const marked = $derived(new Set(data.markedTraits ?? []))
@@ -23,13 +24,21 @@
   function key(trait: string) {
     return `Trait.${trait[0].toUpperCase()}${trait.slice(1)}`
   }
+
+  /** Marks a trait raised this tier, or clears it; the same list as Advancement's checkboxes. */
+  function toggleMarked(trait: string) {
+    const current = new Set(marked)
+    if (!current.delete(trait as any)) current.add(trait as any)
+    set(character, 'data.markedTraits', traits.filter((entry) => current.has(entry)))
+  }
 </script>
 
-<!-- each trait rolls the Duality Dice with its modifier; the circle by its name marks a trait raised this tier -->
+<!-- each trait rolls the Duality Dice with its modifier; the circle by its name marks a trait raised
+     this tier, toggled by clicking the name -->
 <div class="traits">
   {#each traits as trait}
     <div class="trait shield" class:marked={marked.has(trait)}>
-      <div class="label">{t(key(trait))}</div>
+      <button type="button" class="label" aria-pressed={marked.has(trait)} onclick={() => toggleMarked(trait)}>{t(key(trait))}</button>
       <div class="value">
         <RollLink formula={actionRoll(data.traits?.[trait])} label={t(key(trait))}>{signed(data.traits?.[trait])}</RollLink>
       </div>

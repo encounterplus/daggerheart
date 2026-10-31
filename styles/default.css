@@ -1642,9 +1642,8 @@ dialog.confirm {
   --paper-color: #F6F4EF;
   --panel-gap: 1.6rem;
 
-  /* the ribbon heading's and the shield's outlines, for clip-path */
+  /* the ribbon heading's outline, for clip-path */
   --ribbon-shape: polygon(0.8rem 0, calc(100% - 0.8rem) 0, 100% 50%, calc(100% - 0.8rem) 100%, 0.8rem 100%, 0 50%);
-  --shield-shape: polygon(0 9%, 9% 0, 91% 0, 100% 9%, 100% 58%, 86% 79%, 50% 100%, 14% 79%, 0 58%);
 
   /* light text on the dark page; the panels set their own */
   --pico-color: var(--light-color);
@@ -2053,13 +2052,22 @@ dialog.confirm {
   .level {
     flex: none;
 
+    /* the name across the lower part, as Evasion's and Armor's */
     .value {
       width: 3.6rem;
+      aspect-ratio: 191 / 230;
+      padding-bottom: 1rem;
+      background-image: url("../images/scores/score-level.svg");
+    }
+
+    .label {
+      margin-top: -1.6rem;
     }
   }
 }
 
-/* a number on a shield, its name on a dark tab: the traits, Evasion, Armor and the level */
+/* a number on a shield, its name on a dark tab: the traits, Evasion, Armor and the level; each shield
+   is its own drawing (images/scores), outlines and colors in the art */
 #character .shield {
   display: flex;
   flex-direction: column;
@@ -2067,35 +2075,15 @@ dialog.confirm {
   text-align: center;
 
   .value {
-    position: relative;
-    isolation: isolate;
     display: grid;
     place-items: center;
     width: 4.4rem;
-    aspect-ratio: 10 / 11;
     padding-bottom: 0.5rem;
     color: var(--dark-color);
+    background: center / contain no-repeat;
     font-size: 1.6rem;
     font-weight: 800;
     line-height: 1;
-
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      clip-path: var(--shield-shape);
-    }
-
-    &::before {
-      inset: 0;
-      background-color: var(--trim-color);
-    }
-
-    &::after {
-      inset: 3px;
-      background-color: var(--light-bg-color);
-    }
 
     a {
       --pico-color: var(--dark-color);
@@ -2127,9 +2115,19 @@ dialog.confirm {
   gap: 1rem 0.4rem;
 
   /* the circle sits on the tab's right end, as the printed sheet's, so the name keeps the width */
+  /* a button that marks the trait: the tab's look, none of Pico's */
   .trait .label {
     order: -1;
+    min-width: 5rem;
     margin: 0 0 -0.45rem;
+    box-shadow: none;
+    line-height: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--trim-color);
+      outline-offset: 2px;
+    }
     padding-inline: 0.5rem;
     font-size: 0.62rem;
     letter-spacing: 0.02em;
@@ -2153,7 +2151,9 @@ dialog.confirm {
   }
 
   .trait .value {
+    aspect-ratio: 186 / 196;
     padding-top: 0.35rem;
+    background-image: url("../images/scores/score-trait.svg");
   }
 
   .verbs {
@@ -2174,6 +2174,37 @@ dialog.confirm {
   align-items: flex-start;
   justify-content: center;
   gap: 1rem;
+
+  /* Evasion and Armor in the same box, so their names sit on one line across the lower part, as the
+     printed sheet's */
+  .shield .value {
+    width: 5.8rem;
+    aspect-ratio: 210 / 231;
+    padding-bottom: 1rem;
+    background-image: url("../images/scores/score-evasion.svg");
+    font-size: 2rem;
+  }
+
+  .shield .label {
+    min-width: 6rem;
+    margin-top: -2rem;
+  }
+
+  .shield.armor .value {
+    background-image: url("../images/scores/score-armor.svg");
+  }
+
+  /* the thin rule between Evasion and Armor */
+  .shield.armor {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 25%;
+      bottom: 25%;
+    }
+  }
 
   .armor-slots {
     display: flex;
@@ -2201,18 +2232,21 @@ dialog.confirm {
     }
   }
 
-  /* three a row, four rows at most, as the printed sheet's */
+  /* three a row, four rows at most, as the printed sheet's; small drawn shields, marked filled */
   .pips {
-    --pip-color: var(--armor-color);
     display: grid;
     grid-template-columns: repeat(3, auto);
 
     input[type=checkbox] {
       width: 1.1rem;
-      height: 1.3rem;
-      border-color: var(--trim-color);
-      border-radius: 0.2rem 0.2rem 0.6rem 0.6rem / 0.2rem 0.2rem 0.8rem 0.8rem;
-      background-color: transparent;
+      height: 1.25rem;
+      border: none;
+      border-radius: 0;
+      background: url("../images/shield.svg") center / contain no-repeat transparent;
+    }
+
+    input[type=checkbox]:checked {
+      background: url("../images/shield-filled.svg") center / contain no-repeat transparent;
     }
   }
 }
@@ -2834,10 +2868,11 @@ dialog.confirm {
     }
   }
 
-  /* the traits first, then Evasion, Armor and the slots in their three columns */
+  /* the traits first, then Evasion, Armor and the slots in their three columns; room under them for
+     the Damage & Health ribbon, which stands above its panel */
   #character .sheet-header {
     .traits { order: 1; }
-    .defense { order: 2; }
+    .defense { order: 2; margin-bottom: 1rem; }
   }
 
   #character .defense {
