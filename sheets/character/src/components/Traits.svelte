@@ -34,9 +34,10 @@
 </script>
 
 <!-- each trait rolls the Duality Dice with its modifier; the circle by its name marks a trait raised
-     this tier, toggled by clicking the name -->
+     this tier, toggled by clicking the name; a dashed rule between two traits (default.css) -->
 <div class="traits">
-  {#each traits as trait}
+  {#each traits as trait, index}
+    {#if index}<div class="divider" aria-hidden="true"></div>{/if}
     <div class="trait shield" class:marked={marked.has(trait)}>
       <button type="button" class="label" aria-pressed={marked.has(trait)} onclick={() => toggleMarked(trait)}>{t(key(trait))}</button>
       <div class="value">

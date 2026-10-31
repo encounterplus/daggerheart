@@ -1972,12 +1972,14 @@ dialog.confirm {
     margin: 0;
   }
 
-  /* the traits come before the defense in the page, after it on the sheet */
+  /* the traits first, then Evasion, Armor and the slots; room under them for the Damage & Health
+     ribbon, which stands above its panel */
   .sheet-title { order: 0; }
-  .defense { order: 1; grid-column: 1 / -1; }
-  .traits { order: 2; }
-  .health { order: 3; grid-column: 1 / -1; }
-  .hope { order: 4; grid-column: 1 / -1; }
+  .traits { order: 1; }
+  .defense { order: 2; grid-column: 1 / -1; margin-bottom: 1rem; }
+  .defense-divider { order: 3; display: none; }
+  .health { order: 4; grid-column: 1 / -1; }
+  .hope { order: 5; grid-column: 1 / -1; }
 }
 
 @media (min-width: 700px) {
@@ -1987,10 +1989,26 @@ dialog.confirm {
   }
 }
 
+/* the defense and the traits in a row, as the printed sheet: the defense first, a strong rule in its
+   own column between them, the column gap either side of it */
 @media (min-width: 720px) {
   #character .sheet-header {
-    .defense { grid-column: 1 / span 5; }
-    .traits { grid-column: 6 / -1; }
+    grid-template-columns: repeat(5, minmax(0, 1fr)) auto repeat(10, minmax(0, 1fr));
+
+    .defense { order: 1; grid-column: 1 / span 5; margin-bottom: 0; }
+    .defense-divider { order: 2; }
+    .traits { order: 3; grid-column: 7 / -1; }
+    .health { grid-column: 1 / span 8; }
+    .hope { grid-column: 9 / -1; }
+
+    .defense-divider {
+      display: block;
+      grid-column: 6;
+      width: 2px;
+      margin-block: 0.25rem;
+      margin-left: auto;
+      background-color: color-mix(in srgb, var(--trim-color) 70%, transparent);
+    }
   }
 }
 
@@ -2111,8 +2129,15 @@ dialog.confirm {
    the circle by the name filled once a trait is raised this tier */
 #character .traits {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) repeat(5, auto minmax(0, 1fr));
   gap: 1rem 0.4rem;
+
+  /* a dashed rule in its own column between two traits, from below the tabs to the uses' end */
+  .divider {
+    width: 1px;
+    margin-top: 1.5rem;
+    background-image: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--light-color) 35%, transparent) 0 3px, transparent 3px 7px);
+  }
 
   /* the circle sits on the tab's right end, as the printed sheet's, so the name keeps the width */
   /* a button that marks the trait: the tab's look, none of Pico's */
@@ -2194,16 +2219,13 @@ dialog.confirm {
     background-image: url("../images/scores/score-armor.svg");
   }
 
-  /* the thin rule between Evasion and Armor */
-  .shield.armor {
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 25%;
-      bottom: 25%;
-    }
+  /* the light rule between Evasion and Armor, across the shields' middle */
+  .divider {
+    align-self: stretch;
+    flex: none;
+    width: 1px;
+    margin-block: 1.5rem 2.25rem;
+    background-color: color-mix(in srgb, var(--light-color) 30%, transparent);
   }
 
   .armor-slots {
@@ -2861,23 +2883,22 @@ dialog.confirm {
   }
 
   #character .traits {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) repeat(2, auto minmax(0, 1fr));
+
+    /* none at the end of the first row */
+    .divider:nth-child(6) {
+      display: none;
+    }
 
     .verbs {
       display: none;
     }
   }
 
-  /* the traits first, then Evasion, Armor and the slots in their three columns; room under them for
-     the Damage & Health ribbon, which stands above its panel */
-  #character .sheet-header {
-    .traits { order: 1; }
-    .defense { order: 2; margin-bottom: 1rem; }
-  }
-
+  /* Evasion, Armor and the slots in their three columns */
   #character .defense {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) minmax(0, 1fr);
     gap: 1rem 0.4rem;
     justify-items: center;
   }

@@ -27,6 +27,7 @@
       <div class="value">{view.evasion ?? ''}</div>
       <div class="label">{t('Common.Evasion')}</div>
     </div>
+    <div class="divider" aria-hidden="true"></div>
     <div class="shield armor">
       <div class="value">{view.armorScore ?? 0}</div>
       <div class="label">{t('Entity.Armor')}</div>
@@ -40,6 +41,8 @@
       {/if}
     </div>
   </div>
+  <!-- the rule between the defense and the traits, when they share a row (default.css) -->
+  <div class="defense-divider" aria-hidden="true"></div>
 
   <section class="box health">
     <h3>{t('Character.DamageAndHealth')}</h3>
