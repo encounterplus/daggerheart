@@ -1982,10 +1982,11 @@ dialog.confirm {
   .hope { order: 5; grid-column: 1 / -1; }
 }
 
-@media (min-width: 700px) {
+/* Damage & Health and Hope side by side, except on a phone */
+@media (min-width: 600px) {
   #character .sheet-header {
-    .health { grid-column: 1 / span 7; }
-    .hope { grid-column: 8 / -1; }
+    .health { grid-column: 1 / span 6; }
+    .hope { grid-column: 7 / -1; }
   }
 }
 
