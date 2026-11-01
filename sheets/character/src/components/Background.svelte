@@ -13,7 +13,7 @@
 </script>
 
 <section class="panel">
-  <h3>{t('Character.Story')}</h3>
+  <h3>{t('Character.Description')}</h3>
   <div class="grid-fields">
     <label>{t('Character.Pronouns')} <input type="text" use:field={{ store: character, path: 'data.pronouns' }}></label>
     <label>{t('Character.Player')} <input type="text" use:field={{ store: character, path: 'data.player' }}></label>
@@ -21,13 +21,20 @@
       <label>{t(`Appearance.${key[0].toUpperCase()}${key.slice(1)}`)} <input type="text" use:field={{ store: character, path: `data.appearance.${key}` }}></label>
     {/each}
   </div>
-  <label class="text">{t('Class.BackgroundQuestions')}
-    <textarea rows="6" use:field={{ store: character, path: 'data.background' }}></textarea>
-  </label>
-  <label class="text">{t('Class.Connections')}
-    <textarea rows="4" use:field={{ store: character, path: 'data.connections' }}></textarea>
-  </label>
 </section>
+
+<div class="background-columns">
+  <section class="panel">
+    <h3>{t('Class.BackgroundQuestions')}</h3>
+    <p class="hint">{t('Class.BackgroundQuestionsHint')}</p>
+    <textarea rows="8" aria-label={t('Class.BackgroundQuestions')} use:field={{ store: character, path: 'data.background' }}></textarea>
+  </section>
+  <section class="panel">
+    <h3>{t('Class.Connections')}</h3>
+    <p class="hint">{t('Class.ConnectionsHint')}</p>
+    <textarea rows="8" aria-label={t('Class.Connections')} use:field={{ store: character, path: 'data.connections' }}></textarea>
+  </section>
+</div>
 
 {#if view.descrHTML || view.notesHTML}
   <section class="panel">
