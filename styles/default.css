@@ -1638,13 +1638,38 @@ dialog.confirm {
 
   --violet-color: #3E3189;
   --ink-color: #17142A;
-  --trim-color: var(--gold-color);
+  /* --trim-color: var(--gold-color); */
   --paper-color: #F6F4EF;
   --panel-gap: 1.6rem;
 
-  /* the ribbon heading's outline, for clip-path */
+  /* the Hope band's outline, for clip-path */
   --ribbon-shape: polygon(0.8rem 0, calc(100% - 0.8rem) 0, 100% 50%, calc(100% - 0.8rem) 100%, 0.8rem 100%, 0 50%);
   --ribbon-min-width: 20rem;
+
+  /* the panel heading, from the printed sheet's header art: the whole outline (centre plate, end
+     caps, the band's edge), the band's edge, and the band; in em, so they scale with the heading, the plate 47% wide */
+  --ribbon-frame: polygon(
+    0 0.94em, 0.4em 0.54em, 1.12em 0.54em, 1.52em 0.14em,
+    calc(26.3% + 0.25em) 0.14em, calc(26.3% + 0.39em) 0,
+    calc(73.7% - 0.39em) 0, calc(73.7% - 0.25em) 0.14em,
+    calc(100% - 1.52em) 0.14em, calc(100% - 1.12em) 0.54em, calc(100% - 0.4em) 0.54em,
+    100% 0.94em, 100% calc(100% - 0.94em),
+    calc(100% - 0.4em) calc(100% - 0.54em), calc(100% - 1.12em) calc(100% - 0.54em),
+    calc(100% - 1.52em) calc(100% - 0.14em),
+    calc(73.7% - 0.25em) calc(100% - 0.14em), calc(73.7% - 0.39em) 100%,
+    calc(26.3% + 0.39em) 100%, calc(26.3% + 0.25em) calc(100% - 0.14em),
+    1.52em calc(100% - 0.14em), 1.12em calc(100% - 0.54em), 0.4em calc(100% - 0.54em),
+    0 calc(100% - 0.94em));
+  --ribbon-edge: polygon(
+    0.56em 50%, 1.52em 0.14em, calc(100% - 1.52em) 0.14em,
+    calc(100% - 0.56em) 50%, calc(100% - 1.52em) calc(100% - 0.14em), 1.52em calc(100% - 0.14em));
+  --ribbon-band: polygon(
+    0.74em 50%, 1.58em 0.26em, calc(100% - 1.58em) 0.26em,
+    calc(100% - 0.74em) 50%, calc(100% - 1.58em) calc(100% - 0.26em), 1.58em calc(100% - 0.26em));
+  --ribbon-plate-color: #E48B3C;
+  --ribbon-edge-color: #F3C267;
+  --ribbon-band-color: var(--ink-color);
+  --ribbon-font-size: 1rem;
 
   /* light text on the dark page; the panels set their own */
   --pico-color: var(--light-color);
@@ -1652,6 +1677,8 @@ dialog.confirm {
   --pico-primary-underline: color-mix(in srgb, var(--gold-color) 50%, transparent);
   --pico-primary-hover: var(--light-color);
   --pico-primary-hover-underline: var(--light-color);
+
+  --trim-color: var(--ribbon-edge-color);
 
   max-width: 68rem;
   margin-inline: auto;
@@ -1766,7 +1793,8 @@ dialog.confirm {
   }
 }
 
-/* its heading: a dark ribbon with pointed ends and a gold edge, astride the frame's top */
+/* its heading: the printed sheet's header, a dark band with pointed ends on an orange plate and end
+   caps, astride the frame's top; the heading's own background is the plate, under its two layers */
 #character :is(.panel, .box) > h3:first-child,
 #character .panel-header:first-child h3 {
   position: relative;
@@ -1774,31 +1802,33 @@ dialog.confirm {
   width: fit-content;
   min-width: min(var(--ribbon-min-width), 100%);
   max-width: 100%;
-  margin: calc(-1.8rem - 2px) auto 0.75rem;
-  padding: 0 1.6rem;
-  font-size: 1rem;
+  margin: calc(-0.9rem - 1.1 * var(--ribbon-font-size) - 2px) auto 0.75rem;
+  padding: 0 2em;
+  font-size: var(--ribbon-font-size);
   --pico-font-weight: 400;
-  line-height: 1.8rem;
+  line-height: 2.2em;
   letter-spacing: 0.06em;
   text-align: center;
   color: white;
+  background-color: var(--ribbon-plate-color);
+  clip-path: var(--ribbon-frame);
 
   &::before,
   &::after {
     content: "";
     position: absolute;
+    inset: 0;
     z-index: -1;
-    clip-path: var(--ribbon-shape);
   }
 
   &::before {
-    inset: 0;
-    background-color: var(--trim-color);
+    clip-path: var(--ribbon-edge);
+    background-color: var(--ribbon-edge-color);
   }
 
   &::after {
-    inset: 2px;
-    background-color: var(--ink-color);
+    clip-path: var(--ribbon-band);
+    background-color: var(--ribbon-band-color);
   }
 
   small {
@@ -1822,7 +1852,7 @@ dialog.confirm {
   margin-bottom: 0.75rem;
 
   &:first-child {
-    margin-top: calc(-1.8rem - 2px);
+    margin-top: calc(-0.9rem - 1.1 * var(--ribbon-font-size) - 2px);
   }
 
   h3 {
