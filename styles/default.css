@@ -1644,6 +1644,7 @@ dialog.confirm {
 
   /* the ribbon heading's outline, for clip-path */
   --ribbon-shape: polygon(0.8rem 0, calc(100% - 0.8rem) 0, 100% 50%, calc(100% - 0.8rem) 100%, 0.8rem 100%, 0 50%);
+  --ribbon-min-width: 20rem;
 
   /* light text on the dark page; the panels set their own */
   --pico-color: var(--light-color);
@@ -1771,6 +1772,7 @@ dialog.confirm {
   position: relative;
   isolation: isolate;
   width: fit-content;
+  min-width: min(var(--ribbon-min-width), 100%);
   max-width: 100%;
   margin: calc(-1.8rem - 2px) auto 0.75rem;
   padding: 0 1.6rem;
@@ -1814,7 +1816,7 @@ dialog.confirm {
    the frame; on a phone the buttons go below */
 #character .panel-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(min(var(--ribbon-min-width), 100%), auto) minmax(0, 1fr);
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
