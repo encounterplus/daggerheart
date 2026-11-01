@@ -25,7 +25,7 @@
     return `Trait.${trait[0].toUpperCase()}${trait.slice(1)}`
   }
 
-  /** Marks a trait raised this tier, or clears it; the same list as Advancement's checkboxes. */
+  /** Marks a trait raised this tier, or clears it; a tier achievement clears them all (rules). */
   function toggleMarked(trait: string) {
     const current = new Set(marked)
     if (!current.delete(trait as any)) current.add(trait as any)

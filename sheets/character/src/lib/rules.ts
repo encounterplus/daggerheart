@@ -186,17 +186,27 @@ export function moveToLoadout(data: CharacterData, id: string, recall: boolean) 
 
 // LEVELING UP
 
-/** The advancement options, the tiers they open at and their slots in a tier. */
+/**
+ * The advancement options in the printed sheet's words, the tiers they open at and their slots in
+ * a tier; `double` takes both of a level's advancements.
+ */
 export const advancements = [
-  { key: 'traits', label: '+1 to two unmarked traits, and mark them', slots: 3, from: 2 },
-  { key: 'hp', label: 'One Hit Point slot', slots: 2, from: 2 },
-  { key: 'stress', label: 'One Stress slot', slots: 2, from: 2 },
-  { key: 'experiences', label: '+1 to two Experiences', slots: 1, from: 2 },
-  { key: 'domainCard', label: 'An additional domain card', slots: 1, from: 2 },
-  { key: 'evasion', label: '+1 to Evasion', slots: 1, from: 2 },
-  { key: 'subclass', label: 'Upgraded subclass card', slots: 1, from: 3 },
-  { key: 'proficiency', label: '+1 Proficiency (both of a level\'s advancements)', slots: 2, from: 3 },
-  { key: 'multiclass', label: 'Multiclass (both of a level\'s advancements)', slots: 2, from: 3 }
+  { key: 'traits', label: 'Gain a +1 bonus to two unmarked character traits and mark them.', slots: 3, from: 2 },
+  { key: 'hp', label: 'Permanently gain one Hit Point slot.', slots: 2, from: 2 },
+  { key: 'stress', label: 'Permanently gain one Stress slot.', slots: 2, from: 2 },
+  { key: 'experiences', label: 'Permanently gain a +1 bonus to two Experiences.', slots: 1, from: 2 },
+  { key: 'domainCard', label: 'Choose an additional domain card of your level or lower from a domain you have access to.', slots: 1, from: 2 },
+  { key: 'evasion', label: 'Permanently gain a +1 bonus to your Evasion.', slots: 1, from: 2 },
+  { key: 'subclass', label: 'Take an upgraded subclass card. Then cross out the multiclass option for this tier.', slots: 1, from: 3 },
+  { key: 'proficiency', label: 'Increase your Proficiency by +1.', slots: 2, from: 3, double: true },
+  { key: 'multiclass', label: 'Multiclass: Choose an additional class for your character, then cross out an unused “Take an upgraded subclass card” and the other multiclass option on this sheet.', slots: 2, from: 3, double: true }
+] as const
+
+/** The tiers that advance, with their levels and what their first level brings by itself. */
+export const advancementTiers = [
+  { tier: 2, first: 2, last: 4, achievement: 'At level 2, gain an additional Experience at +2 and gain a +1 bonus to your Proficiency.' },
+  { tier: 3, first: 5, last: 7, achievement: 'At level 5, gain an additional Experience at +2 and clear all marks on character traits. Then gain a +1 bonus to your Proficiency.' },
+  { tier: 4, first: 8, last: 10, achievement: 'At level 8, gain an additional Experience at +2 and clear all marks on character traits. Then gain a +1 bonus to your Proficiency.' }
 ] as const
 
 /** The levels at which a new tier starts, with its achievements. */

@@ -2,9 +2,8 @@
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
   import { ask } from '../lib/confirm.svelte'
-  import { field } from '../lib/field'
   import { t } from '../lib/labels.svelte'
-  import { advancements, isTierAchievement, levelUp, newExperience, tier, traits } from '../lib/rules'
+  import { advancements, advancementTiers, isTierAchievement, levelUp, newExperience, tier } from '../lib/rules'
   import Pips from '../lib/Pips.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -13,15 +12,18 @@
   const level = $derived(data.level ?? 1)
   const current = $derived(tier(level))
 
-  /** The tiers reached, newest first: their advancements, two a level. */
-  const tiers = $derived([4, 3, 2].filter((entry) => entry <= current).map((entry) => {
-    const key = `tier${entry}` as 'tier2' | 'tier3' | 'tier4'
-    const marked = advancements.reduce((sum, option) => sum + (data.advancements?.[key]?.[option.key] ?? 0), 0)
-    // levels gained in the tier: 2–4, 5–7, 8–10
-    const first = entry === 2 ? 2 : entry === 3 ? 5 : 8
-    const levels = Math.min(level, first + 2) - first + 1
-    return { key, tier: entry, marked, allowed: levels * 2 }
-  }))
+  /**
+   * The three tiers side by side, as the printed sheet's, reached or not. A tier may take options
+   * left in an earlier one, so the advancements are counted together: two a level past the first.
+   */
+  const tiers = $derived(advancementTiers.map((entry) => ({
+    ...entry,
+    key: `tier${entry.tier}` as 'tier2' | 'tier3' | 'tier4',
+    reached: level >= entry.first
+  })))
+  const marked = $derived(tiers.reduce((sum, entry) =>
+    sum + advancements.reduce((count, option) => count + (data.advancements?.[entry.key]?.[option.key] ?? 0), 0), 0))
+  const allowed = $derived((level - 1) * 2)
 
   async function onLevelUp() {
     const next = level + 1
@@ -38,56 +40,36 @@
     }
   }
 
-  function toggleMarked(trait: string, marked: boolean) {
-    const current = new Set(data.markedTraits ?? [])
-    if (marked) {
-      current.add(trait as any)
-    } else {
-      current.delete(trait as any)
-    }
-    set(character, 'data.markedTraits', traits.filter((entry) => current.has(entry)))
-  }
-
-  function traitLabel(trait: string) {
-    return t(`Trait.${trait[0].toUpperCase()}${trait.slice(1)}`)
+  /** The domain card option names its tier's highest level, but in the last tier. */
+  function optionLabel(option: (typeof advancements)[number], entry: (typeof tiers)[number]) {
+    return option.key === 'domainCard' && entry.tier < 4 ? `${option.label.slice(0, -1)} (up to level ${entry.last}).` : option.label
   }
 </script>
 
 <section class="panel">
   <div class="panel-header">
-    <h3>{t('Character.Advancement')} <small>{t('Common.Level')} {level} · {t(`Tier.Tier${current}`)}</small></h3>
+    <h3>{t('Character.Advancement')} <small>{t('Common.Level')} {level} · {t(`Tier.Tier${current}`)} · <span class:over={marked > allowed}>{marked} / {allowed}</span></small></h3>
     <div class="actions">
       <button class="outline" disabled={level >= 10} onclick={onLevelUp}>Level up</button>
     </div>
   </div>
 
-  <!-- raised traits stay marked until the next tier achievement clears them -->
-  <div class="marked-traits">
-    <span class="label">{t('Character.MarkedTraits')}</span>
-    {#each traits as trait}
-      <label>
-        <input type="checkbox" checked={(data.markedTraits ?? []).includes(trait)} onchange={(event) => toggleMarked(trait, event.currentTarget.checked)}>
-        {traitLabel(trait)}
-      </label>
-    {/each}
-  </div>
-
-  {#each tiers as entry (entry.key)}
-    <div class="advancements">
-      <h4>{t(`Tier.Tier${entry.tier}`)} <small class:over={entry.marked > entry.allowed}>{entry.marked} / {entry.allowed}</small></h4>
-      {#each advancements.filter((option) => option.from <= entry.tier) as option}
-        <div class="advancement">
-          <Pips value={data.advancements?.[entry.key]?.[option.key]} boxes={option.slots} label={option.label} onchange={(count) => set(character, `data.advancements.${entry.key}.${option.key}`, count)} />
-          <span>{option.label}</span>
+  <!-- the printed sheet's three columns; a tier not reached yet faded, its boxes closed -->
+  <div class="advancement-tiers">
+    {#each tiers as entry (entry.key)}
+      <div class="advancements" class:locked={!entry.reached}>
+        <h4>{t(`TierLevels.Tier${entry.tier}`)}</h4>
+        <p class="achievement">{entry.achievement}</p>
+        <p class="note">Choose two options from the list below{entry.tier > 2 ? ' or any from the previous tier' : ''} and mark them.</p>
+        <div class="options">
+          {#each advancements.filter((option) => option.from <= entry.tier) as option}
+            <div class="advancement" class:double={'double' in option}>
+              <Pips value={data.advancements?.[entry.key]?.[option.key]} boxes={option.slots} max={entry.reached ? undefined : 0} label={option.label} onchange={(count) => set(character, `data.advancements.${entry.key}.${option.key}`, count)} />
+              <span>{optionLabel(option, entry)}</span>
+            </div>
+          {/each}
         </div>
-      {/each}
-    </div>
-  {:else}
-    <p class="empty">Advancements open at level 2.</p>
-  {/each}
-
-  <div class="grid-fields">
-    <!-- Avoid Death: a Hope Die at or below the level crosses out a Hope slot -->
-    <label>{t('Character.Scars')} <input type="number" min="0" max="6" use:field={{ store: character, path: 'data.scars' }}></label>
+      </div>
+    {/each}
   </div>
 </section>

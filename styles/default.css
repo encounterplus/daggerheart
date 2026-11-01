@@ -3154,23 +3154,108 @@ dialog.confirm {
   }
 }
 
-#character .marked-traits {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 1rem;
-  margin-bottom: 0.5rem;
+/* the Advancement tab: the three tiers, as the printed sheet's; except on a phone side by side,
+   ruled apart, their headings, achievements and notes on shared rows (subgrid), so each is as
+   tall as the tallest; one not reached faded */
+#character .advancement-tiers {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
 
-  label {
-    margin: 0;
-    font-size: 0.9rem;
+@media (min-width: 600px) {
+  #character .advancement-tiers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+
+    .advancements {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      padding-inline: 0.75rem;
+    }
+
+    /* the achievement's text in the middle of its taller plate */
+    .achievement {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .advancements:first-child {
+      padding-left: 0;
+    }
+
+    .advancements:last-child {
+      padding-right: 0;
+    }
+
+    .advancements + .advancements {
+      border-left: 1px solid color-mix(in srgb, var(--trim-color) 50%, transparent);
+    }
   }
 }
 
-#character .advancements .advancement,
+#character .advancements {
+  h4 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  /* what the tier's first level brings by itself: the printed sheet's dark plate */
+  .achievement {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    background-color: var(--dark-color);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .note {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  &.locked > :not(h4) {
+    opacity: 0.5;
+  }
+
+  .advancement {
+    display: grid;
+    grid-template-columns: 3.75rem 1fr;
+    align-items: start;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.8rem;
+    font-style: italic;
+    line-height: 1.3;
+
+    /* the boxes at the right, as printed, beside the text's first line */
+    .pips {
+      justify-content: flex-end;
+      padding-top: 0.05rem;
+    }
+
+    /* both of a level's advancements: the pair in a heavy frame */
+    &.double .pips {
+      justify-self: end;
+      gap: 0.15rem;
+      padding: 0.1rem;
+      border: 2px solid var(--dark-color);
+      border-radius: 4px;
+    }
+  }
+}
+
 #character .upgrades .upgrade {
   display: grid;
-  grid-template-columns: 4.5rem 1fr;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.25rem;
@@ -3179,10 +3264,6 @@ dialog.confirm {
   .pips {
     justify-content: flex-start;
   }
-}
-
-#character .upgrades .upgrade {
-  grid-template-columns: 1fr auto;
 }
 
 /* removing from a list: a quiet trash icon, which asks first (dialog.confirm) */

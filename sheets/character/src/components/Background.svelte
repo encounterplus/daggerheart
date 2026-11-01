@@ -20,6 +20,8 @@
     {#each appearance as key}
       <label>{t(`Appearance.${key[0].toUpperCase()}${key.slice(1)}`)} <input type="text" use:field={{ store: character, path: `data.appearance.${key}` }}></label>
     {/each}
+    <!-- Avoid Death: a Hope Die at or below the level crosses out a Hope slot -->
+    <label>{t('Character.Scars')} <input type="number" min="0" max="6" use:field={{ store: character, path: 'data.scars' }}></label>
   </div>
 </section>
 
