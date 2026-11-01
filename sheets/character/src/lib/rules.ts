@@ -109,9 +109,25 @@ type Weapon = NonNullable<CharacterData['weapons']>[number]
 /** At most two weapons carried besides the active ones. */
 export const inventoryWeaponLimit = 2
 
+/** The hands the Active Weapons may take: a character's maximum burden. */
+export const burdenLimit = 2
+
+/** The hands the Active Weapons take: two for a two-handed weapon, one for any other. */
+export function burden(data: CharacterData) {
+  return (data.weapons ?? [])
+    .filter((weapon) => weapon.equipped)
+    .reduce((hands, weapon) => hands + (weapon.burden === 'twoHanded' ? 2 : 1), 0)
+}
+
+/** Whether the character ignores burden: the Warrior's Combat Training, a multiclass's too. */
+export function ignoresBurden(data: CharacterData) {
+  return trackedFeatures(data).some((feature) => feature.name?.trim().toLowerCase() === 'combat training')
+}
+
 /**
  * Equips a weapon in its category's slot, unequipping what it displaces: the other weapon of the
- * same category, the secondary for a two-handed primary, a two-handed primary for a secondary.
+ * same category and, unless the character ignores burden, the secondary for a two-handed primary
+ * or a two-handed primary for a secondary.
  */
 export function equip(data: CharacterData, index: number) {
   const weapons = data.weapons ?? []
@@ -119,23 +135,24 @@ export function equip(data: CharacterData, index: number) {
   if (!weapon) {
     return
   }
+  const free = ignoresBurden(data)
   for (const [other, entry] of weapons.entries()) {
     if (other === index || !entry.equipped) {
       continue
     }
-    if (displaces(weapon, entry) || displaces(entry, weapon)) {
+    if (displaces(weapon, entry, free) || displaces(entry, weapon, free)) {
       entry.equipped = false
     }
   }
   weapon.equipped = true
 }
 
-function displaces(weapon: Weapon, other: Weapon) {
+function displaces(weapon: Weapon, other: Weapon, ignoringBurden: boolean) {
   if (weapon.category === other.category) {
     return true
   }
   // a two-handed primary takes both hands
-  return weapon.category === 'primary' && weapon.burden === 'twoHanded' && other.category === 'secondary'
+  return !ignoringBurden && weapon.category === 'primary' && weapon.burden === 'twoHanded' && other.category === 'secondary'
 }
 
 // DOMAIN CARDS

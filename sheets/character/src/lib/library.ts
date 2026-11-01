@@ -29,6 +29,8 @@ export const copyKeys = {
   Subclass: ['spellcastTrait', 'foundations', 'specializations', 'masteries'],
   Armor: ['tier', 'score', 'thresholds', 'feature'],
   Weapon: ['category', 'tier', 'type', 'trait', 'range', 'damage', 'damageType', 'burden', 'feature'],
+  // consumables too: Consumable extends Item
+  Item: ['rarity', 'descr'],
   DomainCard: ['domain', 'type', 'level', 'recall', 'descr'],
   Beastform: ['tier', 'trait', 'traitModifier', 'evasionModifier', 'attack', 'advantages', 'features']
 }

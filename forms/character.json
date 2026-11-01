@@ -286,7 +286,12 @@
           "title": "Character.Inventory",
           "type": "list",
           "attribute": "data.inventory",
+          "attributeType": "Item",
           "custom": {
+            "map": {
+              "rarity": "data.rarity",
+              "descr": "descr"
+            },
             "itemValue": "{{ quantity|default: 1 }}×"
           },
           "form": {

@@ -15,12 +15,34 @@
       ]
     },
     {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Rarity",
+          "type": "picker",
+          "attribute": "rarity",
+          "attributeType": "Rarity"
+        }
+      ]
+    },
+    {
       "title": "Common.Description",
       "type": "group",
       "fields": [
         {
           "type": "textArea",
-          "attribute": "text"
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Item"
         }
       ]
     }

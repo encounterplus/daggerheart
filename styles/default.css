@@ -2930,8 +2930,52 @@ dialog.confirm {
   }
 }
 
-#character :is(table.weapons, table.equipment) {
+#character :is(table.weapons, table.equipment, table.items) {
   margin-bottom: 0.5rem;
+  /* separate, so the header's corners can round */
+  border-collapse: separate;
+  border-spacing: 0;
+
+  /* the header as a domain card's: ink, a gold rule under it, its top corners rounded */
+  thead th {
+    border-bottom: 2px solid var(--trim-color);
+    background-color: var(--ink-color);
+    color: white;
+    letter-spacing: 0.03em;
+  }
+
+  thead th:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+
+  thead th:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+
+  /* a light frame below the header, on the edge cells so it follows the rounded corners */
+  tbody td {
+    border: 0 solid var(--sand-color);
+  }
+
+  tbody td:first-child {
+    border-left-width: 1px;
+  }
+
+  tbody td:last-child {
+    border-right-width: 1px;
+  }
+
+  tbody tr:last-child td {
+    border-bottom-width: 1px;
+  }
+
+  tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0.5rem;
+  }
+
+  tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0.5rem;
+  }
 
   td {
     vertical-align: top;
@@ -3074,8 +3118,31 @@ dialog.confirm {
   }
 }
 
-#character .item {
-  margin-bottom: 0.4rem;
+/* the inventory's items: the description under the name fills the row, the quantity a small
+   box beside it */
+#character table.items {
+  .markdown,
+  .markdown p {
+    font-size: 0.8rem;
+  }
+
+  input.quantity {
+    width: 4rem;
+    height: auto;
+    margin: 0 auto;
+    padding: 0.15rem 0.25rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  :is(th, td):not(:first-child) {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  :is(th, td):nth-child(2) {
+    text-align: center;
+  }
 }
 
 #character .marked-traits {

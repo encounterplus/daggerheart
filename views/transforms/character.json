@@ -6,12 +6,12 @@
       "data.tier": "#{% if data.level >= 8 %}4{% elif data.level >= 5 %}3{% elif data.level >= 2 %}2{% else %}1{% endif %}",
       // the class's starting Evasion, permanent bonuses and the Beastform's while in one
       "data.evasion": "#{{data.class.evasion|default: 0}} + {{data.bonuses.evasion|default: 0}} + {{data.beastform.evasionModifier|default: 0}}",
-      // the armor's base score and permanent bonuses; 0 unarmored
-      "data.armorScore": "#{{data.armor.score|default: 0}} + {{data.bonuses.armorScore|default: 0}}",
+      // the armor's base score and permanent bonuses; 0 unarmored or with the armor taken off
+      "data.armorScore": "#{% if data.armor.unequipped %}0{% else %}{{data.armor.score|default: 0}}{% endif %} + {{data.bonuses.armorScore|default: 0}}",
       // the armor's base thresholds plus the level; unarmored, Major is the level and Severe
       // twice the level
-      "data.thresholds.major": "#{{data.armor.thresholds.major|default: 0}} + {{data.level|default: 1}} + {{data.bonuses.majorThreshold|default: 0}}",
-      "data.thresholds.severe": "#{% if data.armor.thresholds.severe %}{{data.armor.thresholds.severe}}{% else %}{{data.level|default: 1}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.severeThreshold|default: 0}}",
+      "data.thresholds.major": "#{% if data.armor.unequipped %}0{% else %}{{data.armor.thresholds.major|default: 0}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.majorThreshold|default: 0}}",
+      "data.thresholds.severe": "#{% if data.armor.unequipped %}{{data.level|default: 1}}{% elif data.armor.thresholds.severe %}{{data.armor.thresholds.severe}}{% else %}{{data.level|default: 1}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.severeThreshold|default: 0}}",
       // six slots, less the scars, and the companion's Light in the Dark
       "data.hopeMaximum": "#6 - {{data.scars|default: 0}} + {{data.companion.upgrades.lightInTheDark|default: 0}}"
     },
@@ -39,7 +39,7 @@
       "data.stances.known": { "attribute": "data.stances.known", "map": { "textHTML": "{{self.text|md}}" } },
       "data.weapons": { "attribute": "data.weapons", "map": { "featureHTML": "{{self.feature.text|md}}" } },
       "data.domainCards": { "attribute": "data.domainCards", "map": { "descrHTML": "{{self.descr|md}}" } },
-      "data.inventory": { "attribute": "data.inventory", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.inventory": { "attribute": "data.inventory", "map": { "descrHTML": "{{self.descr|md}}" } },
       "data.resources": { "attribute": "data.resources", "map": { "textHTML": "{{self.text|md}}" } },
       "data.companion.textHTML": "{{data.companion.text|md}}"
     }

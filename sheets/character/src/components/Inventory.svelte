@@ -5,7 +5,7 @@
   import { label, t } from '../lib/labels.svelte'
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { ask } from '../lib/confirm.svelte'
-  import { equip, inventoryWeaponLimit } from '../lib/rules'
+  import { burden, burdenLimit, equip, ignoresBurden, inventoryWeaponLimit } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Pips from '../lib/Pips.svelte'
   import Reference from '../lib/Reference.svelte'
@@ -18,6 +18,7 @@
   const view = $derived(snapshot.view.data)
   const weapons = $derived<any[]>(view.weapons ?? [])
   const carried = $derived(weapons.filter((weapon) => !weapon.equipped).length)
+  const hands = $derived(burden(data))
 
   async function chooseArmor() {
     // the new armor comes without marked slots
@@ -82,6 +83,9 @@
   {#if carried > inventoryWeaponLimit}
     <p class="warning">A character carries at most {inventoryWeaponLimit} Inventory Weapons besides the active ones ({carried} now).</p>
   {/if}
+  {#if hands > burdenLimit && !ignoresBurden(data)}
+    <p class="warning">The Active Weapons take {hands} hands; a character has {burdenLimit}.</p>
+  {/if}
 </section>
 
 <section class="panel">
@@ -91,7 +95,8 @@
       <button class="outline" onclick={chooseArmor}>{data.armor?.name ? 'Change armor' : 'Choose armor'}</button>
     </div>
   </div>
-  <!-- one armor at a time, the Active Armor: removing or replacing it clears its marked slots -->
+  <!-- one armor at a time, the Active Armor: removing or replacing it clears its marked slots;
+       taken off (not in danger or under pressure), it keeps them but gives no protection -->
   <div class="table-responsive">
     <table class="equipment">
       <thead>
@@ -100,12 +105,13 @@
           <th>{t('Armor.BaseThresholds')}</th>
           <th>{t('Armor.BaseScore')}</th>
           <th>{t('Character.Marked')}</th>
+          <th>Active</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         {#if view.armor?.name}
-          <tr class="equipped">
+          <tr class:equipped={!view.armor.unequipped}>
             <td>
               <strong><Reference entry={view.armor} /></strong>
               {#if view.armor.tier}<small>{label('Tier', view.armor.tier)}</small>{/if}
@@ -114,10 +120,14 @@
             <td>{view.armor.thresholds?.major ?? '-'} / {view.armor.thresholds?.severe ?? '-'}</td>
             <td>{view.armor.score ?? 0}</td>
             <td>{view.armor.marked ?? 0}</td>
+            <td>
+              <input type="checkbox" role="switch" aria-label="Active" checked={!view.armor.unequipped}
+                onchange={(event) => set(character, 'data.armor.unequipped', !event.currentTarget.checked)}>
+            </td>
             <td><RemoveButton name={view.armor.name} onremove={() => character.remove('data.armor').catch(() => {})} /></td>
           </tr>
         {:else}
-          <tr><td colspan="5" class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</td></tr>
+          <tr><td colspan="6" class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</td></tr>
         {/if}
       </tbody>
     </table>
@@ -128,7 +138,7 @@
   <div class="panel-header">
     <h3>{t('Character.Inventory')}</h3>
     <div class="actions">
-      <button class="outline" onclick={() => character.insert('data.inventory', { name: '', quantity: 1 }).catch(() => {})}>Add item</button>
+      <button class="outline" onclick={() => addFromLibrary(character, 'data.inventory', 'Item', copyKeys.Item)}>Add item</button>
     </div>
   </div>
   <!-- the gold first, in its own box, the items under it -->
@@ -143,16 +153,35 @@
       {/each}
     </div>
   </div>
-  {#each view.inventory ?? [] as item (item.path)}
-    <div class="item">
-      <div class="row ruled">
-        <input type="text" aria-label={t('Common.Name')} placeholder={t('Common.Name')} use:field={{ store: character, path: `${item.path}.name` }}>
-        <input type="number" class="modifier" min="0" aria-label={t('Common.Quantity')} title={t('Common.Quantity')} use:field={{ store: character, path: `${item.path}.quantity` }}>
-        <RemoveButton name={item.name} onremove={() => character.remove(item.path).catch(() => {})} />
-      </div>
-      <Markdown html={item.textHTML} />
-    </div>
-  {:else}
-    <p class="empty">Nothing carried.</p>
-  {/each}
+  <!-- as the weapons: the name with its rarity and description, then the quantity; names are
+       edited in the item's form -->
+  <div class="table-responsive">
+    <table class="items">
+      <thead>
+        <tr>
+          <th>{t('Common.Name')}</th>
+          <th>{t('Common.QuantityShort')}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each view.inventory ?? [] as item (item.path)}
+          <tr>
+            <td>
+              <strong><Reference entry={item} /></strong>
+              {#if item.rarity}<small>{label('Rarity', item.rarity)}</small>{/if}
+              <Markdown html={item.descrHTML} />
+            </td>
+            <td>
+              <!-- library copies come without a quantity: one -->
+              <input type="number" class="quantity" min="0" placeholder="1" aria-label={t('Common.Quantity')} use:field={{ store: character, path: `${item.path}.quantity` }}>
+            </td>
+            <td><RemoveButton name={item.name} onremove={() => character.remove(item.path).catch(() => {})} /></td>
+          </tr>
+        {:else}
+          <tr><td colspan="3" class="empty">Nothing carried.</td></tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
 </section>

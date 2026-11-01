@@ -13,6 +13,16 @@
       "type": "group",
       "fields": [
         {
+          "title": "Character.TakenOff",
+          "type": "toggle",
+          "attribute": "unequipped"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
           "title": "Common.Tier",
           "type": "picker",
           "attribute": "tier",

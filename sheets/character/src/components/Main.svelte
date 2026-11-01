@@ -130,7 +130,7 @@
 
     <section class="panel">
       <h3>{t('Character.ActiveArmor')}</h3>
-      {#if view.armor?.name}
+      {#if view.armor?.name && !view.armor.unequipped}
         <div class="active-armor">
           <div class="name"><strong><Reference entry={view.armor} /></strong></div>
           <small>{properties(label('Tier', view.armor.tier), `${t('Armor.BaseThresholds')} ${view.armor.thresholds?.major ?? '-'} / ${view.armor.thresholds?.severe ?? '-'}`, `${t('Armor.BaseScore')} ${view.armor.score ?? 0}`)}</small>
@@ -138,6 +138,8 @@
             <div class="feature"><strong>{view.armor.feature.name}:</strong> <Markdown html={view.armor.feature.textHTML} /></div>
           {/if}
         </div>
+      {:else if view.armor?.name}
+        <p class="empty">Unarmored: {view.armor.name} is taken off. Put it back on on the Inventory tab.</p>
       {:else}
         <p class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level. Equip armor on the Inventory tab.</p>
       {/if}

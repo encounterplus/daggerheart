@@ -25,7 +25,10 @@
     </div>
     <div class="armor-slots">
       <!-- <div class="label">Armor Slots <small>{data.armor?.marked ?? 0} / {view.armorScore ?? 0}</small></div> -->
-      {#if data.armor && view.armorScore}
+      {#if data.armor?.unequipped}
+        <!-- its marked slots stay with it until it's back on -->
+        <p class="empty">{data.armor.name} taken off.</p>
+      {:else if data.armor && view.armorScore}
         <Pips value={data.armor.marked} boxes={view.armorScore} label="Armor Slots" onchange={(count) => set(character, 'data.armor.marked', count)} />
       {:else}
         <p class="empty">{data.armor?.name ? 'No Armor Slots.' : 'No armor equipped.'}</p>
