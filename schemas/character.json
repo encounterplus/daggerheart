@@ -292,6 +292,9 @@
     },
     // the answers to the class's background questions, and the connections with the other PCs
     "background": "text",
-    "connections": "text"
+    "connections": "text",
+
+    // the player's own notes, kept on the sheet
+    "journal": "text"
   }
 }

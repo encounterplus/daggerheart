@@ -38,6 +38,13 @@
   </section>
 </div>
 
+<!-- the player's freeform notes, across the page -->
+<section class="panel journal">
+  <h3>{t('Character.Journal')}</h3>
+  <p class="hint">{t('Character.JournalHint')}</p>
+  <textarea rows="14" aria-label={t('Character.Journal')} use:field={{ store: character, path: 'data.journal' }}></textarea>
+</section>
+
 {#if view.descrHTML || view.notesHTML}
   <section class="panel">
     <!-- the entity's own description and notes: written in the app -->

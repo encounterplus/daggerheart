@@ -362,6 +362,13 @@
           ]
         },
         {
+          "title": "Character.Journal",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "data.journal" }
+          ]
+        },
+        {
           "title": "Common.Description",
           "type": "group",
           "fields": [

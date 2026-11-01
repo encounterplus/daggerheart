@@ -78,6 +78,8 @@
   "Character.Heritage": "Heritage",
   "Character.InVault": "In Vault",
   "Character.Inventory": "Inventory",
+  "Character.Journal": "Journal",
+  "Character.JournalHint": "Your notes: sessions, people, places, clues.",
   "Character.KnownStances": "Known Stances",
   "Character.Loadout": "Loadout",
   "Character.Main": "Main",
