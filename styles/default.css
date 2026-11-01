@@ -2948,18 +2948,43 @@ dialog.confirm {
   }
 }
 
-/* gold as the printed sheet's: the handfuls, bags and chest drawn (images/gold), marked filled,
-   in whole pixels so they space evenly, their names below; side by side with dotted rules
-   between them, on a phone one under another */
+/* gold as the printed sheet's, a box at the top of the Inventory with its heading inside: the
+   handfuls, bags and chest drawn (images/gold), marked filled, in whole pixels so they space
+   evenly, their names below; side by side with dotted rules between them, and where that's
+   too wide the handfuls and bags break into rows, as the HP and Stress slots do */
 #character .gold {
-  display: grid;
-  gap: 0.75rem;
+  /* no wider than the drawings need, centred in the panel */
+  max-width: max-content;
+  margin: 0 auto 0.9rem;
+  padding: 0.5rem 1rem 0.75rem;
+  border: 2px solid var(--field-rule);
+  border-radius: 0.6rem;
+
+  h4 {
+    margin: 0 0 0.5rem;
+    font-family: "Eveleth Clean", var(--pico-font-family);
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* centred, as the printed box's, without the headings' square */
+  h4::before {
+    content: none;
+  }
+
+  .coins {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .coin {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     gap: 0.35rem;
+    min-width: 0;
+    padding-inline: 1.25rem;
 
     .pips {
       justify-content: flex-start;
@@ -2968,6 +2993,7 @@ dialog.confirm {
     }
 
     .pips input[type=checkbox] {
+      width: var(--slot-width);
       border: none;
       border-radius: 0;
       background: var(--coin-image) center / contain no-repeat transparent;
@@ -2981,9 +3007,9 @@ dialog.confirm {
   .handfuls {
     --coin-image: url("../images/gold/handful.svg");
     --coin-filled-image: url("../images/gold/handful-filled.svg");
+    --slot-width: 1.375rem;
 
     .pips input[type=checkbox] {
-      width: 1.375rem;
       height: 1.125rem;
     }
   }
@@ -2991,40 +3017,60 @@ dialog.confirm {
   .bags {
     --coin-image: url("../images/gold/bag.svg");
     --coin-filled-image: url("../images/gold/bag-filled.svg");
+    --slot-width: 1.25rem;
 
     .pips input[type=checkbox] {
-      width: 1.25rem;
       height: 1.5rem;
     }
+  }
+
+  .coin:first-child {
+    padding-left: 0;
+  }
+
+  .coin:last-child {
+    flex: none;
+    padding-right: 0;
+  }
+
+  .coin + .coin {
+    border-left: 2px dotted var(--field-rule);
   }
 
   .chests {
     --coin-image: url("../images/gold/chest.svg");
     --coin-filled-image: url("../images/gold/chest-filled.svg");
+    --slot-width: 1.625rem;
 
     .pips input[type=checkbox] {
-      width: 1.625rem;
       height: 1.625rem;
     }
   }
 }
 
-@media (min-width: 768px) {
+/* on a phone closer around the rules, so the slots keep more of the room */
+@media (max-width: 599px) {
   #character .gold {
-    display: flex;
-    gap: 0;
+    padding-inline: 0.75rem;
 
     .coin {
-      padding-inline: 1.25rem;
+      padding-inline: 0.6rem;
     }
+  }
+}
 
-    .coin:first-child {
-      padding-left: 0;
-    }
+/* broken into even rows rather than leaving one slot alone on the last: five and four where
+   the nine don't fit in a row, three rows of three where five don't (measured on the Inventory
+   tab, where the panel spans the page) */
+@media (max-width: 549px) {
+  #character .gold .pips {
+    max-width: calc(5 * var(--slot-width) + 4 * 0.25rem);
+  }
+}
 
-    .coin + .coin {
-      border-left: 2px dotted var(--sand-color);
-    }
+@media (max-width: 399px) {
+  #character .gold .pips {
+    max-width: calc(3 * var(--slot-width) + 2 * 0.25rem);
   }
 }
 

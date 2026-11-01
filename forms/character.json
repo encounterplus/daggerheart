@@ -277,7 +277,7 @@
               "fields": [
                 { "title": "Gold.Handfuls", "type": "number", "alignment": "top", "attribute": "data.gold.handfuls" },
                 { "title": "Gold.Bags", "type": "number", "alignment": "top", "attribute": "data.gold.bags" },
-                { "title": "Gold.Chests", "type": "number", "alignment": "top", "attribute": "data.gold.chests" }
+                { "title": "Gold.Chest", "type": "number", "alignment": "top", "attribute": "data.gold.chests" }
               ]
             }
           ]

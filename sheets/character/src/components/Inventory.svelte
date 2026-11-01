@@ -30,7 +30,7 @@
   const coins = [
     { unit: 'handfuls', label: 'Gold.Handfuls', boxes: 9 },
     { unit: 'bags', label: 'Gold.Bags', boxes: 9 },
-    { unit: 'chests', label: 'Gold.Chests', boxes: 1 }
+    { unit: 'chests', label: 'Gold.Chest', boxes: 1 }
   ] as const
 </script>
 
@@ -125,22 +125,22 @@
 </section>
 
 <section class="panel">
-  <h3>{t('Character.Gold')}</h3>
-  <div class="gold">
-    {#each coins as coin}
-      <div class="coin {coin.unit}">
-        <Pips value={data.gold?.[coin.unit]} boxes={coin.boxes} label={t(coin.label)} onchange={(count) => set(character, `data.gold.${coin.unit}`, count)} />
-        <span class="label">{t(coin.label)}</span>
-      </div>
-    {/each}
-  </div>
-</section>
-
-<section class="panel">
   <div class="panel-header">
     <h3>{t('Character.Inventory')}</h3>
     <div class="actions">
       <button class="outline" onclick={() => character.insert('data.inventory', { name: '', quantity: 1 }).catch(() => {})}>Add item</button>
+    </div>
+  </div>
+  <!-- the gold first, in its own box, the items under it -->
+  <div class="gold">
+    <h4>{t('Character.Gold')}</h4>
+    <div class="coins">
+      {#each coins as coin}
+        <div class="coin {coin.unit}">
+          <Pips value={data.gold?.[coin.unit]} boxes={coin.boxes} label={t(coin.label)} onchange={(count) => set(character, `data.gold.${coin.unit}`, count)} />
+          <span class="label">{t(coin.label)}</span>
+        </div>
+      {/each}
     </div>
   </div>
   {#each view.inventory ?? [] as item (item.path)}
