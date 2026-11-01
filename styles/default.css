@@ -2568,12 +2568,15 @@ dialog.confirm {
     calc(100% - 1rem) 100%, 
     1rem 100%, 
     0 0.2rem);
+  /* the outline inset 0.12rem all round (open at the top, under the heading): the tabs, then the
+     sides, which fall 1.5rem over 1rem, so 0.144rem across for 0.12rem square to them */
   --plate-inner: polygon(
-    0rem 0rem, 
-    calc(100%) 0rem, 
-    calc(100% - 1.1rem) calc(100% - 0.12rem), 
-    1.1rem calc(100% - 0.12rem), 
-    0rem 0rem);
+    0.12rem 0,
+    calc(100% - 0.12rem) 0,
+    calc(100% - 0.12rem) 0.164rem,
+    calc(100% - 1.064rem) calc(100% - 0.12rem),
+    1.064rem calc(100% - 0.12rem),
+    0.12rem 0.164rem);
 
   position: relative;
   isolation: isolate;
