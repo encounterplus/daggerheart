@@ -2,7 +2,7 @@
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
   import { field } from '../lib/field'
-  import { label, t } from '../lib/labels.svelte'
+  import { label, properties, t } from '../lib/labels.svelte'
   import { actionRoll, damageRoll, reset, signed } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Health from './Health.svelte'
@@ -38,11 +38,6 @@
 
   function removeCondition(name: string) {
     set(character, 'data.otherConditions', (data.otherConditions ?? []).filter((entry) => entry !== name))
-  }
-
-  /** A weapon's or armor's properties under its name, as in the Inventory: the set ones, `·` between. */
-  function properties(...values: (string | undefined)[]) {
-    return values.filter(Boolean).join(' · ')
   }
 
   /** The modifier a trait gives an attack: the character's, in a Beastform its bonus too. */

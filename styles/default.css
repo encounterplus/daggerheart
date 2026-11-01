@@ -2395,6 +2395,19 @@ dialog.confirm {
   }
 }
 
+/* the Inventory tab: the weapons and armor, then the inventory; side by side from a tablet,
+   with shorter ribbons, so the buttons beside them keep clear */
+@media (min-width: 768px) {
+  #character .inventory-columns {
+    --ribbon-min-width: 14rem;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.25rem;
+  }
+}
+
 /* Damage & Health: the damage severities with the thresholds between them, then HP and Stress */
 #character .health {
   .thresholds {
@@ -2999,36 +3012,40 @@ dialog.confirm {
   tr.equipped td:first-child {
     box-shadow: inset 3px 0 var(--violet-color);
   }
+
+  /* a weapon's trait, range, damage and burden, an armor's thresholds, score and marks: the
+     columns they'd fill, folded under the name */
+  td .stats {
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  /* the name takes the room, the switch or quantity and the remove button only theirs */
+  :is(th, td):not(:first-child) {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  :is(th, td):nth-child(2) {
+    text-align: center;
+  }
 }
 
-/* gold as the printed sheet's, a box at the top of the Inventory with its heading inside: the
-   handfuls, bags and chest drawn (images/gold), marked filled, in whole pixels so they space
-   evenly, their names below; side by side with dotted rules between them, and where that's
-   too wide the handfuls and bags break into rows, as the HP and Stress slots do */
+/* the Gold panel, as the printed sheet's box: the handfuls, bags and chest drawn (images/gold),
+   marked filled, in whole pixels so they space evenly, their names below; side by side with
+   dotted rules between them, and where that's too wide the handfuls and bags break into rows,
+   as the HP and Stress slots do */
 #character .gold {
   /* no wider than the drawings need, centred in the panel */
-  max-width: max-content;
-  margin: 0 auto 0.9rem;
-  padding: 0.5rem 1rem 0.75rem;
-  border: 2px solid var(--field-rule);
-  border-radius: 0.6rem;
-
-  h4 {
-    margin: 0 0 0.5rem;
-    font-family: "Eveleth Clean", var(--pico-font-family);
-    font-weight: 400;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  /* centred, as the printed box's, without the headings' square */
-  h4::before {
-    content: none;
-  }
-
   .coins {
     display: flex;
     justify-content: space-between;
+    max-width: max-content;
+    margin-inline: auto;
   }
 
   .coin {
@@ -3103,18 +3120,14 @@ dialog.confirm {
 
 /* on a phone closer around the rules, so the slots keep more of the room */
 @media (max-width: 599px) {
-  #character .gold {
-    padding-inline: 0.75rem;
-
-    .coin {
-      padding-inline: 0.6rem;
-    }
+  #character .gold .coin {
+    padding-inline: 0.6rem;
   }
 }
 
 /* broken into even rows rather than leaving one slot alone on the last: five and four where
-   the nine don't fit in a row, three rows of three where five don't (measured on the Inventory
-   tab, where the panel spans the page) */
+   the nine don't fit in a row, three rows of three where five don't (measured on a phone, where
+   the panel spans the page) */
 @media (max-width: 549px) {
   #character .gold .pips {
     max-width: calc(5 * var(--slot-width) + 4 * 0.25rem);
@@ -3141,15 +3154,6 @@ dialog.confirm {
     margin: 0 auto;
     padding: 0.15rem 0.25rem;
     font-size: 0.9rem;
-    text-align: center;
-  }
-
-  :is(th, td):not(:first-child) {
-    width: 1%;
-    white-space: nowrap;
-  }
-
-  :is(th, td):nth-child(2) {
     text-align: center;
   }
 }

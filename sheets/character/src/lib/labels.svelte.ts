@@ -25,3 +25,8 @@ export function label(name: string, value: unknown): string {
   void labels.loaded
   return EP.label(name, value)
 }
+
+/** A weapon's or armor's properties under its name on Main: the set ones, `·` between. */
+export function properties(...values: (string | undefined)[]) {
+  return values.filter(Boolean).join(' · ')
+}
