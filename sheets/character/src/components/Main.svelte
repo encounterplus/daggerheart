@@ -168,8 +168,8 @@
 
 <!-- uses come back as the features' and cards' texts say; HP, Stress, Hope and armor are the
      downtime moves the player chooses -->
-<section class="panel resets">
+<div class="resets">
   {#each resets as { event, title, hint }}
     <button class="outline" title={hint} onclick={() => change(character, (draft) => reset(draft, event))}>{title}</button>
   {/each}
-</section>
+</div>

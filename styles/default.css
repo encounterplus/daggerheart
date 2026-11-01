@@ -1975,14 +1975,15 @@ dialog.confirm {
   }
 }
 
-/* a header too narrow for the ribbon and an add button beside it (as in the Main tab's columns): the
-   button under the ribbon, as on a phone */
-#character .panel-header:has(button.add) {
+/* a header too narrow for the ribbon and an add button or the subclass's rank beside it (as in the
+   Main and Features tabs' columns): the button or rank under the ribbon, as on a phone */
+#character .panel-header:has(button.add, > select) {
   container: panel-header / inline-size;
 }
 
 @container panel-header (max-width: 47rem) {
-  #character .panel-header .actions:has(button.add) {
+  #character .panel-header .actions:has(button.add),
+  #character .panel-header > select {
     grid-column: 1 / -1;
     justify-self: center;
   }
@@ -2375,9 +2376,10 @@ dialog.confirm {
 }
 
 /* the Main tab: Damage & Health, Hope and the Experiences, then the weapons, armor and conditions;
+   the Features tab: the class and subclass, then the heritage and the class's modules;
    except on a phone in two columns, each its own stack */
 @media (min-width: 600px) {
-  #character .main-columns {
+  #character :is(.main-columns, .feature-columns) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
@@ -2824,6 +2826,7 @@ dialog.confirm {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.4rem;
+  margin-bottom: var(--panel-gap);
 }
 
 /* a feature or domain card (lib/FeatureCard): its name on a dark band, faded once its use is spent */
