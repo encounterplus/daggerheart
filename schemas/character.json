@@ -159,7 +159,7 @@
     // items addressed by id: a sheet edits them one by one
     "experiences": { "type": ["Experience"], "ids": true },
 
-    // EQUIPMENT: one armor at a time (armor can't be carried), its marked slots kept with it
+    // EQUIPMENT: one armor at a time (armor can't be carried); its marked slots go with it
     "armor": {
       "ref": "Armor",
       "properties": {

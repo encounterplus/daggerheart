@@ -20,7 +20,7 @@
   const carried = $derived(weapons.filter((weapon) => !weapon.equipped).length)
 
   async function chooseArmor() {
-    // the marked slots stay with the armor they were marked on
+    // the new armor comes without marked slots
     if (data.armor?.marked && !(await ask(`${data.armor.name} has ${data.armor.marked} marked Armor Slots. Replace it?`, 'Replace'))) {
       return
     }
@@ -86,22 +86,42 @@
 
 <section class="panel">
   <div class="panel-header">
-    <h3>{t('Character.ActiveArmor')}</h3>
+    <h3>{t('Entity.Armor')}</h3>
     <div class="actions">
       <button class="outline" onclick={chooseArmor}>{data.armor?.name ? 'Change armor' : 'Choose armor'}</button>
-      {#if data.armor?.name}<RemoveButton name={data.armor.name} onremove={() => character.remove('data.armor').catch(() => {})} />{/if}
     </div>
   </div>
-  {#if view.armor?.name}
-    <p>
-      <strong><Reference entry={view.armor} /></strong>
-      · {t('Armor.BaseThresholds')} {view.armor.thresholds?.major ?? '-'} / {view.armor.thresholds?.severe ?? '-'}
-      · {t('Armor.BaseScore')} {view.armor.score ?? 0}
-    </p>
-    {#if view.armor.feature?.name}<div class="feature"><em>{view.armor.feature.name}:</em> <Markdown html={view.armor.feature.textHTML} /></div>{/if}
-  {:else}
-    <p class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</p>
-  {/if}
+  <!-- one armor at a time, the Active Armor: removing or replacing it clears its marked slots -->
+  <div class="table-responsive">
+    <table class="equipment">
+      <thead>
+        <tr>
+          <th>{t('Common.Name')}</th>
+          <th>{t('Armor.BaseThresholds')}</th>
+          <th>{t('Armor.BaseScore')}</th>
+          <th>{t('Character.Marked')}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {#if view.armor?.name}
+          <tr class="equipped">
+            <td>
+              <strong><Reference entry={view.armor} /></strong>
+              {#if view.armor.tier}<small>{label('Tier', view.armor.tier)}</small>{/if}
+              {#if view.armor.feature?.name}<div class="feature"><em>{view.armor.feature.name}:</em> <Markdown html={view.armor.feature.textHTML} /></div>{/if}
+            </td>
+            <td>{view.armor.thresholds?.major ?? '-'} / {view.armor.thresholds?.severe ?? '-'}</td>
+            <td>{view.armor.score ?? 0}</td>
+            <td>{view.armor.marked ?? 0}</td>
+            <td><RemoveButton name={view.armor.name} onremove={() => character.remove('data.armor').catch(() => {})} /></td>
+          </tr>
+        {:else}
+          <tr><td colspan="5" class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</td></tr>
+        {/if}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section class="panel">

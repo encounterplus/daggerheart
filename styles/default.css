@@ -2622,20 +2622,42 @@ dialog.confirm {
   }
 }
 
-#character .weapon {
+#character :is(.weapon, .active-armor) {
+  /* the name, properties and feature on the left; the rolls on the right */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
   padding-block: 0.5rem;
   border-bottom: 1px solid var(--sand-color);
+
+  > :not(.rolls) {
+    grid-column: 1;
+  }
 
   &:last-child {
     border-bottom: none;
   }
 
+  /* the properties under the name, as in the Inventory's weapons */
+  > small {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  .feature {
+    display: block;
+  }
+
   .rolls {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: baseline;
     gap: 0.35rem 0.75rem;
-    margin-top: 0.2rem;
 
     a {
       padding: 0.05rem 0.5rem;
@@ -2790,7 +2812,7 @@ dialog.confirm {
   }
 }
 
-#character table.weapons {
+#character :is(table.weapons, table.equipment) {
   margin-bottom: 0.5rem;
 
   td {

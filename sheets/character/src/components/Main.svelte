@@ -38,6 +38,11 @@
     set(character, 'data.otherConditions', (data.otherConditions ?? []).filter((entry) => entry !== name))
   }
 
+  /** A weapon's or armor's properties under its name, as in the Inventory: the set ones, `·` between. */
+  function properties(...values: (string | undefined)[]) {
+    return values.filter(Boolean).join(' · ')
+  }
+
   /** The modifier a trait gives an attack: the character's, in a Beastform its bonus too. */
   function traitModifier(trait?: string) {
     return trait ? (data.traits as Record<string, number> | undefined)?.[trait] ?? 0 : 0
@@ -63,35 +68,48 @@
     {@const attack = view.beastform.attack ?? {}}
     {@const trait = attack.trait ?? view.beastform.trait}
     <div class="weapon">
-      <div class="name"><strong><Reference entry={view.beastform} /></strong> <small>{t('Entity.Beastform')}</small></div>
+      <div class="name"><strong><Reference entry={view.beastform} /></strong></div>
+      <small>{properties(t('Entity.Beastform'), label('Range', attack.range), attack.damage ? label('Damage', attack.damageType) : '')}</small>
       <div class="rolls">
         <RollLink formula={actionRoll(traitModifier(trait) + (view.beastform.traitModifier ?? 0))} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</RollLink>
         {#if attack.damage}
           <RollLink formula={damageRoll(attack.damage, proficiency)} label={`${view.beastform.name} damage`}>{damageRoll(attack.damage, proficiency)}</RollLink>
-          {label('Damage', attack.damageType)}
         {/if}
-        <span>{label('Range', attack.range)}</span>
       </div>
     </div>
   {:else}
     {#each active as weapon (weapon.path)}
       <div class="weapon">
-        <div class="name"><strong><Reference entry={weapon} /></strong> <small>{label('WeaponCategory', weapon.category)}{weapon.burden ? ` · ${label('WeaponBurden', weapon.burden)}` : ''}</small></div>
+        <div class="name"><strong><Reference entry={weapon} /></strong></div>
+        <small>{properties(label('WeaponCategory', weapon.category), label('WeaponBurden', weapon.burden), label('Range', weapon.range), weapon.damage ? label('Damage', weapon.damageType) : '')}</small>
+        {#if weapon.feature?.name}
+          <div class="feature"><strong>{weapon.feature.name}:</strong> <Markdown html={weapon.featureHTML} /></div>
+        {/if}
         <div class="rolls">
           <RollLink formula={actionRoll(traitModifier(weapon.trait))} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</RollLink>
           {#if weapon.damage}
             <RollLink formula={damageRoll(weapon.damage, proficiency)} label={`${weapon.name} damage`}>{damageRoll(weapon.damage, proficiency)}</RollLink>
-            {label('Damage', weapon.damageType)}
           {/if}
-          <span>{label('Range', weapon.range)}</span>
         </div>
-        {#if weapon.feature?.name}
-          <div class="feature"><strong>{weapon.feature.name}:</strong> <Markdown html={weapon.featureHTML} /></div>
-        {/if}
       </div>
     {:else}
       <p class="empty">No weapon equipped: equip one on the Inventory tab.</p>
     {/each}
+  {/if}
+</section>
+
+<section class="panel">
+  <h3>{t('Character.ActiveArmor')}</h3>
+  {#if view.armor?.name}
+    <div class="active-armor">
+      <div class="name"><strong><Reference entry={view.armor} /></strong></div>
+      <small>{properties(label('Tier', view.armor.tier), `${t('Armor.BaseThresholds')} ${view.armor.thresholds?.major ?? '-'} / ${view.armor.thresholds?.severe ?? '-'}`, `${t('Armor.BaseScore')} ${view.armor.score ?? 0}`)}</small>
+      {#if view.armor.feature?.name}
+        <div class="feature"><strong>{view.armor.feature.name}:</strong> <Markdown html={view.armor.feature.textHTML} /></div>
+      {/if}
+    </div>
+  {:else}
+    <p class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level. Equip armor on the Inventory tab.</p>
   {/if}
 </section>
 
