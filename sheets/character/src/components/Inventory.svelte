@@ -147,7 +147,7 @@
   </div>
   {#each view.inventory ?? [] as item (item.path)}
     <div class="item">
-      <div class="row">
+      <div class="row ruled">
         <input type="text" aria-label={t('Common.Name')} placeholder={t('Common.Name')} use:field={{ store: character, path: `${item.path}.name` }}>
         <input type="number" class="modifier" min="0" aria-label={t('Common.Quantity')} title={t('Common.Quantity')} use:field={{ store: character, path: `${item.path}.quantity` }}>
         <RemoveButton name={item.name} onremove={() => character.remove(item.path).catch(() => {})} />

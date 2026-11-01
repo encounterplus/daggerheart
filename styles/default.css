@@ -1760,6 +1760,71 @@ dialog.confirm {
   }
 }
 
+/* fields as on the printed sheet's header: white boxes in a dark grey frame, rounded where it cuts
+   the corners. Not the select in a heading, a pill on the frame (.panel-header) */
+#character {
+  --field-border: #6D6E71;
+  --field-rule: #D1D3D4;
+  --field-end: 12px;
+  --field-start-image: url("../images/fields/line-start.svg");
+  --field-end-image: url("../images/fields/line-end.svg");
+  --field-tray-image: url("../images/fields/experience-value.svg");
+}
+
+#character :is(input:not([type=checkbox], [type=radio], [type=range], [type=file]), select:not(.panel-header *), textarea) {
+  --pico-form-element-background-color: white;
+  --pico-form-element-active-background-color: white;
+  --pico-form-element-border-color: var(--field-border);
+  border-width: 2px;
+  border-radius: 0.4rem;
+}
+
+/* the lines of Experiences, Conditions and Inventory: no box, a light rule with its ends turned up;
+   the ends are images (images/fields), the rule between them a gradient */
+#character .row:is(.experience, .ruled) input {
+  --pico-form-element-focus-color: transparent;
+  padding-inline: calc(var(--field-end) + 0.25rem);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    var(--field-start-image) left bottom / var(--field-end) var(--field-end) no-repeat,
+    var(--field-end-image) right bottom / var(--field-end) var(--field-end) no-repeat,
+    linear-gradient(var(--field-rule), var(--field-rule)) center bottom / calc(100% - 2 * var(--field-end)) 2px no-repeat;
+
+  /* focused, the rule and its ends (or the tray) turn violet */
+  &:focus {
+    --field-rule: var(--violet-color);
+    --field-start-image: url("../images/fields/line-start-focus.svg");
+    --field-end-image: url("../images/fields/line-end-focus.svg");
+    --field-tray-image: url("../images/fields/experience-value-focus.svg");
+  }
+
+  &[type=number] {
+    text-align: center;
+  }
+}
+
+/* an Experience: the name's rule runs on to the value, which sits in a tray */
+#character .row.experience {
+  gap: 0.25rem;
+
+  input[type=text] {
+    padding-inline-end: 0.25rem;
+    background:
+      var(--field-start-image) left bottom / var(--field-end) var(--field-end) no-repeat,
+      linear-gradient(var(--field-rule), var(--field-rule)) right bottom / calc(100% - var(--field-end)) 2px no-repeat;
+  }
+
+  /* padded as the other lines, so the browser's arrows (always shown in Safari) sit inside the tray */
+  input.modifier {
+    width: 5rem;
+    padding-left: 2rem;
+    padding-right: 0.7rem;
+    background: var(--field-tray-image) center bottom / 100% auto no-repeat;
+  }
+}
+
 /* a light panel in a gold frame: the header's boxes and the tabs' sections */
 #character :is(.panel, .box) {
   --pico-color: var(--dark-color);
@@ -1775,6 +1840,9 @@ dialog.confirm {
   --pico-switch-checked-background-color: var(--violet-color);
   --pico-h3-color: var(--ink-color);
   --pico-h4-color: var(--ink-color);
+  /* light paper even in dark mode: the browser draws its own parts of controls (number arrows,
+     scrollbars) dark on it, not white */
+  color-scheme: light;
 
   position: relative;
   margin: 0 0 var(--panel-gap);

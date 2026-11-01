@@ -158,7 +158,7 @@
           <button class="tag" title="Remove" onclick={() => removeCondition(name)}>{name} ×</button>
         {/each}
       </div>
-      <form class="row" onsubmit={addCondition}>
+      <form class="row ruled" onsubmit={addCondition}>
         <input type="text" placeholder={t('Character.OtherConditions')} bind:value={condition}>
         <button class="outline" type="submit">Add</button>
       </form>
