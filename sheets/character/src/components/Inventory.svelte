@@ -5,7 +5,7 @@
   import { label, t } from '../lib/labels.svelte'
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { ask } from '../lib/confirm.svelte'
-  import { addGold, equip, inventoryWeaponLimit } from '../lib/rules'
+  import { equip, inventoryWeaponLimit } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Pips from '../lib/Pips.svelte'
   import Reference from '../lib/Reference.svelte'
@@ -126,13 +126,11 @@
 
 <section class="panel">
   <h3>{t('Character.Gold')}</h3>
-  <!-- the tenth mark in a category clears it and marks one in the next -->
   <div class="gold">
     {#each coins as coin}
-      <div class="coin">
+      <div class="coin {coin.unit}">
+        <Pips value={data.gold?.[coin.unit]} boxes={coin.boxes} label={t(coin.label)} onchange={(count) => set(character, `data.gold.${coin.unit}`, count)} />
         <span class="label">{t(coin.label)}</span>
-        <Pips value={data.gold?.[coin.unit]} boxes={coin.boxes} shape="round" label={t(coin.label)} onchange={(count) => set(character, `data.gold.${coin.unit}`, count)} />
-        <button class="outline" aria-label="Add one" onclick={() => change(character, (draft) => addGold(draft, coin.unit))}>+</button>
       </div>
     {/each}
   </div>

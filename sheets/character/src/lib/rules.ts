@@ -167,23 +167,6 @@ export function moveToLoadout(data: CharacterData, id: string, recall: boolean) 
   card.vault = false
 }
 
-// GOLD
-
-/** 10 handfuls make a bag, 10 bags a chest: a category's tenth mark clears it and marks the next. */
-export function addGold(data: CharacterData, unit: 'handfuls' | 'bags' | 'chests') {
-  const gold = { handfuls: 0, bags: 0, chests: 0, ...data.gold }
-  gold[unit] += 1
-  if (gold.handfuls > 9) {
-    gold.handfuls = 0
-    gold.bags += 1
-  }
-  if (gold.bags > 9) {
-    gold.bags = 0
-    gold.chests += 1
-  }
-  data.gold = gold
-}
-
 // LEVELING UP
 
 /** The advancement options, the tiers they open at and their slots in a tier. */
