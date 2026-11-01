@@ -1907,6 +1907,19 @@ dialog.confirm {
   }
 }
 
+/* a header too narrow for the ribbon and an add button beside it (as in the Main tab's columns): the
+   button under the ribbon, as on a phone */
+#character .panel-header:has(button.add) {
+  container: panel-header / inline-size;
+}
+
+@container panel-header (max-width: 47rem) {
+  #character .panel-header .actions:has(button.add) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
 /* the tabs: gold edged pills on a gold line, the open one violet; on a phone a menu instead, which
    the round button in the corner opens (the bar is a popover: these undo the browser's popover style) */
 #character.sheet .tab-bar.band-tabs {
@@ -1984,8 +1997,8 @@ dialog.confirm {
   display: none;
 }
 
-/* the header: portrait and name, then the defense and the traits, then health and Hope; on a wide
-   screen side by side, as the printed sheet */
+/* the header: portrait and name, then the defense and the traits; on a wide screen side by side, as
+   the printed sheet */
 #character .sheet-header {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -2004,22 +2017,11 @@ dialog.confirm {
     margin: 0;
   }
 
-  /* the traits first, then Evasion, Armor and the slots; room under them for the Damage & Health
-     ribbon, which stands above its panel */
+  /* the traits first, then Evasion, Armor and the slots */
   .sheet-title { order: 0; }
   .traits { order: 1; }
-  .defense { order: 2; grid-column: 1 / -1; margin-bottom: 1rem; }
+  .defense { order: 2; grid-column: 1 / -1; }
   .defense-divider { order: 3; display: none; }
-  .health { order: 4; grid-column: 1 / -1; }
-  .hope { order: 5; grid-column: 1 / -1; }
-}
-
-/* Damage & Health and Hope side by side, except on a phone */
-@media (min-width: 600px) {
-  #character .sheet-header {
-    .health { grid-column: 1 / span 6; }
-    .hope { grid-column: 7 / -1; }
-  }
 }
 
 /* the defense and the traits in a row, as the printed sheet: the defense first, a strong rule in its
@@ -2028,11 +2030,9 @@ dialog.confirm {
   #character .sheet-header {
     grid-template-columns: repeat(5, minmax(0, 1fr)) auto repeat(10, minmax(0, 1fr));
 
-    .defense { order: 1; grid-column: 1 / span 5; margin-bottom: 0; }
+    .defense { order: 1; grid-column: 1 / span 5; }
     .defense-divider { order: 2; }
     .traits { order: 3; grid-column: 7 / -1; }
-    .health { grid-column: 1 / span 8; }
-    .hope { grid-column: 9 / -1; }
 
     .defense-divider {
       display: block;
@@ -2306,6 +2306,24 @@ dialog.confirm {
   }
 }
 
+/* the Main tab: Damage & Health, Hope and the Experiences, then the weapons, armor and conditions;
+   except on a phone in two columns, each its own stack */
+@media (min-width: 600px) {
+  #character .main-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.25rem;
+  }
+}
+
+/* from a tablet the first a little narrower, as the printed sheet's */
+@media (min-width: 768px) {
+  #character .main-columns {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+
 /* Damage & Health: the damage severities with the thresholds between them, then HP and Stress */
 #character .health {
   .thresholds {
@@ -2385,6 +2403,26 @@ dialog.confirm {
 
   .stress .pips input:checked {
     --pip-color: var(--stress-color);
+  }
+}
+
+/* in a column the 12 HP and Stress slots narrower rather than in a second row; too narrow for the
+   labels beside them as well, the labels above */
+@media (min-width: 600px) {
+  #character .health .pips {
+    flex-wrap: nowrap;
+
+    input[type=checkbox] {
+      flex: 0 1 1.45rem;
+      min-width: 0;
+    }
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  #character .health .track {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
   }
 }
 
@@ -2675,6 +2713,15 @@ dialog.confirm {
   }
 }
 
+/* the Main tab's columns at their narrowest: the damage under the attack, one width */
+@media (min-width: 600px) and (max-width: 767px) {
+  #character .weapon .rolls {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
 #character .feature,
 #character .feature .markdown,
 #character .feature .markdown p {
@@ -2939,10 +2986,15 @@ dialog.confirm {
 }
 
 /* a phone or a narrow window: the tabs become a menu over the round button in the bottom right
-   corner, and the sheet leaves room under its last panel for the button */
+   corner, and the sheet leaves room under its last panel for the button; with no tabs between them,
+   room between the header and the first panels' ribbons */
 @media (max-width: 767px) {
   #character.sheet {
     padding-bottom: 5.5rem;
+  }
+
+  #character .sheet-header {
+    margin-bottom: calc(var(--panel-gap) + 1.25rem);
   }
 
   #character .sections-button {
