@@ -1757,6 +1757,28 @@ dialog.confirm {
   > footer {
     font-size: 0.85rem;
     opacity: 0.75;
+
+    /* the token beside the source and location, as the template's footer.html */
+    .source {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 0.4rem;
+
+      a {
+        flex: none;
+      }
+
+      img {
+        display: block;
+        height: 50px;
+        width: auto;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 
@@ -1975,14 +1997,14 @@ dialog.confirm {
   }
 }
 
-/* a header too narrow for the ribbon and an add button or the subclass's rank beside it (as in the
-   Main and Features tabs' columns): the button or rank under the ribbon, as on a phone */
-#character .panel-header:has(button.add, > select) {
+/* a header too narrow for the ribbon and its buttons or the subclass's rank beside it (as in the
+   Main, Features and Inventory tabs' columns): the buttons or rank under the ribbon, as on a phone */
+#character .panel-header:has(> .actions, > select) {
   container: panel-header / inline-size;
 }
 
 @container panel-header (max-width: 47rem) {
-  #character .panel-header .actions:has(button.add),
+  #character .panel-header > .actions,
   #character .panel-header > select {
     grid-column: 1 / -1;
     justify-self: center;
@@ -2121,9 +2143,19 @@ dialog.confirm {
   --pico-primary-hover: var(--light-color);
   --pico-primary-hover-underline: var(--light-color);
 
+  /* the name plate, from the printed sheet's header art: in from the left behind the portrait, as
+     long as the name, its right edge slanted at the art's angle (142 across 274 down) */
+  --plate-padding: 0.75rem;
+  --plate-slant: 3.4rem;
+  --plate-start: 2rem;
+  --plate-color: color-mix(in srgb, var(--violet-color) 55%, var(--ink-color));
+
+  position: relative;
+  isolation: isolate;
   display: flex;
   gap: 1rem;
   align-items: center;
+  padding-block: var(--plate-padding);
 
   .portrait {
     flex: none;
@@ -2135,9 +2167,78 @@ dialog.confirm {
     box-shadow: 0 0 0 2px var(--ink-color), 0 0 0 3px color-mix(in srgb, var(--trim-color) 55%, transparent);
   }
 
-  .name {
-    flex: 1;
+  &:has(> .portrait) {
+    --plate-start: 8rem;
+  }
+
+  /* as tall as the header, the name and the domains centred on it; room on the right for the slant */
+  .plate {
+    position: relative;
+    flex: 0 1 auto;
+    align-self: stretch;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     min-width: 0;
+    margin-right: auto;
+    padding-right: var(--plate-slant);
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: calc(-1 * var(--plate-padding)) 0 calc(-1 * var(--plate-padding)) calc(-1 * var(--plate-start));
+      clip-path: polygon(0 0, 100% 0, calc(100% - var(--plate-slant)) 100%, 0 100%);
+      background:
+        linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent), transparent 60%),
+        linear-gradient(to right, transparent, var(--plate-color) 6rem);
+    }
+  }
+
+  .name {
+    min-width: 0;
+  }
+
+  /* the class's domains and the multiclass's, one above another past a thin rule; the icons
+     (images/domains) are one-color drawings, masked so they take the trim's color */
+  .domains {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 1rem;
+    border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
+  }
+
+  .domain-icon {
+    display: block;
+    width: 1.9rem;
+    aspect-ratio: 1;
+    background-color: var(--trim-color);
+    mask: var(--domain-icon) center / contain no-repeat;
+
+    &[data-domain=arcana] { --domain-icon: url("../images/domains/arcana.svg"); }
+    &[data-domain=blade] { --domain-icon: url("../images/domains/blade.svg"); }
+    &[data-domain=bone] { --domain-icon: url("../images/domains/bone.svg"); }
+    &[data-domain=codex] { --domain-icon: url("../images/domains/codex.svg"); }
+    &[data-domain=dread] { --domain-icon: url("../images/domains/dread.svg"); }
+    &[data-domain=grace] { --domain-icon: url("../images/domains/grace.svg"); }
+    &[data-domain=midnight] { --domain-icon: url("../images/domains/midnight.svg"); }
+    &[data-domain=sage] { --domain-icon: url("../images/domains/sage.svg"); }
+    &[data-domain=splendor] { --domain-icon: url("../images/domains/splendor.svg"); }
+    &[data-domain=valor] { --domain-icon: url("../images/domains/valor.svg"); }
+  }
+
+  /* side by side and larger once the header has the room, as the defense and the traits' row */
+  @media (min-width: 720px) {
+    .domains {
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    .domain-icon {
+      width: 3rem;
+    }
   }
 
   hgroup {
@@ -2174,14 +2275,17 @@ dialog.confirm {
 
     /* the name across the lower part, as Evasion's and Armor's */
     .value {
-      width: 3.6rem;
+      width: 4.7rem;
       aspect-ratio: 191 / 230;
-      padding-bottom: 1rem;
+      padding-bottom: 1.2rem;
       background-image: url("../images/scores/score-level.svg");
+      font-size: 1.85rem;
     }
 
     .label {
-      margin-top: -1.6rem;
+      margin-top: -1.8rem;
+      min-width: 5rem;
+      font-size: 0.65rem;
     }
   }
 }
@@ -2216,7 +2320,7 @@ dialog.confirm {
     position: relative;
     z-index: 1;
     margin-top: -0.85rem;
-    padding: 0.1rem 0.55rem;
+    padding: 0.12rem 0rem 0.1rem 0;
     border: 2px solid var(--trim-color);
     border-radius: 0.35rem;
     background-color: var(--ink-color);
@@ -2395,12 +2499,9 @@ dialog.confirm {
   }
 }
 
-/* the Inventory tab: the weapons and armor, then the inventory; side by side from a tablet,
-   with shorter ribbons, so the buttons beside them keep clear */
+/* the Inventory tab: the weapons, armor and gold, then the inventory; side by side from a tablet */
 @media (min-width: 768px) {
   #character .inventory-columns {
-    --ribbon-min-width: 14rem;
-
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
@@ -2462,14 +2563,17 @@ dialog.confirm {
     font-weight: 800;
   }
 
-  .track {
-    display: grid;
-    grid-template-columns: 5.5rem minmax(0, 1fr);
-    align-items: center;
-    gap: 0.5rem;
-    padding-block: 0.35rem;
-    border-top: 1px solid var(--sand-color);
-  }
+}
+
+/* HP and Stress, and the companion's Stress and the Strange Patterns number (Features tab) alike:
+   the label, then the slots */
+#character :is(.health, .companion, .strange-patterns) .track {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.35rem;
+  border-top: 1px solid var(--sand-color);
 
   .pips {
     justify-content: flex-start;
@@ -2481,11 +2585,11 @@ dialog.confirm {
     }
   }
 
-  .hp .pips input:checked {
+  &.hp .pips input:checked {
     --pip-color: var(--hp-color);
   }
 
-  .stress .pips input:checked {
+  &.stress .pips input:checked {
     --pip-color: var(--stress-color);
   }
 }
@@ -2493,7 +2597,7 @@ dialog.confirm {
 /* in a column the 12 HP and Stress slots narrower rather than in a second row; too narrow for the
    labels beside them as well, the labels above */
 @media (min-width: 600px) {
-  #character .health .pips {
+  #character :is(.health, .companion, .strange-patterns) .track .pips {
     flex-wrap: nowrap;
 
     input[type=checkbox] {
@@ -2504,7 +2608,7 @@ dialog.confirm {
 }
 
 @media (min-width: 600px) and (max-width: 1023px) {
-  #character .health .track {
+  #character :is(.health, .companion, .strange-patterns) .track {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.25rem;
   }
@@ -2515,34 +2619,59 @@ dialog.confirm {
   text-transform: none;
 }
 
-/* Hope: gold diamonds on a violet band, then what Hope is spent on and the class's Hope feature */
+/* the Hope and Focus tracks, as the printed sheet's: gold diamonds on a violet band, a short
+   upright rule between two; .diamond outranks the shared diamond spacing below */
+#character :is(.hope, .focus) .pips.diamond {
+  --pip-color: var(--hope-color);
+  --cross-color: var(--light-color);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 1.7rem;
+  background-color: var(--violet-color);
+  clip-path: var(--ribbon-shape);
+
+  input[type=checkbox] {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-color: var(--trim-color);
+    background-color: var(--ink-color);
+  }
+
+  input[type=checkbox]:checked {
+    background-color: var(--pip-color);
+  }
+
+  .divider {
+    width: 2px;
+    height: 0.8rem;
+    border-radius: 1px;
+    background-color: var(--trim-color);
+  }
+}
+
+/* Martial Stances' Focus: its name, then the track */
+#character .track.focus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.75rem;
+  margin-bottom: 0.75rem;
+
+  .label {
+    font-family: "Eveleth Clean", var(--pico-font-family);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
+/* Hope: the track, then what Hope is spent on and the class's Hope feature */
 #character .hope {
   text-align: center;
 
   .track {
     display: flex;
     justify-content: center;
-  }
-
-  /* .diamond: outranks the shared diamond spacing below */
-  .pips.diamond {
-    --pip-color: var(--hope-color);
-    --cross-color: var(--light-color);
-    gap: 0.8rem;
-    padding: 0.55rem 1.7rem;
-    background-color: var(--violet-color);
-    clip-path: var(--ribbon-shape);
-
-    input[type=checkbox] {
-      width: 1.35rem;
-      height: 1.35rem;
-      border-color: var(--trim-color);
-      background-color: var(--ink-color);
-    }
-
-    input[type=checkbox]:checked {
-      background-color: var(--pip-color);
-    }
   }
 
   .note {
@@ -3230,43 +3359,31 @@ dialog.confirm {
     opacity: 0.5;
   }
 
-  .advancement {
-    display: grid;
-    grid-template-columns: 3.75rem 1fr;
-    align-items: start;
-    gap: 0.5rem;
-    margin-bottom: 0.35rem;
-    font-size: 0.8rem;
-    font-style: italic;
-    line-height: 1.3;
-
-    /* the boxes at the right, as printed, beside the text's first line */
-    .pips {
-      justify-content: flex-end;
-      padding-top: 0.05rem;
-    }
-
-    /* both of a level's advancements: the pair in a heavy frame */
-    &.double .pips {
-      justify-self: end;
-      gap: 0.15rem;
-      padding: 0.1rem;
-      border: 2px solid var(--dark-color);
-      border-radius: 4px;
-    }
+  /* both of a level's advancements: the pair in a heavy frame */
+  .advancement.double .pips {
+    justify-self: end;
+    gap: 0.15rem;
+    padding: 0.1rem;
+    border: 2px solid var(--dark-color);
+    border-radius: 4px;
   }
 }
 
-#character .upgrades .upgrade {
+/* an advancement option, and a companion upgrade (Features tab) alike: its boxes, then its text */
+#character :is(.advancements .advancement, .upgrades .upgrade) {
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
+  grid-template-columns: 3.75rem 1fr;
+  align-items: start;
   gap: 0.5rem;
-  margin-bottom: 0.25rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.3;
 
+  /* the boxes at the right, as printed, beside the text's first line */
   .pips {
-    justify-content: flex-start;
+    justify-content: flex-end;
+    padding-top: 0.05rem;
   }
 }
 
@@ -3431,7 +3548,7 @@ dialog.confirm {
     justify-items: center;
   }
 
-  #character .health .track {
+  #character :is(.health, .companion, .strange-patterns) .track {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.25rem;
   }

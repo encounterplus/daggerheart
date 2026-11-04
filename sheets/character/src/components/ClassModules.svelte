@@ -4,7 +4,7 @@
   import { field } from '../lib/field'
   import { label, t } from '../lib/labels.svelte'
   import { addFromLibrary, copyKeys } from '../lib/library'
-  import { actionRoll, damageRoll, signed } from '../lib/rules'
+  import { actionRoll, companionUpgrades, damageRoll, signed } from '../lib/rules'
   import FeatureCard from '../lib/FeatureCard.svelte'
   import Markdown from '../lib/Markdown.svelte'
   import Pips from '../lib/Pips.svelte'
@@ -29,9 +29,6 @@
   const stances = $derived(has('Martial Artist') || Boolean(data.stances?.known?.length))
   const patron = $derived(has('Warlock') || Boolean(data.patron))
   const strangePatterns = $derived(has('Wizard') || data.strangePattern !== undefined)
-
-  /** The companion's level-up options, by schema key. */
-  const upgrades = ['intelligent', 'lightInTheDark', 'creatureComfort', 'armored', 'vicious', 'resilient', 'bonded', 'aware'] as const
 
   function upgradeLabel(key: string) {
     return t(`CompanionUpgrade.${key[0].toUpperCase()}${key.slice(1)}`)
@@ -74,17 +71,17 @@
 
 {#if companion}
   {@const attack = data.companion?.attack ?? {}}
-  <section class="panel">
+  <section class="panel companion">
     <h3>{t('Character.Companion')}</h3>
     <div class="grid-fields">
       <label>{t('Common.Name')} <input type="text" use:field={{ store: character, path: 'data.companion.name' }}></label>
       <label>{t('Common.Evasion')} <input type="number" use:field={{ store: character, path: 'data.companion.evasion' }}></label>
-      <label>{t('Common.Stress')} {t('Common.Maximum')} <input type="number" min="0" use:field={{ store: character, path: 'data.companion.stress.maximum' }}></label>
     </div>
-    <div class="track">
-      <div class="label">{t('Common.Stress')}</div>
-      <!-- the companion marks a Stress for any damage; its last drops it out of the scene -->
-      <Pips value={data.companion?.stress?.current} max={data.companion?.stress?.maximum} boxes={Math.max(data.companion?.stress?.maximum ?? 0, 3)} label="Companion Stress" onchange={(count) => set(character, 'data.companion.stress.current', count)} />
+    <!-- as the character's Stress (Health): the companion marks one for any damage, and its last
+         drops it out of the scene; three slots and the Resilient upgrades' (views/transforms) -->
+    <div class="track stress">
+      <div class="label">{t('Common.Stress')} <small>{data.companion?.stress?.current ?? 0} / {view.companion?.stressMaximum ?? 3}</small></div>
+      <Pips value={data.companion?.stress?.current} max={view.companion?.stressMaximum ?? 3} boxes={6} label="Companion Stress" onchange={(count) => set(character, 'data.companion.stress.current', count)} />
     </div>
     <div class="grid-fields">
       <label>{t('Common.Attack')} <input type="text" use:field={{ store: character, path: 'data.companion.attack.name' }}></label>
@@ -112,11 +109,12 @@
       <button class="outline" onclick={() => character.insert('data.companion.experiences', { name: '', modifier: 2 }).catch(() => {})}>Add Experience</button>
     </div>
     <h4>{t('Character.CompanionUpgrades')}</h4>
+    <!-- as the Advancement tab's options: the boxes, then the name and what it does -->
     <div class="upgrades">
-      {#each upgrades as key}
+      {#each companionUpgrades as upgrade}
         <div class="upgrade">
-          <span>{upgradeLabel(key)}</span>
-          <Pips value={data.companion?.upgrades?.[key]} boxes={key === 'intelligent' || key === 'vicious' || key === 'resilient' ? 3 : 1} label={upgradeLabel(key)} onchange={(count) => set(character, `data.companion.upgrades.${key}`, count)} />
+          <Pips value={data.companion?.upgrades?.[upgrade.key]} boxes={upgrade.slots} label={upgradeLabel(upgrade.key)} onchange={(count) => set(character, `data.companion.upgrades.${upgrade.key}`, count)} />
+          <span><strong>{upgradeLabel(upgrade.key)}:</strong> {upgrade.text}</span>
         </div>
       {/each}
     </div>
@@ -134,9 +132,9 @@
         </select>
       </label>
     </div>
-    <div class="track">
+    <div class="track focus">
       <div class="label">{t('Character.Focus')}</div>
-      <Pips value={data.stances?.focus} boxes={6} shape="round" label={t('Character.Focus')} onchange={(count) => set(character, 'data.stances.focus', count)} />
+      <Pips value={data.stances?.focus} boxes={6} shape="diamond" dividers label={t('Character.Focus')} onchange={(count) => set(character, 'data.stances.focus', count)} />
     </div>
     <!-- stances are written in the form (Main → Class Modules) -->
     {#each view.stances?.known ?? [] as stance (stance.path)}
@@ -157,11 +155,13 @@
 {/if}
 
 {#if strangePatterns}
-  <section class="panel">
+  <section class="panel strange-patterns">
     <h3>{t('Character.StrangePatterns')}</h3>
-    <!-- rolling it on a Duality Die gains a Hope or clears a Stress -->
-    <div class="grid-fields">
-      <label>Number (1–12) <input type="number" min="1" max="12" use:field={{ store: character, path: 'data.strangePattern' }}></label>
+    <!-- rolling it on a Duality Die gains a Hope or clears a Stress; the number marked across twelve
+         slots, as the companion's Stress; none is 1–12's nothing, so unmarking the last removes it -->
+    <div class="track">
+      <div class="label">Number <small>{data.strangePattern ?? '–'}</small></div>
+      <Pips value={data.strangePattern} boxes={12} label={t('Character.StrangePatterns')} onchange={(count) => count ? set(character, 'data.strangePattern', count) : character.remove('data.strangePattern').catch(() => {})} />
     </div>
   </section>
 {/if}

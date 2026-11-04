@@ -20,7 +20,7 @@
 <section class="box hope">
   <h3>{t('Common.Hope')} <small>{data.hope ?? 0} / {view.hopeMaximum ?? 6}</small></h3>
   <div class="track">
-    <Pips value={data.hope} max={view.hopeMaximum} crossed={data.scars ?? 0} boxes={hopeSlots} shape="diamond" label={t('Common.Hope')} onchange={(count) => set(character, 'data.hope', count)} />
+    <Pips value={data.hope} max={view.hopeMaximum} crossed={data.scars ?? 0} boxes={hopeSlots} shape="diamond" dividers label={t('Common.Hope')} onchange={(count) => set(character, 'data.hope', count)} />
   </div>
   <p class="note">Spend a Hope to use an Experience or help an ally.</p>
   {#if hopeFeature?.name}

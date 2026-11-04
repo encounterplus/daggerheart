@@ -202,6 +202,18 @@ export const advancements = [
   { key: 'multiclass', label: 'Multiclass: Choose an additional class for your character, then cross out an unused “Take an upgraded subclass card” and the other multiclass option on this sheet.', slots: 2, from: 3, double: true }
 ] as const
 
+/** The Beastbound companion's level-up options in the SRD's words, with their slots. */
+export const companionUpgrades = [
+  { key: 'intelligent', slots: 3, text: 'Your companion gains a permanent +1 bonus to a Companion Experience of your choice.' },
+  { key: 'lightInTheDark', slots: 1, text: 'Use this as an additional Hope slot your character can mark.' },
+  { key: 'creatureComfort', slots: 1, text: 'Once per rest, when you take time during a quiet moment to give your companion love and attention, you can gain a Hope or you can both clear a Stress.' },
+  { key: 'armored', slots: 1, text: 'When your companion takes damage, you can mark one of your Armor Slots instead of marking one of their Stress.' },
+  { key: 'vicious', slots: 3, text: 'Increase your companion\'s damage dice or range by one step (d6 to d8, Close to Far, etc.).' },
+  { key: 'resilient', slots: 3, text: 'Your companion gains an additional Stress slot.' },
+  { key: 'bonded', slots: 1, text: 'When you mark your last Hit Point, your companion rushes to your side to comfort you. Roll a number of d6s equal to the unmarked Stress slots they have and mark them. If any roll a 6, your companion helps you up. Clear your last Hit Point and return to the scene.' },
+  { key: 'aware', slots: 1, text: 'Your companion gains a permanent +2 bonus to their Evasion.' }
+] as const
+
 /** The tiers that advance, with their levels and what their first level brings by itself. */
 export const advancementTiers = [
   { tier: 2, first: 2, last: 4, achievement: 'At level 2, gain an additional Experience at +2 and gain a +1 bonus to your Proficiency.' },

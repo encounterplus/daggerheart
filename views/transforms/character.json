@@ -13,7 +13,9 @@
       "data.thresholds.major": "#{% if data.armor.unequipped %}0{% else %}{{data.armor.thresholds.major|default: 0}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.majorThreshold|default: 0}}",
       "data.thresholds.severe": "#{% if data.armor.unequipped %}{{data.level|default: 1}}{% elif data.armor.thresholds.severe %}{{data.armor.thresholds.severe}}{% else %}{{data.level|default: 1}}{% endif %} + {{data.level|default: 1}} + {{data.bonuses.severeThreshold|default: 0}}",
       // six slots, less the scars, and the companion's Light in the Dark
-      "data.hopeMaximum": "#6 - {{data.scars|default: 0}} + {{data.companion.upgrades.lightInTheDark|default: 0}}"
+      "data.hopeMaximum": "#6 - {{data.scars|default: 0}} + {{data.companion.upgrades.lightInTheDark|default: 0}}",
+      // the companion's three Stress slots and one a Resilient upgrade
+      "data.companion.stressMaximum": "#3 + {{data.companion.upgrades.resilient|default: 0}}"
     },
     // DISPLAY: what a static sheet (sheets/character) can't render itself — Markdown, with its
     // dice links. Templates use the filters directly.

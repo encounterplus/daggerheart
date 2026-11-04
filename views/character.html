@@ -101,7 +101,7 @@
 
       {# class modules, when the character has them #}
       {% if data.companion.name %}
-      <p><strong><em>{{'Character.Companion'|l}}:</em></strong> {{data.companion.name}} | {{'Common.Evasion'|l}} {{data.companion.evasion|default: 10}} | {{'Common.Stress'|l}} {{data.companion.stress.current|default: 0}} / {{data.companion.stress.maximum|default: 0}}{% if data.companion.attack.damage %} | <a href="/roll/{{data.proficiency|default: 1}}{{data.companion.attack.damage}}/{{data.companion.name}}/damage">{{data.proficiency|default: 1}}{{data.companion.attack.damage}}</a> {{data.companion.attack.range|map: 'Range'}}{% endif %}</p>
+      <p><strong><em>{{'Character.Companion'|l}}:</em></strong> {{data.companion.name}} | {{'Common.Evasion'|l}} {{data.companion.evasion|default: 10}} | {{'Common.Stress'|l}} {{data.companion.stress.current|default: 0}} / {{data.companion.stressMaximum}}{% if data.companion.attack.damage %} | <a href="/roll/{{data.proficiency|default: 1}}{{data.companion.attack.damage}}/{{data.companion.name}}/damage">{{data.proficiency|default: 1}}{{data.companion.attack.damage}}</a> {{data.companion.attack.range|map: 'Range'}}{% endif %}</p>
       {% endif %}
       {% if data.stances.known %}
       <p><strong><em>{{'Character.MartialStances'|l}}:</em></strong> {{'Character.Focus'|l}} {{data.stances.focus|default: 0}}{% if data.stances.active %} | {{'Character.ActiveStance'|l}}: {{data.stances.active}}{% endif %}</p>
