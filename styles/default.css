@@ -1625,6 +1625,8 @@ dialog.confirm {
    damage bands, the Hope diamonds) in light panels on a dark page, gold trimmed with violet accents;
    track colors from the source material: HP brick, Stress slate, Hope gold, armor brass */
 :root:has(main#character.sheet) {
+  /* the scrollbar always shown: tabs that fit and tabs that don't keep the same width */
+  overflow-y: scroll;
   --pico-background-color: var(--dark-bg-color);
   background-image: radial-gradient(120% 50rem at 50% 0, color-mix(in srgb, #3E3189 40%, transparent), transparent);
   background-repeat: no-repeat;
@@ -2530,7 +2532,16 @@ dialog.confirm {
       width: 100%;
       min-height: 2.6rem;
       padding: 0.2rem 0.5rem;
-      border-radius: 0.3rem;
+      /* the printed sheet's label: the body inset 0.15rem, a 0.55rem square tab out at each corner,
+         its outer corner clipped and a 45° step back to the body */
+      clip-path: polygon(
+        0.15rem 0.7rem, 0 0.55rem, 0 0.08rem, 0.08rem 0, 0.55rem 0, 0.7rem 0.15rem,
+        calc(100% - 0.7rem) 0.15rem, calc(100% - 0.55rem) 0, calc(100% - 0.08rem) 0, 100% 0.08rem,
+        100% 0.55rem, calc(100% - 0.15rem) 0.7rem,
+        calc(100% - 0.15rem) calc(100% - 0.7rem), 100% calc(100% - 0.55rem), 100% calc(100% - 0.08rem),
+        calc(100% - 0.08rem) 100%, calc(100% - 0.55rem) 100%, calc(100% - 0.7rem) calc(100% - 0.15rem),
+        0.7rem calc(100% - 0.15rem), 0.55rem 100%, 0.08rem 100%, 0 calc(100% - 0.08rem),
+        0 calc(100% - 0.55rem), 0.15rem calc(100% - 0.7rem));
       background-color: var(--violet-color);
       color: white;
       font-size: 0.7rem;
@@ -2552,8 +2563,10 @@ dialog.confirm {
     z-index: 1;
     display: grid;
     place-items: center;
-    min-width: 2.5rem;
-    height: 2.6rem;
+    min-width: 2rem;
+    height: 2rem;
+    /* centred on the 2.6rem labels, not on the labels with their notes under them */
+    margin-block-start: 0.3rem;
     margin-inline: -0.3rem;
     padding-inline: 0.35rem;
     border: 2px solid var(--violet-color);
@@ -2561,6 +2574,36 @@ dialog.confirm {
     background-color: white;
     font-size: 1.25rem;
     font-weight: 800;
+
+    /* the printed sheet's arrow out of the box into the next label: a white triangle over the
+       box's right border, a violet one inside it on the same base */
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    &::before {
+      left: 100%;
+      width: 0.7rem;
+      height: 1.4rem;
+      background-color: white;
+    }
+
+    &::after {
+      left: calc(100% + 0.03rem);
+      width: 0.37rem;
+      height: 0.74rem;
+      background-color: var(--violet-color);
+    }
+  }
+
+  /* the labels after a threshold clear its arrow */
+  .threshold + .severity strong {
+    padding-inline-start: 1.1rem;
   }
 
 }
@@ -2808,8 +2851,8 @@ dialog.confirm {
   font-weight: 600;
 }
 
-/* the Background Questions', the Connections' and the Journal's prompts, over their fields */
-#character :is(.background-columns, .journal) .hint {
+/* the Background Questions', the Connections', the Projects' and the Journal's prompts, over their fields */
+#character :is(.background-columns, .projects, .journal) .hint {
   margin: 0 0 0.5rem;
   font-style: italic;
   text-align: center;
@@ -2973,11 +3016,363 @@ dialog.confirm {
   }
 }
 
-#character .resets {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.4rem;
-  margin-bottom: var(--panel-gap);
+/* Projects (Story): a countdown each, its description under it */
+#character .project {
+  margin-bottom: 0.75rem;
+
+  .of {
+    opacity: 0.6;
+  }
+
+  .done {
+    margin: 0 0 0.4rem;
+    color: var(--slate-color);
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  textarea {
+    margin-bottom: 0;
+  }
+}
+
+/* the header's Downtime button: its icon in a dark round button in the gold trim, before the level */
+#character .sheet-title .downtime-button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  padding: 0.45rem;
+  border: 2px solid var(--trim-color);
+  border-radius: 999px;
+  background-color: var(--ink-color);
+  color: white;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--violet-color);
+  }
+}
+
+/* the Downtime panel (components/Downtime): a paper column sliding in from the right over the
+   dimmed sheet, its title on a dark band, Finish and the other resets kept at the foot */
+#character dialog.downtime {
+  --pico-modal-overlay-backdrop-filter: none;
+  --pad: 1.1rem;
+
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 0;
+  /* not a scroll container (Pico's is): the panel sliding in overflows it, and focusing the panel's
+     first button would scroll it into view, so it showed at once over a scrollbar */
+  overflow: clip;
+
+  > article {
+    display: flex;
+    flex-direction: column;
+    width: min(27rem, 100%);
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0 var(--pad);
+    overflow-y: auto;
+    border-width: 0 0 0 2px;
+    border-radius: 0;
+    box-shadow: -0.5rem 0 2rem rgb(0 0 0 / 0.4);
+  }
+
+  /* in from the right over a fading dimmer, out the same way: the sheet closes the dialog once
+     the closing animations end */
+  &[open] {
+    animation: downtime-dim-in 0.25s ease-out;
+
+    > article {
+      animation: downtime-slide-in 0.25s ease-out;
+    }
+  }
+
+  &[open].closing {
+    animation: downtime-dim-out 0.2s ease-in forwards;
+
+    > article {
+      animation: downtime-slide-out 0.2s ease-in forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[open],
+    &[open] > article {
+      animation: none !important;
+    }
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 calc(-1 * var(--pad)) 0.9rem;
+    padding: 0.7rem var(--pad);
+    border-bottom: 2px solid var(--trim-color);
+    border-radius: 0;
+    background-color: var(--ink-color);
+
+    h2 {
+      margin: 0;
+      color: var(--light-color);
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  }
+
+  button {
+    width: auto;
+    margin: 0;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+
+  .dismiss {
+    display: grid;
+    place-items: center;
+    padding: 0.2rem;
+    border: none;
+    background: none;
+    color: var(--light-color);
+
+    svg {
+      display: block;
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+
+  section {
+    margin: 0 0 1.25rem;
+  }
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    small {
+      margin-left: 0.3rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  .note {
+    margin: 0.3rem 0 0;
+    font-size: 0.85rem;
+  }
+
+  label {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .rests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  > article > .note {
+    margin-bottom: 1rem;
+  }
+
+  .swaps {
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.2rem 0;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    li.vault span {
+      opacity: 0.6;
+    }
+
+    button {
+      padding: 0.15rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .move {
+    margin-bottom: 0.5rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--ink-color) 20%, transparent);
+    border-radius: 0.5rem;
+    background-color: white;
+
+    > * + * {
+      margin-top: 0.45rem;
+    }
+
+    .row {
+      margin-bottom: 0;
+    }
+  }
+
+  .move-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .targets {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .amounts {
+    display: flex;
+    gap: 0.35rem;
+
+    button {
+      flex: 1;
+    }
+
+    .roll {
+      flex: 2;
+    }
+  }
+
+  .advance {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+
+    input {
+      width: 4rem;
+    }
+  }
+
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+
+    button {
+      font-size: 0.85rem;
+    }
+  }
+
+  .extra {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+
+    .note {
+      flex: 1;
+      margin: 0;
+    }
+
+    button {
+      width: 2rem;
+      padding: 0.1rem;
+    }
+  }
+
+  details.reference {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+
+    summary {
+      font-weight: 700;
+    }
+  }
+
+  footer {
+    position: sticky;
+    bottom: 0;
+    margin: auto calc(-1 * var(--pad)) 0;
+    padding: 0.75rem var(--pad) 1rem;
+    border-top: 1px solid var(--trim-color);
+    border-radius: 0;
+    background-color: var(--paper-color);
+
+    > button {
+      width: 100%;
+    }
+  }
+
+  .resets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+
+    button {
+      font-size: 0.8rem;
+    }
+  }
+
+  .finished {
+    .reminder {
+      margin: 0.75rem 0 0;
+      padding: 0.5rem 0.7rem;
+      border-left: 3px solid var(--gold-color);
+      background-color: white;
+      font-size: 0.9rem;
+    }
+
+    > button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+}
+
+@keyframes downtime-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes downtime-slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes downtime-dim-in {
+  from { background-color: transparent; }
+}
+
+@keyframes downtime-dim-out {
+  to { background-color: transparent; }
+}
+
+/* a phone: the panel the whole width */
+@media (max-width: 599px) {
+  #character dialog.downtime > article {
+    width: 100%;
+    border-left-width: 0;
+  }
 }
 
 /* a feature or domain card (lib/FeatureCard): its name on a dark band, faded once its use is spent */
@@ -3562,9 +3957,5 @@ dialog.confirm {
       grid-column: 1;
       justify-self: center;
     }
-  }
-
-  #character .resets {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

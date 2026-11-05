@@ -36,6 +36,15 @@
       "text": "text"
     },
 
+    // A long-term project (Work on a Project): a progress countdown the GM sets, `current` its
+    // ticks advanced towards `maximum`, where the project is done.
+    "Project": {
+      "name": "string",
+      "current": { "type": "integer", "min": 0 },
+      "maximum": { "type": "integer", "min": 0 },
+      "text": "text"
+    },
+
     // A feature as the character carries it: the library's name and text, plus the tokens placed
     // on it and whether its usage limit (once per rest, scene…) is spent. The sheet reads the limit
     // from the text; a rest clears used, tokens are cleared by hand.
@@ -279,6 +288,9 @@
     "strangePattern": { "type": "integer", "min": 1, "max": 12 },
     // any other class tracker
     "resources": { "type": ["Resource"], "ids": true },
+
+    // DOWNTIME: the projects the Work on a Project move advances
+    "projects": { "type": ["Project"], "ids": true },
 
     // STORY
     "appearance": {

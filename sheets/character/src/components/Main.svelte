@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
-  import { change, set } from '../lib/change'
+  import { set } from '../lib/change'
   import { field } from '../lib/field'
   import { label, properties, t } from '../lib/labels.svelte'
-  import { actionRoll, damageRoll, reset, signed } from '../lib/rules'
+  import { actionRoll, damageRoll, signed } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Health from './Health.svelte'
   import Hope from './Hope.svelte'
@@ -44,13 +44,6 @@
   function traitModifier(trait?: string) {
     return trait ? (data.traits as Record<string, number> | undefined)?.[trait] ?? 0 : 0
   }
-
-  const resets = [
-    { event: 'scene', title: 'End Scene', hint: 'Clears uses spent "once per scene"' },
-    { event: 'shortRest', title: 'Short Rest', hint: 'Clears uses spent "once per rest" and "once per short rest"' },
-    { event: 'longRest', title: 'Long Rest', hint: 'Clears uses spent "once per rest" and "once per long rest"' },
-    { event: 'session', title: 'End Session', hint: 'Clears uses spent "once per session"' }
-  ] as const
 </script>
 
 <!-- the character's state, then what they fight with; side by side from a tablet (default.css) -->
@@ -161,12 +154,4 @@
       </form>
     </section>
   </div>
-</div>
-
-<!-- uses come back as the features' and cards' texts say; HP, Stress, Hope and armor are the
-     downtime moves the player chooses -->
-<div class="resets">
-  {#each resets as { event, title, hint }}
-    <button class="outline" title={hint} onclick={() => change(character, (draft) => reset(draft, event))}>{title}</button>
-  {/each}
 </div>

@@ -43,6 +43,7 @@
       "data.domainCards": { "attribute": "data.domainCards", "map": { "descrHTML": "{{self.descr|md}}" } },
       "data.inventory": { "attribute": "data.inventory", "map": { "descrHTML": "{{self.descr|md}}" } },
       "data.resources": { "attribute": "data.resources", "map": { "textHTML": "{{self.text|md}}" } },
+      "data.projects": { "attribute": "data.projects", "map": { "textHTML": "{{self.text|md}}" } },
       "data.companion.textHTML": "{{data.companion.text|md}}"
     }
   ]

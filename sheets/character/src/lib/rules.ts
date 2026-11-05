@@ -102,6 +102,125 @@ export function reset(data: CharacterData, event: keyof typeof resets) {
   }
 }
 
+// DOWNTIME
+
+export type Rest = 'shortRest' | 'longRest'
+
+/**
+ * The downtime moves, by the rest they're chosen in: a short rest's clear 1d4 + Tier, a long
+ * rest's all of it. `ally` moves can be made on an ally, whose own sheet clears it.
+ */
+export const downtimeMoves = [
+  { key: 'wounds', shortRest: 'Tend to Wounds', longRest: 'Tend to All Wounds', ally: true, text: 'Clear Hit Points for yourself or an ally.' },
+  { key: 'stress', shortRest: 'Clear Stress', longRest: 'Clear All Stress', ally: false, text: 'Clear Stress.' },
+  { key: 'armor', shortRest: 'Repair Armor', longRest: 'Repair All Armor', ally: true, text: 'Clear Armor Slots from your or an ally\'s armor.' },
+  { key: 'prepare', shortRest: 'Prepare', longRest: 'Prepare', ally: false, text: 'Describe how you prepare, then gain a Hope; 2 Hope each when you Prepare with one or more members of your party.' },
+  { key: 'project', shortRest: null, longRest: 'Work on a Project', ally: false, text: 'With GM approval, advance a long-term project\'s countdown, automatically or with an action roll (GM\'s choice).' }
+] as const
+
+export type DowntimeMoveKey = typeof downtimeMoves[number]['key']
+
+/** A move as the player chose it: whose it is, what its dice came to, a project's advance. */
+export interface DowntimeMove {
+  key: DowntimeMoveKey
+  /** made on an ally: nothing changes here */
+  ally?: boolean
+  /** a short rest's 1d4 + Tier as rolled */
+  amount?: number
+  /** Prepare with one or more members of the party */
+  together?: boolean
+  project?: string
+  advance?: number
+}
+
+/** During a rest, each PC can make up to two downtime moves. */
+export const downtimeMoveCount = 2
+
+/** The dice a short rest's clearing moves roll. */
+export function downtimeRoll(tier = 1) {
+  return `1d4+${tier}`
+}
+
+/** Whether a move rolls before it can be made: a short rest's clearing ones, made on yourself. */
+export function needsRoll(move: DowntimeMove, rest: Rest) {
+  return rest === 'shortRest' && !move.ally && (move.key === 'wounds' || move.key === 'stress' || move.key === 'armor')
+}
+
+/** A track cleared by an amount, or all of it on a long rest; what it cleared. */
+function clear(current = 0, rest: Rest, amount = 0) {
+  const left = rest === 'longRest' ? 0 : Math.max(current - amount, 0)
+  return { left, cleared: current - left }
+}
+
+/** Whether the character carries a Premium Bedroll: during downtime, it clears a Stress. */
+export function hasBedroll(data: CharacterData) {
+  return (data.inventory ?? []).some((item) => item.name?.trim().toLowerCase() === 'premium bedroll')
+}
+
+/**
+ * Finishes a rest: makes the chosen moves on the character, the Premium Bedroll's Stress and a
+ * Beastbound companion's (it clears the Stress the character's moves clear), then clears the uses
+ * the rest brings back. Moves made on an ally change nothing here.
+ */
+export function finishRest(data: CharacterData, rest: Rest, moves: DowntimeMove[], hopeMaximum = 6) {
+  let stressCleared = 0
+  for (const move of moves) {
+    if (move.ally) {
+      continue
+    }
+    switch (move.key) {
+      case 'wounds': {
+        data.hp = { ...data.hp, current: clear(data.hp?.current, rest, move.amount).left }
+        break
+      }
+      case 'stress': {
+        const { left, cleared } = clear(data.stress?.current, rest, move.amount)
+        data.stress = { ...data.stress, current: left }
+        stressCleared += cleared
+        break
+      }
+      case 'armor': {
+        if (data.armor) {
+          data.armor.marked = clear(data.armor.marked, rest, move.amount).left
+        }
+        break
+      }
+      case 'prepare': {
+        data.hope = Math.min((data.hope ?? 0) + (move.together ? 2 : 1), hopeMaximum)
+        break
+      }
+      case 'project': {
+        const project = (data.projects ?? []).find((entry) => entry.id === move.project)
+        if (project) {
+          const advanced = (project.current ?? 0) + (move.advance ?? 1)
+          project.current = project.maximum ? Math.min(advanced, project.maximum) : advanced
+        }
+        break
+      }
+    }
+  }
+  if (hasBedroll(data) && data.stress?.current) {
+    data.stress = { ...data.stress, current: data.stress.current - 1 }
+  }
+  if (stressCleared && data.companion?.stress?.current) {
+    data.companion.stress.current = Math.max(data.companion.stress.current - stressCleared, 0)
+  }
+  reset(data, rest)
+}
+
+/**
+ * The features, loadout cards and items whose text names downtime or a rest, for reference: read
+ * from the view, which carries their Markdown (views/transforms/character.json).
+ */
+export function downtimeFeatures(view: any): { name?: string, html?: string }[] {
+  const mentions = (text?: string) => /downtime|during a (short |long )?rest|at the start of a rest/i.test(text ?? '')
+  return [
+    ...trackedFeatures(view).filter((feature) => mentions(feature.text)).map((feature: any) => ({ name: feature.name, html: feature.textHTML ?? feature.text })),
+    ...((view.domainCards ?? []) as any[]).filter((card) => !card.vault && mentions(card.descr)).map((card) => ({ name: card.name, html: card.descrHTML })),
+    ...((view.inventory ?? []) as any[]).filter((item) => mentions(item.descr)).map((item) => ({ name: item.name, html: item.descrHTML }))
+  ]
+}
+
 // EQUIPMENT
 
 type Weapon = NonNullable<CharacterData['weapons']>[number]

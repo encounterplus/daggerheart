@@ -115,6 +115,9 @@
       {% for resource in data.resources %}
       <p><strong><em>{{resource.name}}:</em></strong> {{resource.current|default: 0}}{{resource.maximum|prefix: ' / '}}{{resource.die|prefix: ' '}}</p>
       {% endfor %}
+      {% for project in data.projects %}
+      <p><strong><em>{{'Character.Project'|l}}: {{project.name}}</em></strong> {{project.current|default: 0}}{{project.maximum|prefix: ' / '}}</p>
+      {% endfor %}
     </div>
   </section>
 

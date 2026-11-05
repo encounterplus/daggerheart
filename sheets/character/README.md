@@ -22,7 +22,7 @@ system files, content and the API to the app's web server, `EP_SERVER` (default
 
 - `src/lib/` — the store (`character.ts`), labels, the `field` action that binds an input to a
   model path, `Pips`, `FeatureCard`, and the rules the sheet applies (`rules.ts`: tiers, rolls,
-  usage limits and resets, equipping, the loadout, gold, leveling up).
+  usage limits and resets, the downtime moves, equipping, the loadout, gold, leveling up).
 - `src/components/` — the header (traits, vitals) and the tabs.
 
 Inputs write model paths (`data.hp.current`); displays read the view (`view.data.evasion`), where

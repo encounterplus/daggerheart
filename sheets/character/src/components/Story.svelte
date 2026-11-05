@@ -3,6 +3,7 @@
   import { field } from '../lib/field'
   import { t } from '../lib/labels.svelte'
   import Markdown from '../lib/Markdown.svelte'
+  import RemoveButton from '../lib/RemoveButton.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
 
@@ -37,6 +38,34 @@
     <textarea rows="8" aria-label={t('Class.Connections')} use:field={{ store: character, path: 'data.connections' }}></textarea>
   </section>
 </div>
+
+<!-- what the Work on a Project downtime move advances (components/Downtime) -->
+<section class="panel projects">
+  <div class="panel-header">
+    <h3>{t('Character.Projects')}</h3>
+    <div class="actions">
+      <button class="outline add" onclick={() => character.insert('data.projects', { name: '', current: 0, maximum: 4 }).catch(() => {})}>Add Project</button>
+    </div>
+  </div>
+  <p class="hint">{t('Character.ProjectsHint')}</p>
+  {#each view.data.projects ?? [] as project (project.id)}
+    <div class="project">
+      <div class="row">
+        <input type="text" aria-label={t('Common.Name')} placeholder={t('Common.Name')} use:field={{ store: character, path: `data.projects[${project.id}].name` }}>
+        <input type="number" class="modifier" min="0" aria-label={t('Common.Current')} title={t('Common.Current')} use:field={{ store: character, path: `data.projects[${project.id}].current` }}>
+        <span class="of">/</span>
+        <input type="number" class="modifier" min="0" aria-label={t('Common.Maximum')} title={t('Common.Maximum')} use:field={{ store: character, path: `data.projects[${project.id}].maximum` }}>
+        <RemoveButton name={project.name} onremove={() => character.remove(`data.projects[${project.id}]`).catch(() => {})} />
+      </div>
+      {#if project.maximum && (project.current ?? 0) >= project.maximum}
+        <p class="note done">Complete</p>
+      {/if}
+      <textarea rows="2" aria-label={t('Common.Description')} placeholder={t('Common.Description')} use:field={{ store: character, path: `data.projects[${project.id}].text` }}></textarea>
+    </div>
+  {:else}
+    <p class="empty">No projects yet.</p>
+  {/each}
+</section>
 
 <!-- the player's freeform notes, across the page -->
 <section class="panel journal">

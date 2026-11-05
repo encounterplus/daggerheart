@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
+  import { downtime } from '../lib/downtime.svelte'
   import { label, t } from '../lib/labels.svelte'
   import Reference from '../lib/Reference.svelte'
 
@@ -45,6 +46,16 @@
       </div>
     {/if}
   </div>
+  <!-- rests and downtime moves, in a panel from the right (components/Downtime) -->
+  <button class="downtime-button" aria-label={t('Character.Downtime')} title={t('Character.Downtime')} onclick={() => (downtime.open = true)}>
+    <!-- the icon: Lucide's tent (ISC) -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3.5 21 14 3" />
+      <path d="M20.5 21 10 3" />
+      <path d="M15.5 21 12 15l-3.5 6" />
+      <path d="M2 21h20" />
+    </svg>
+  </button>
   <!-- the level on a shield in the corner, as the printed sheet's -->
   <div class="level shield">
     <div class="value">{view.level ?? 1}</div>

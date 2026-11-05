@@ -13,6 +13,7 @@
   import Story from './components/Story.svelte'
   import Advancement from './components/Advancement.svelte'
   import Footer from './components/Footer.svelte'
+  import Downtime from './components/Downtime.svelte'
   import Status from './components/Status.svelte'
   import ConfirmDialog from './lib/ConfirmDialog.svelte'
 
@@ -72,6 +73,8 @@
 
     <hr>
     <Footer {character} snapshot={$character} />
+    <!-- in the sheet, for its colors and controls (default.css) -->
+    <Downtime {character} snapshot={$character} />
   </main>
   <Status {character} snapshot={$character} />
   <ConfirmDialog />

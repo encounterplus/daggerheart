@@ -362,6 +362,18 @@
           ]
         },
         {
+          "title": "Character.Projects",
+          "type": "list",
+          "attribute": "data.projects",
+          "custom": {
+            "itemDetail": "{{ current|default: 0 }}{{ maximum|prefix: ' / ' }}"
+          },
+          "form": {
+            "title": "Character.Project",
+            "partial": "character-project"
+          }
+        },
+        {
           "title": "Character.Journal",
           "type": "group",
           "fields": [
