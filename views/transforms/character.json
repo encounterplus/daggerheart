@@ -17,7 +17,7 @@
       // the companion's three Stress slots and one a Resilient upgrade
       "data.companion.stressMaximum": "#3 + {{data.companion.upgrades.resilient|default: 0}}"
     },
-    // DISPLAY: what a static sheet (sheets/character) can't render itself — Markdown, with its
+    // DISPLAY: what a static sheet (sheets/default) can't render itself — Markdown, with its
     // dice links. Templates use the filters directly.
     {
       "descrHTML": "{{descr|md}}",

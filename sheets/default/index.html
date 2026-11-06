@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<!--
+  The Daggerheart character sheet, rendered by Svelte: /sheets/default/?id=<character-id>, the same in the app
+  and in a browser. The app serves the build, dist/ (see sheet.json); this is its source.
+
+  The SDK comes from the app and the system's styles from the system, never from the bundle. As views/partials/base.html,
+  no color scheme is forced; the SDK adds the view theme and the app's extra styles from the view's
+  environment, and src/lib/environment.ts the theme's stylesheet.
+-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character</title>
+  <link href="/systems/daggerheart/styles/pico.min.css" rel="stylesheet" type="text/css">
+  <link href="/systems/daggerheart/styles/default.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="/_app/js/ep.js"></script>
+  <!-- the SDK's UI in a browser: the library dialog EP.pick shows, the banner with each roll's result -->
+  <script src="/_app/js/ep-ui.js"></script>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

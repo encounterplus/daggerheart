@@ -45,14 +45,21 @@
     },
     "Character": {
       "role": "friendly",
-      // opens as the GM card (views/character.html), whose "Open sheet" button opens sheets/character
+      // opens as the GM card (views/character.html), whose "Open sheet" button opens sheets/default
       "view": {
         "renderer": "html",
-        "sheet": "character"
+        "sheet": "default"
       },
       "collection": {
         "detail": "{{data.class.name|default: 'Custom'}}"
-      }
+      },
+      // the conditions the sheet toggles, shown as status effects on the character's combatant.
+      // The rules are in the SRD module; without it the links still work, from name and icon here.
+      "statusEffects": [
+        { "attribute": "data.conditions.hidden", "reference": "/condition/hidden", "name": "Condition.Hidden", "icon": "gi-hood" },
+        { "attribute": "data.conditions.restrained", "reference": "/condition/restrained", "name": "Condition.Restrained", "icon": "gi-manacles" },
+        { "attribute": "data.conditions.vulnerable", "reference": "/condition/vulnerable", "name": "Condition.Vulnerable", "icon": "gi-broken-shield" }
+      ]
     }
   },
   "resources": [
@@ -72,6 +79,9 @@
       "visibility": "players"
     }
   ],
+  "statusEffects": {
+    "menuProvider": ["Rule:condition"]
+  },
   "viewThemes": [
     { "id": "night", "label": "Night (dark interface)" }
   ],
