@@ -1623,8 +1623,9 @@ dialog.confirm {
 
 /* the character sheet (sheets/default): the printed sheet's shapes (shields, ribbon headings,
    damage bands, the Hope diamonds) in light panels on a dark page, gold trimmed with violet accents;
-   track colors from the source material: HP brick, Stress slate, Hope gold, armor brass */
-:root:has(main#character.sheet) {
+   track colors from the source material: HP brick, Stress slate, Hope gold, armor brass;
+   the class is on <html> in the sheet's index.html, so the page has its background before Svelte mounts */
+:root.character-sheet {
   /* the scrollbar always shown: tabs that fit and tabs that don't keep the same width */
   overflow-y: scroll;
   --pico-background-color: var(--dark-bg-color);
