@@ -26,7 +26,13 @@
       checked={index < value}
       disabled={max !== undefined && index >= max}
       aria-label={label ? `${label} ${index + 1}` : undefined}
-      onchange={() => onchange(index + 1 === value ? index : index + 1)}
+      onchange={(event) => {
+        // Svelte writes `checked` only when `index < value` flips, so a box that keeps its state
+        // (unticking the 2nd of 5 sets the count to 2) would be left as the browser toggled it:
+        // put it back to what was drawn and let the new count redraw it.
+        event.currentTarget.checked = index < value
+        onchange(index + 1 === value ? index : index + 1)
+      }}
     >
   {/each}
 </div>
