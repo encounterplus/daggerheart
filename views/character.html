@@ -42,12 +42,12 @@
       <hr>
       {# each trait rolls the Duality Dice with its modifier #}
       <p class="list">
-        <span><strong>{{'Trait.Agility'|l}}</strong> <a href="/roll/2d12{{data.traits.agility|default: 0|signed}}/{{'Trait.Agility'|l}}">{{data.traits.agility|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Strength'|l}}</strong> <a href="/roll/2d12{{data.traits.strength|default: 0|signed}}/{{'Trait.Strength'|l}}">{{data.traits.strength|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Finesse'|l}}</strong> <a href="/roll/2d12{{data.traits.finesse|default: 0|signed}}/{{'Trait.Finesse'|l}}">{{data.traits.finesse|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Instinct'|l}}</strong> <a href="/roll/2d12{{data.traits.instinct|default: 0|signed}}/{{'Trait.Instinct'|l}}">{{data.traits.instinct|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Presence'|l}}</strong> <a href="/roll/2d12{{data.traits.presence|default: 0|signed}}/{{'Trait.Presence'|l}}">{{data.traits.presence|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Knowledge'|l}}</strong> <a href="/roll/2d12{{data.traits.knowledge|default: 0|signed}}/{{'Trait.Knowledge'|l}}">{{data.traits.knowledge|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Agility'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.agility|default: 0|signed}}/{{'Trait.Agility'|l}}">{{data.traits.agility|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Strength'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.strength|default: 0|signed}}/{{'Trait.Strength'|l}}">{{data.traits.strength|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Finesse'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.finesse|default: 0|signed}}/{{'Trait.Finesse'|l}}">{{data.traits.finesse|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Instinct'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.instinct|default: 0|signed}}/{{'Trait.Instinct'|l}}">{{data.traits.instinct|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Presence'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.presence|default: 0|signed}}/{{'Trait.Presence'|l}}">{{data.traits.presence|default: 0|signed}}</a></span>
+        <span><strong>{{'Trait.Knowledge'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.knowledge|default: 0|signed}}/{{'Trait.Knowledge'|l}}">{{data.traits.knowledge|default: 0|signed}}</a></span>
       </p>
       {% if data.experiences %}
       <hr>

@@ -188,6 +188,10 @@
   --primary-bg-color: color-mix(in srgb, var(--primary-color) var(--tint-amount), var(--tint-base-color));
 
   --pico-background-color: Canvas;
+
+  /* the SDK's dialogs (ep-ui.js: pick, confirm) keep the system colors, light or dark, and take
+     brick for an action that removes something */
+  --ep-ui-danger: var(--brick-color);
 }
 
 
@@ -1600,10 +1604,9 @@ section.questions {
   }
 }
 
-/* the sheet's form controls (and its confirmation's) light in either color scheme, as the rest of
-   the sheet: Pico's light scheme values, which its dark scheme would replace */
-#character.sheet,
-dialog.confirm {
+/* the sheet's form controls light in either color scheme, as the rest of the sheet: Pico's light
+   scheme values, which its dark scheme would replace */
+#character.sheet {
   --pico-muted-color: #646b79;
   --pico-form-element-background-color: rgb(251, 251.5, 252.25);
   --pico-form-element-selected-background-color: #dfe3eb;
@@ -3783,7 +3786,7 @@ dialog.confirm {
   }
 }
 
-/* removing from a list: a quiet trash icon, which asks first (dialog.confirm) */
+/* removing from a list: a quiet trash icon, which asks first (EP.confirm) */
 #character button.remove {
   display: inline-flex;
   width: auto;
@@ -3802,36 +3805,6 @@ dialog.confirm {
 
   &:hover {
     color: var(--brick-color);
-  }
-}
-
-/* the sheet's confirmation: a small card over the dimmed sheet, its action in brick */
-dialog.confirm {
-  --pico-modal-overlay-backdrop-filter: none;
-
-  article {
-    max-width: 24rem;
-    padding: 1.25rem 1.5rem 1rem;
-  }
-
-  p {
-    text-align: center;
-  }
-
-  footer {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-
-    button {
-      width: auto;
-      margin: 0;
-    }
-  }
-
-  .danger {
-    --pico-background-color: var(--brick-color);
-    --pico-border-color: var(--brick-color);
   }
 }
 

@@ -9,6 +9,7 @@
   import Pips from '../lib/Pips.svelte'
   import Reference from '../lib/Reference.svelte'
   import RemoveButton from '../lib/RemoveButton.svelte'
+  import DualityRoll from '../lib/DualityRoll.svelte'
   import RollLink from '../lib/RollLink.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -88,7 +89,7 @@
           <div class="name"><strong><Reference entry={view.beastform} /></strong></div>
           <small>{properties(t('Entity.Beastform'), label('Range', attack.range), attack.damage ? label('Damage', attack.damageType) : '')}</small>
           <div class="rolls">
-            <RollLink formula={actionRoll(traitModifier(trait) + (view.beastform.traitModifier ?? 0))} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</RollLink>
+            <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" formula={actionRoll(traitModifier(trait) + (view.beastform.traitModifier ?? 0))} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</DualityRoll>
             {#if attack.damage}
               <RollLink formula={damageRoll(attack.damage, proficiency)} label={`${view.beastform.name} damage`}>{damageRoll(attack.damage, proficiency)}</RollLink>
             {/if}
@@ -103,7 +104,7 @@
               <div class="feature"><strong>{weapon.feature.name}:</strong> <Markdown html={weapon.featureHTML} /></div>
             {/if}
             <div class="rolls">
-              <RollLink formula={actionRoll(traitModifier(weapon.trait))} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</RollLink>
+              <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" formula={actionRoll(traitModifier(weapon.trait))} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</DualityRoll>
               {#if weapon.damage}
                 <RollLink formula={damageRoll(weapon.damage, proficiency)} label={`${weapon.name} damage`}>{damageRoll(weapon.damage, proficiency)}</RollLink>
               {/if}

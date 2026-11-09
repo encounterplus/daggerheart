@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
-  import { ask } from '../lib/confirm.svelte'
   import { t } from '../lib/labels'
   import { advancements, advancementTiers, isTierAchievement, levelUp, newExperience, tier } from '../lib/rules'
   import Pips from '../lib/Pips.svelte'
@@ -31,7 +30,7 @@
     const message = achievement
       ? `Level up to ${next}: a new tier. You gain +1 Proficiency and a new Experience at +2${next >= 5 ? ', and your marked traits clear' : ''}. Then choose two advancements and a domain card.`
       : `Level up to ${next}? Then choose two advancements and a domain card.`
-    if (!(await ask(message, 'Level up'))) {
+    if (!(await EP.confirm(message, { action: 'Level up' }))) {
       return
     }
     change(character, levelUp)

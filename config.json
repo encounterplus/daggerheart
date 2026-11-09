@@ -79,6 +79,19 @@
       "visibility": "players"
     }
   ],
+  // the duality dice: a sheet rolls 1d12[Hope] + 1d12[Fear] + modifier; the roller colours the two
+  // dice, and the log marks the roll with the outcome. Gaining Hope or Fear is the sheet's to apply.
+  "dice": {
+    "labels": {
+      "Hope": { "color": "#D2B25F", "textColor": "#231F20" },
+      "Fear": { "color": "#6B3FA0", "textColor": "#FAF3E6" }
+    },
+    "outcomes": [
+      { "id": "critical", "label": "Roll.Critical", "color": "#D2B25F", "when": { "equal": ["Hope", "Fear"] } },
+      { "id": "hope", "label": "Roll.WithHope", "color": "#D2B25F", "when": { "greater": ["Hope", "Fear"] } },
+      { "id": "fear", "label": "Roll.WithFear", "color": "#8A5CC2", "when": { "greater": ["Fear", "Hope"] } }
+    ]
+  },
   "statusEffects": {
     "menuProvider": ["Rule:condition"]
   },

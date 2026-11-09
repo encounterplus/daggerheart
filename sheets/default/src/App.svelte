@@ -14,7 +14,6 @@
   import Footer from './components/Footer.svelte'
   import Downtime from './components/Downtime.svelte'
   import Status from './components/Status.svelte'
-  import ConfirmDialog from './lib/ConfirmDialog.svelte'
 
   // the sheet renders from the store's snapshots; inputs write through `EP.field` and the store
   let { character }: { character: Character } = $props()
@@ -72,4 +71,3 @@
   <Downtime {character} snapshot={$character} />
 </main>
 <Status {character} snapshot={$character} />
-<ConfirmDialog />

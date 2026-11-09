@@ -3,11 +3,12 @@
   import { set } from '../lib/change'
   import { t } from '../lib/labels'
   import { actionRoll, signed, traits } from '../lib/rules'
-  import RollLink from '../lib/RollLink.svelte'
+  import DualityRoll from '../lib/DualityRoll.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
 
   const data = $derived(snapshot.model.data)
+  const hopeMaximum = $derived(snapshot.view.data.hopeMaximum)
   const marked = $derived(new Set(data.markedTraits ?? []))
 
   /** What each trait is rolled for, as the character sheet lists them. */
@@ -41,7 +42,7 @@
     <div class="trait shield" class:marked={marked.has(trait)}>
       <button type="button" class="label" aria-pressed={marked.has(trait)} onclick={() => toggleMarked(trait)}>{t(key(trait))}</button>
       <div class="value">
-        <RollLink formula={actionRoll(data.traits?.[trait])} label={t(key(trait))}>{signed(data.traits?.[trait])}</RollLink>
+        <DualityRoll {character} {hopeMaximum} formula={actionRoll(data.traits?.[trait])} label={t(key(trait))}>{signed(data.traits?.[trait])}</DualityRoll>
       </div>
       <div class="verbs">{#each verbs[trait] ?? [] as verb}<span>{verb}</span>{/each}</div>
     </div>

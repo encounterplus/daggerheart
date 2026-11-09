@@ -14,9 +14,35 @@ export function signed(value = 0) {
   return value < 0 ? String(value) : `+${value}`
 }
 
-/** An action roll with a modifier: the Duality Dice, read as a sum. */
+/**
+ * An action roll with a modifier: the Duality Dice. Each die carries its label, so the app colours
+ * them and reads the roll's outcome (config.json `dice`): `1d12[Hope] + 1d12[Fear] + 2`.
+ */
 export function actionRoll(modifier = 0) {
-  return `2d12${signed(modifier)}`
+  return `1d12[Hope] + 1d12[Fear] ${signed(modifier).replace(/^([+-])/, '$1 ')}`
+}
+
+/** A duality roll's outcome, as config.json's `dice.outcomes` name them. */
+export type DualityOutcome = 'hope' | 'fear' | 'critical'
+
+/** The outcome of a duality roll the app rolled; `null` for one it read none from. */
+export function dualityOutcome(roll: EPRoll | null): DualityOutcome | null {
+  const id = roll?.outcome?.id
+  return id === 'hope' || id === 'fear' || id === 'critical' ? id : null
+}
+
+/**
+ * What an action roll's outcome gives the character: with Hope, a Hope; a critical success, a
+ * Hope and a Stress cleared. With Fear the GM gains a Fear, which is the campaign's, not the
+ * character's (components use `EP.adjustResource`). Hope stays within its maximum.
+ */
+export function applyDuality(data: CharacterData, outcome: DualityOutcome, hopeMaximum = 6) {
+  if (outcome === 'hope' || outcome === 'critical') {
+    data.hope = Math.min((data.hope ?? 0) + 1, hopeMaximum)
+  }
+  if (outcome === 'critical' && (data.stress?.current ?? 0) > 0) {
+    data.stress = { ...data.stress, current: (data.stress?.current ?? 0) - 1 }
+  }
 }
 
 /**

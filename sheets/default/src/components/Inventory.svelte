@@ -3,7 +3,6 @@
   import { change, set } from '../lib/change'
   import { label, t } from '../lib/labels'
   import { addFromLibrary, copyKeys } from '../lib/library'
-  import { ask } from '../lib/confirm.svelte'
   import { burden, burdenLimit, equip, ignoresBurden, inventoryWeaponLimit } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Pips from '../lib/Pips.svelte'
@@ -21,7 +20,7 @@
 
   async function chooseArmor() {
     // the new armor comes without marked slots
-    if (data.armor?.marked && !(await ask(`${data.armor.name} has ${data.armor.marked} marked Armor Slots. Replace it?`, 'Replace'))) {
+    if (data.armor?.marked && !(await EP.confirm(`${data.armor.name} has ${data.armor.marked} marked Armor Slots. Replace it?`, { action: 'Replace', destructive: true }))) {
       return
     }
     addFromLibrary(character, 'data.armor', 'Armor', copyKeys.Armor, false)

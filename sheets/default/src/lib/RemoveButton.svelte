@@ -1,11 +1,9 @@
 <script lang="ts">
-  // Removes a list entry once the user confirms it (lib/confirm).
-  import { ask } from './confirm.svelte'
-
+  // Removes a list entry once the user confirms it, in ep-ui.js's dialog.
   let { name, onremove }: { name?: string, onremove: () => void } = $props()
 
   async function onclick() {
-    if (await ask(`Remove ${name || 'this entry'}?`, 'Remove')) {
+    if (await EP.confirm(`Remove ${name || 'this entry'}?`, { action: 'Remove', destructive: true })) {
       onremove()
     }
   }
