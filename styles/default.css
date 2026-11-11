@@ -3942,12 +3942,39 @@ section.questions {
     --panel-gap: 1.4rem;
   }
 
+  /* the level above the Downtime button in one column, so the plate keeps the width */
   #character .sheet-title {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
     gap: 0.75rem;
 
+    &:not(:has(> .portrait)) {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
     .portrait {
+      grid-row: 1 / span 2;
       width: 3.75rem;
       height: 3.75rem;
+    }
+
+    .plate {
+      grid-row: 1 / span 2;
+      grid-column: -3 / -2;
+    }
+
+    .level {
+      grid-row: 1;
+      grid-column: -2;
+      align-self: end;
+    }
+
+    .downtime-button {
+      grid-row: 2;
+      grid-column: -2;
+      justify-self: center;
+      align-self: start;
     }
 
     h1 {
@@ -3957,6 +3984,17 @@ section.questions {
     .level .value {
       width: 3rem;
       font-size: 1.3rem;
+    }
+
+    /* the domains' icons left out for the name's room; the heritage line still names them */
+    .domains {
+      display: none;
+    }
+
+    /* no wider than the shield */
+    .level .label {
+      min-width: 3.5rem;
+      padding-inline: 0.3rem;
     }
   }
 
