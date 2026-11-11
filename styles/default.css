@@ -1852,7 +1852,7 @@ section.questions {
     }
   }
 
-  /* HP, Stress, Hope and Proficiency, as the sheet draws them */
+  /* HP, Stress and Hope, as the sheet draws them */
   .tracks {
     display: flex;
     flex-wrap: wrap;
@@ -1865,15 +1865,14 @@ section.questions {
     align-items: center;
   }
 
-  /* HP, Stress and Hope are checkboxes, bound to their counts (views/character.html); Proficiency
-     plain marks */
+  /* HP, Stress and Hope are checkboxes, bound to their counts (views/character.html) */
   .boxes {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.2rem;
 
-    :is(i, input[type=checkbox]) {
+    input[type=checkbox] {
       width: 1rem;
       height: 0.75rem;
       margin: 0;
@@ -1883,9 +1882,6 @@ section.questions {
       background-color: white;
       background-image: none;
       box-shadow: none;
-    }
-
-    input[type=checkbox] {
       cursor: pointer;
 
       &:checked {
@@ -1923,17 +1919,6 @@ section.questions {
       background-image:
         linear-gradient(35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%),
         linear-gradient(-35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%);
-    }
-  }
-
-  .proficiency-meter .boxes i {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
-
-    &.marked {
-      border-color: var(--violet-color);
-      background-color: var(--violet-color);
     }
   }
 

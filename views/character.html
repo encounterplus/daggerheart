@@ -77,7 +77,6 @@
         <div class="meter stress"><span class="caption">{{'Common.Stress'|l}} <small><span data-text="data.stress.current">{{data.stress.current|default: 0}}</span> / {{data.stress.maximum}}</small></span><span class="boxes" data-count="data.stress.current">{% for slot in 1...data.stress.maximum %}<input type="checkbox" aria-label="{{'Common.Stress'|l}} {{slot}}"{% if slot <= data.stress.current %} checked{% endif %}>{% endfor %}</span></div>
         {% endif %}
         <div class="meter hope-meter"><span class="caption">{{'Common.Hope'|l}} <small><span data-text="data.hope">{{data.hope|default: 0}}</span> / {{data.hopeMaximum}}</small></span><span class="boxes" data-count="data.hope" data-max="view.data.hopeMaximum">{% if data.hopeMaximum > 0 %}{% for slot in 1...data.hopeMaximum %}<input type="checkbox" aria-label="{{'Common.Hope'|l}} {{slot}}"{% if slot <= data.hope %} checked{% endif %}>{% endfor %}{% endif %}{% if data.scars > 0 %}{% for scar in 1...data.scars %}<input type="checkbox" class="crossed" aria-label="{{'Common.Hope'|l}}" disabled>{% endfor %}{% endif %}</span></div>
-        <div class="meter proficiency-meter"><span class="caption">{{'Common.Proficiency'|l}} <small>{{data.proficiency|default: 1}}</small></span><span class="boxes" aria-hidden="true">{% for slot in 1...6 %}<i{% if slot <= data.proficiency %} class="marked"{% elif slot == 1 and not data.proficiency %} class="marked"{% endif %}></i>{% endfor %}</span></div>
       </div>
       <hr>
       {# each trait rolls the Duality Dice with its modifier #}
