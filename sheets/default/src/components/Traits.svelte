@@ -2,7 +2,7 @@
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
   import { t } from '../lib/labels'
-  import { actionRoll, signed, traits } from '../lib/rules'
+  import { signed, traits } from '../lib/rules'
   import DualityRoll from '../lib/DualityRoll.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -42,7 +42,7 @@
     <div class="trait shield" class:marked={marked.has(trait)}>
       <button type="button" class="label" aria-pressed={marked.has(trait)} onclick={() => toggleMarked(trait)}>{t(key(trait))}</button>
       <div class="value">
-        <DualityRoll {character} {hopeMaximum} formula={actionRoll(data.traits?.[trait])} label={t(key(trait))}>{signed(data.traits?.[trait])}</DualityRoll>
+        <DualityRoll {character} {hopeMaximum} modifier={data.traits?.[trait] ?? 0} label={t(key(trait))}>{signed(data.traits?.[trait])}</DualityRoll>
       </div>
       <div class="verbs">{#each verbs[trait] ?? [] as verb}<span>{verb}</span>{/each}</div>
     </div>

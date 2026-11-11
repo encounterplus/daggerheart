@@ -15,8 +15,10 @@ export function signed(value = 0) {
 }
 
 /**
- * An action roll with a modifier: the Duality Dice. Each die carries its label, so the app colours
- * them and reads the roll's outcome (config.json `dice`): `1d12[Hope] + 1d12[Fear] + 2`.
+ * An action roll with a modifier: the Duality Dice. Each die carries its label, so the app
+ * colours them and reads the roll's outcome (config.json `dice`) from the two d12s alone:
+ * `1d12[Hope] + 1d12[Fear] + 2`. Advantage and disadvantage are the system's roll options
+ * (config.json `dice.options`), which add their d6 in the link's menu.
  */
 export function actionRoll(modifier = 0) {
   return `1d12[Hope] + 1d12[Fear] ${signed(modifier).replace(/^([+-])/, '$1 ')}`

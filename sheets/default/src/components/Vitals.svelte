@@ -29,7 +29,10 @@
         <!-- its marked slots stay with it until it's back on -->
         <p class="empty">{data.armor.name} taken off.</p>
       {:else if data.armor && view.armorScore}
+        <!-- the steppers show only when the slots sit below the shields (default.css) -->
+        <button class="step" aria-label="Clear an Armor Slot" disabled={!data.armor.marked} onclick={() => set(character, 'data.armor.marked', Math.max((data.armor?.marked ?? 0) - 1, 0))}>−</button>
         <Pips value={data.armor.marked} boxes={view.armorScore} label="Armor Slots" onchange={(count) => set(character, 'data.armor.marked', count)} />
+        <button class="step" aria-label="Mark an Armor Slot" disabled={(data.armor.marked ?? 0) >= view.armorScore} onclick={() => set(character, 'data.armor.marked', Math.min((data.armor?.marked ?? 0) + 1, view.armorScore ?? 0))}>+</button>
       {:else}
         <p class="empty">{data.armor?.name ? 'No Armor Slots.' : 'No armor equipped.'}</p>
       {/if}

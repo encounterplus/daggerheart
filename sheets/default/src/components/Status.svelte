@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
-  import { notice } from '../lib/notice.svelte'
+  import { activity, notice } from '../lib/notice.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
 
@@ -28,7 +28,10 @@
   <!-- a rule the sheet applies said no (lib/notice) -->
   <p class="status refused" role="alert">{notice.message}</p>
 {:else if snapshot.status !== 'connected'}
-  <p class="status">{snapshot.status === 'connecting' ? 'Connecting…' : 'Disconnected — trying again'}</p>
+  <p class="status" role="status">{snapshot.status === 'connecting' ? 'Connecting…' : 'Disconnected — trying again'}</p>
+{:else if activity.message}
+  <!-- what the sheet is waiting on, a roll's dice (lib/notice) -->
+  <p class="status" role="status">{activity.message}</p>
 {/if}
 
 <style>

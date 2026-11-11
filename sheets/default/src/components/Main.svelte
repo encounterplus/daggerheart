@@ -2,7 +2,7 @@
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
   import { label, properties, t } from '../lib/labels'
-  import { actionRoll, damageRoll, signed } from '../lib/rules'
+  import { damageRoll, signed } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Health from './Health.svelte'
   import Hope from './Hope.svelte'
@@ -89,7 +89,7 @@
           <div class="name"><strong><Reference entry={view.beastform} /></strong></div>
           <small>{properties(t('Entity.Beastform'), label('Range', attack.range), attack.damage ? label('Damage', attack.damageType) : '')}</small>
           <div class="rolls">
-            <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" formula={actionRoll(traitModifier(trait) + (view.beastform.traitModifier ?? 0))} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</DualityRoll>
+            <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" modifier={traitModifier(trait) + (view.beastform.traitModifier ?? 0)} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</DualityRoll>
             {#if attack.damage}
               <RollLink formula={damageRoll(attack.damage, proficiency)} label={`${view.beastform.name} damage`}>{damageRoll(attack.damage, proficiency)}</RollLink>
             {/if}
@@ -104,7 +104,7 @@
               <div class="feature"><strong>{weapon.feature.name}:</strong> <Markdown html={weapon.featureHTML} /></div>
             {/if}
             <div class="rolls">
-              <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" formula={actionRoll(traitModifier(weapon.trait))} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</DualityRoll>
+              <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" modifier={traitModifier(weapon.trait)} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</DualityRoll>
               {#if weapon.damage}
                 <RollLink formula={damageRoll(weapon.damage, proficiency)} label={`${weapon.name} damage`}>{damageRoll(weapon.damage, proficiency)}</RollLink>
               {/if}

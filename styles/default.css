@@ -2127,7 +2127,8 @@ section.questions {
   #character .sheet-header {
     grid-template-columns: repeat(5, minmax(0, 1fr)) auto repeat(10, minmax(0, 1fr));
 
-    .defense { order: 1; grid-column: 1 / span 5; }
+    /* the shields and the slots centred on one another, and together on the traits' row */
+    .defense { order: 1; grid-column: 1 / span 5; align-self: center; align-items: center; }
     .defense-divider { order: 2; }
     .traits { order: 3; grid-column: 7 / -1; }
 
@@ -2464,6 +2465,31 @@ section.questions {
       margin: 0;
       font-size: 0.8rem;
     }
+
+    /* − and + either side of the slots, only when they sit below the shields (below) */
+    .step {
+      display: none;
+      flex: none;
+      width: 1.6rem;
+      height: 1.6rem;
+      padding: 0;
+      border: 2px solid var(--trim-color);
+      border-radius: 50%;
+      background-color: var(--ink-color);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+
+      &:hover:not(:disabled),
+      &:focus-visible {
+        background-color: var(--violet-color);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
   }
 
   /* three a row, four rows at most, as the printed sheet's; small drawn shields, marked filled */
@@ -2481,6 +2507,44 @@ section.questions {
 
     input[type=checkbox]:checked {
       background: url("../images/shield-filled.svg") center / contain no-repeat transparent;
+    }
+  }
+}
+
+/* from a small tablet until the defense beside the traits has room for the slots' column: the slots
+   in two rows, as many a row as half of them rounded up (12 at most, so 6), − and + either side;
+   beside Evasion and Armor while the defense has the sheet's width, below them beside the traits */
+@media (min-width: 600px) and (max-width: 819.98px) {
+  #character .defense {
+    align-items: center;
+
+    @media (min-width: 720px) {
+      flex-wrap: wrap;
+      row-gap: 1rem;
+
+      .armor-slots {
+        flex-basis: 100%;
+      }
+    }
+
+    .armor-slots {
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.75rem;
+
+      .step {
+        display: block;
+      }
+    }
+
+    .pips {
+      grid-template-columns: repeat(var(--pip-columns, 1), auto);
+
+      &:has(> :nth-child(3)) { --pip-columns: 2; }
+      &:has(> :nth-child(5)) { --pip-columns: 3; }
+      &:has(> :nth-child(7)) { --pip-columns: 4; }
+      &:has(> :nth-child(9)) { --pip-columns: 5; }
+      &:has(> :nth-child(11)) { --pip-columns: 6; }
     }
   }
 }
