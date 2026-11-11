@@ -17,45 +17,106 @@
   {% endif %}
 
   <section class="stat-block">
-    {% if token %}
-    <a class="token" href="{{token|resolvePath}}" target="_blank"><img src="{{token|resolvePath}}" width="80" height="80" /></a>
-    {% endif %}
+    {# the plate: token, name, class and heritage, the domains' icons and the level #}
+    <header class="banner">
+      {% if token %}
+      <a class="token" href="{{token|resolvePath}}" target="_blank"><img src="{{token|resolvePath}}" width="80" height="80" alt="" /></a>
+      {% endif %}
+      <div class="name">
+        <hgroup>
+          <h1 class="title">{{name}}</h1>
+          <p class="subtitle">{% if data.class.name %}{% include "reference-link.html" data.class %}{% endif %}{% if data.subclass.name %} ({% include "reference-link.html" data.subclass %}){% endif %}{% if data.multiclass.class.name %} / {% include "reference-link.html" data.multiclass.class %}{% if data.multiclass.subclass.name %} ({% include "reference-link.html" data.multiclass.subclass %}){% endif %}{% endif %}</p>
+        </hgroup>
+        <p class="heritage">
+          {% if data.ancestry.name %}<span>{% include "reference-link.html" data.ancestry %}</span>{% endif %}
+          {% if data.community.name %}<span>{% include "reference-link.html" data.community %}</span>{% endif %}
+          {% if data.transformation.name %}<span>{% include "reference-link.html" data.transformation %}</span>{% endif %}
+          {% if data.pronouns %}<span>{{data.pronouns}}</span>{% endif %}
+          {% if data.class.domains %}<span>{% for domain in data.class.domains %}{{domain|map: 'Domain'}}{% if not forloop.last %} & {% endif %}{% endfor %}{% if data.multiclass.domain %} & {{data.multiclass.domain|map: 'Domain'}}{% endif %}</span>{% endif %}
+        </p>
+      </div>
+      {% if data.class.domains %}
+      <div class="domains">
+        {% for domain in data.class.domains %}<span class="domain-icon" data-domain="{{domain}}" role="img" aria-label="{{domain|map: 'Domain'}}" title="{{domain|map: 'Domain'}}"></span>{% endfor %}
+        {% if data.multiclass.domain %}<span class="domain-icon" data-domain="{{data.multiclass.domain}}" role="img" aria-label="{{data.multiclass.domain|map: 'Domain'}}" title="{{data.multiclass.domain|map: 'Domain'}}"></span>{% endif %}
+      </div>
+      {% endif %}
+      <div class="level shield">
+        <div class="value">{{data.level|default: 1}}</div>
+        <div class="label">{{'Common.Level'|l}}</div>
+      </div>
+    </header>
 
-    <hgroup>
-      <h1 class="title">{{name}}</h1>
-      <p class="subtitle">{{'Common.Level'|l}} {{data.level|default: 1}}{% if data.class.name %} {% include "reference-link.html" data.class %}{% endif %}{% if data.subclass.name %} ({% include "reference-link.html" data.subclass %}){% endif %}{% if data.multiclass.class.name %} / {% include "reference-link.html" data.multiclass.class %}{% if data.multiclass.subclass.name %} ({% include "reference-link.html" data.multiclass.subclass %}){% endif %}{% endif %}</p>
-    </hgroup>
-
-    <p class="heritage">
-      {% if data.ancestry.name %}<span>{% include "reference-link.html" data.ancestry %}</span>{% endif %}
-      {% if data.community.name %}<span>{% include "reference-link.html" data.community %}</span>{% endif %}
-      {% if data.transformation.name %}<span>{% include "reference-link.html" data.transformation %}</span>{% endif %}
-      {% if data.pronouns %}<span>{{data.pronouns}}</span>{% endif %}
-      {% if data.class.domains %}<span>{% for domain in data.class.domains %}{{domain|map: 'Domain'}}{% if not forloop.last %} & {% endif %}{% endfor %}{% if data.multiclass.domain %} & {{data.multiclass.domain|map: 'Domain'}}{% endif %}</span>{% endif %}
-    </p>
+    {# Evasion, Armor and its slots and the damage thresholds under the plate, as the sheet's header;
+       the slots and tracks are drawn one <i> each: marked up to the current count; a range needs a
+       maximum of 1 or more, `1...0` counts down #}
+    <div class="defenses">
+      <div class="shields">
+        <div class="shield">
+          <div class="value">{{data.evasion}}</div>
+          <div class="label">{{'Common.Evasion'|l}}</div>
+        </div>
+        <div class="shield armor">
+          <div class="value">{{data.armorScore}}</div>
+          <div class="label">{{'Entity.Armor'|l}}</div>
+        </div>
+        {% if data.armorScore > 0 %}
+        <div class="slots" role="img" aria-label="{{'Character.MarkedArmorSlots'|l}}: {{data.armor.marked|default: 0}} / {{data.armorScore}}" title="{{'Character.MarkedArmorSlots'|l}}: {{data.armor.marked|default: 0}} / {{data.armorScore}}">{% for slot in 1...data.armorScore %}<i{% if slot <= data.armor.marked %} class="marked"{% endif %}></i>{% endfor %}</div>
+        {% endif %}
+      </div>
+      <div class="thresholds">
+        <div class="severity"><strong>{{'Common.Minor'|l}}</strong></div>
+        <div class="threshold" title="{{'Common.MajorThreshold'|l}}">{{data.thresholds.major}}</div>
+        <div class="severity"><strong>{{'Common.Major'|l}}</strong></div>
+        <div class="threshold" title="{{'Common.SevereThreshold'|l}}">{{data.thresholds.severe}}</div>
+        <div class="severity"><strong>{{'Common.Severe'|l}}</strong></div>
+      </div>
+    </div>
 
     <div class="stats">
-      {% markdown -%}
-**{{'Common.Evasion'|l}}:** {{data.evasion}} | **{{'Character.ArmorScore'|l}}:** {{data.armorScore}}{% if data.armor.marked %} ({{data.armor.marked}} {{'Character.Marked'|l}}){% endif %} | **{{'Common.Thresholds'|l}}:** {{data.thresholds.major}} / {{data.thresholds.severe}} | **{{'Common.Proficiency'|l}}:** {{data.proficiency|default: 1}}
-**{{'Common.HP'|l}}:** {{data.hp.current|default: 0}} / {{data.hp.maximum|default: 0}} | **{{'Common.Stress'|l}}:** {{data.stress.current|default: 0}} / {{data.stress.maximum|default: 0}} | **{{'Common.Hope'|l}}:** {{data.hope|default: 0}} / {{data.hopeMaximum}}
-      {% endmarkdown %}
+      <div class="tracks">
+        {% if data.hp.maximum > 0 %}
+        <div class="meter hp"><span class="caption">{{'Common.HP'|l}} <small><span data-text="data.hp.current">{{data.hp.current|default: 0}}</span> / {{data.hp.maximum}}</small></span><span class="boxes" data-count="data.hp.current">{% for slot in 1...data.hp.maximum %}<input type="checkbox" aria-label="{{'Common.HP'|l}} {{slot}}"{% if slot <= data.hp.current %} checked{% endif %}>{% endfor %}</span></div>
+        {% endif %}
+        {% if data.stress.maximum > 0 %}
+        <div class="meter stress"><span class="caption">{{'Common.Stress'|l}} <small><span data-text="data.stress.current">{{data.stress.current|default: 0}}</span> / {{data.stress.maximum}}</small></span><span class="boxes" data-count="data.stress.current">{% for slot in 1...data.stress.maximum %}<input type="checkbox" aria-label="{{'Common.Stress'|l}} {{slot}}"{% if slot <= data.stress.current %} checked{% endif %}>{% endfor %}</span></div>
+        {% endif %}
+        <div class="meter hope-meter"><span class="caption">{{'Common.Hope'|l}} <small><span data-text="data.hope">{{data.hope|default: 0}}</span> / {{data.hopeMaximum}}</small></span><span class="boxes" data-count="data.hope" data-max="view.data.hopeMaximum">{% if data.hopeMaximum > 0 %}{% for slot in 1...data.hopeMaximum %}<input type="checkbox" aria-label="{{'Common.Hope'|l}} {{slot}}"{% if slot <= data.hope %} checked{% endif %}>{% endfor %}{% endif %}{% if data.scars > 0 %}{% for scar in 1...data.scars %}<input type="checkbox" class="crossed" aria-label="{{'Common.Hope'|l}}" disabled>{% endfor %}{% endif %}</span></div>
+        <div class="meter proficiency-meter"><span class="caption">{{'Common.Proficiency'|l}} <small>{{data.proficiency|default: 1}}</small></span><span class="boxes" aria-hidden="true">{% for slot in 1...6 %}<i{% if slot <= data.proficiency %} class="marked"{% elif slot == 1 and not data.proficiency %} class="marked"{% endif %}></i>{% endfor %}</span></div>
+      </div>
       <hr>
       {# each trait rolls the Duality Dice with its modifier #}
-      <p class="list">
-        <span><strong>{{'Trait.Agility'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.agility|default: 0|signed}}/{{'Trait.Agility'|l}}">{{data.traits.agility|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Strength'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.strength|default: 0|signed}}/{{'Trait.Strength'|l}}">{{data.traits.strength|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Finesse'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.finesse|default: 0|signed}}/{{'Trait.Finesse'|l}}">{{data.traits.finesse|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Instinct'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.instinct|default: 0|signed}}/{{'Trait.Instinct'|l}}">{{data.traits.instinct|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Presence'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.presence|default: 0|signed}}/{{'Trait.Presence'|l}}">{{data.traits.presence|default: 0|signed}}</a></span>
-        <span><strong>{{'Trait.Knowledge'|l}}</strong> <a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.knowledge|default: 0|signed}}/{{'Trait.Knowledge'|l}}">{{data.traits.knowledge|default: 0|signed}}</a></span>
-      </p>
+      <div class="scores">
+        <div><span class="caption">{{'Trait.Agility'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.agility|default: 0|signed}}/{{'Trait.Agility'|l}}">{{data.traits.agility|default: 0|signed}}</a></div>
+        <div><span class="caption">{{'Trait.Strength'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.strength|default: 0|signed}}/{{'Trait.Strength'|l}}">{{data.traits.strength|default: 0|signed}}</a></div>
+        <div><span class="caption">{{'Trait.Finesse'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.finesse|default: 0|signed}}/{{'Trait.Finesse'|l}}">{{data.traits.finesse|default: 0|signed}}</a></div>
+        <div><span class="caption">{{'Trait.Instinct'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.instinct|default: 0|signed}}/{{'Trait.Instinct'|l}}">{{data.traits.instinct|default: 0|signed}}</a></div>
+        <div><span class="caption">{{'Trait.Presence'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.presence|default: 0|signed}}/{{'Trait.Presence'|l}}">{{data.traits.presence|default: 0|signed}}</a></div>
+        <div><span class="caption">{{'Trait.Knowledge'|l}}</span><a href="/roll/1d12%5BHope%5D+1d12%5BFear%5D{{data.traits.knowledge|default: 0|signed}}/{{'Trait.Knowledge'|l}}">{{data.traits.knowledge|default: 0|signed}}</a></div>
+      </div>
+      {# the attacks, as an adversary's: the Active Weapons, the armor and a Beastform; library
+         weapons store their dice without a count (d8+3), so Proficiency prefixes them. The armor's
+         numbers are in the shields and thresholds, so only its name and feature; the rule above
+         hides with nothing equipped (default.css) #}
+      <div class="gear">
+        <hr>
+        {% for weapon in data.weapons %}{% if weapon.equipped %}
+        <p class="item"><strong>{% include "reference-link.html" weapon %}</strong> {{weapon.trait|map: 'Trait'}} {{weapon.range|map: 'Range'}}{% if weapon.damage %} · <a href="/roll/{{data.proficiency|default: 1}}{{weapon.damage}}/{{weapon.name}}/damage">{{data.proficiency|default: 1}}{{weapon.damage}}</a> {{weapon.damageType|map: 'Damage'}}{% endif %}{% if weapon.burden %} · {{weapon.burden|map: 'WeaponBurden'}}{% endif %}{% if weapon.feature.name %} · {{weapon.feature.name}}{% endif %}</p>
+        {% endif %}{% endfor %}
+        {% if data.armor.name %}
+        <p class="item"><strong>{% include "reference-link.html" data.armor %}</strong>{% if data.armor.feature.name %} {{data.armor.feature.name}}{% endif %}{% if data.armor.unequipped %}{% if data.armor.feature.name %} ·{% endif %} {{'Character.TakenOff'|l}}{% endif %}</p>
+        {% endif %}
+        {% if data.beastform.name %}
+        <p><strong class="caption">{{'Entity.Beastform'|l}}</strong> {% include "reference-link.html" data.beastform %} ({{data.beastform.trait|map: 'Trait'}} {{data.beastform.traitModifier|default: 0|signed}}, {{'Common.Evasion'|l}} {{data.beastform.evasionModifier|default: 0|signed}}){% if data.beastform.attack.damage %} · <a href="/roll/{{data.proficiency|default: 1}}{{data.beastform.attack.damage}}/{{data.beastform.name}}/damage">{{data.proficiency|default: 1}}{{data.beastform.attack.damage}}</a> {{data.beastform.attack.damageType|map: 'Damage'}}{% endif %}</p>
+        {% endif %}
+      </div>
       {% if data.experiences %}
       <hr>
-      <p class="list"><strong>{{'Character.Experiences'|l}}:</strong> {% for experience in data.experiences %}<span>{{experience.name}} {{experience.modifier|default: 0|signed}}</span>{% endfor %}</p>
+      <p class="list"><strong class="caption">{{'Character.Experiences'|l}}</strong> {% for experience in data.experiences %}<span>{{experience.name}} {{experience.modifier|default: 0|signed}}</span>{% endfor %}</p>
       {% endif %}
       {% if data.conditions.hidden or data.conditions.restrained or data.conditions.vulnerable or data.otherConditions %}
       <hr>
-      <p class="list"><strong>{{'Character.Conditions'|l}}:</strong>
+      <p class="chips"><strong class="caption">{{'Character.Conditions'|l}}</strong>
         {% if data.conditions.hidden %}<span>{{'Condition.Hidden'|l}}</span>{% endif %}
         {% if data.conditions.restrained %}<span>{{'Condition.Restrained'|l}}</span>{% endif %}
         {% if data.conditions.vulnerable %}<span>{{'Condition.Vulnerable'|l}}</span>{% endif %}
@@ -65,21 +126,9 @@
     </div>
 
     <div class="features">
-      {# Active Weapons; library weapons store their dice without a count (d8+3), so Proficiency
-         prefixes them #}
-      {% for weapon in data.weapons %}{% if weapon.equipped %}
-      <p><strong><em>{% include "reference-link.html" weapon %}:</em></strong> {{weapon.trait|map: 'Trait'}} {{weapon.range|map: 'Range'}}{% if weapon.damage %} | <a href="/roll/{{data.proficiency|default: 1}}{{weapon.damage}}/{{weapon.name}}/damage">{{data.proficiency|default: 1}}{{weapon.damage}}</a> {{weapon.damageType|map: 'Damage'}}{% endif %}{% if weapon.burden %} | {{weapon.burden|map: 'WeaponBurden'}}{% endif %}{% if weapon.feature.name %} | {{weapon.feature.name}}{% endif %}</p>
-      {% endif %}{% endfor %}
-      {% if data.armor.name %}
-      <p><strong><em>{% include "reference-link.html" data.armor %}:</em></strong> {{'Armor.BaseThresholds'|l}} {{data.armor.thresholds.major|default: '-'}} / {{data.armor.thresholds.severe|default: '-'}} | {{'Armor.BaseScore'|l}} {{data.armor.score|default: 0}}{% if data.armor.feature.name %} | {{data.armor.feature.name}}{% endif %}{% if data.armor.unequipped %} | {{'Character.TakenOff'|l}}{% endif %}</p>
-      {% endif %}
-      {% if data.beastform.name %}
-      <p><strong><em>{{'Entity.Beastform'|l}}:</em></strong> {% include "reference-link.html" data.beastform %} ({{data.beastform.trait|map: 'Trait'}} {{data.beastform.traitModifier|default: 0|signed}}, {{'Common.Evasion'|l}} {{data.beastform.evasionModifier|default: 0|signed}}){% if data.beastform.attack.damage %} | <a href="/roll/{{data.proficiency|default: 1}}{{data.beastform.attack.damage}}/{{data.beastform.name}}/damage">{{data.proficiency|default: 1}}{{data.beastform.attack.damage}}</a> {{data.beastform.attack.damageType|map: 'Damage'}}{% endif %}</p>
-      {% endif %}
-
       {# the subclass's features up to its rank; no rank is the foundation #}
       {% if data.class.name or data.subclass.name or data.ancestry.name or data.community.name or data.transformation.name %}
-      <p class="list"><strong>{{'Common.Features'|l}}:</strong>
+      <p class="list"><strong class="caption">{{'Common.Features'|l}}</strong>
         {% if data.class.hopeFeature.name %}<span>{% if data.class.reference %}<a href="{{data.class.reference}}">{{data.class.hopeFeature.name}}</a>{% else %}{{data.class.hopeFeature.name}}{% endif %} ({{'Class.HopeFeature'|l}})</span>{% endif %}
         {% for feature in data.class.features %}{% include "feature-link.html" data.class %}{% endfor %}
         {% for feature in data.subclass.foundations %}{% include "feature-link.html" data.subclass %}{% endfor %}
@@ -96,27 +145,27 @@
       {% endif %}
 
       {% if data.domainCards %}
-      <p class="list"><strong>{{'Character.Loadout'|l}}:</strong> {% for card in data.domainCards %}{% if not card.vault %}<span>{% include "reference-link.html" card %}</span>{% endif %}{% endfor %}</p>
+      <p class="list"><strong class="caption">{{'Character.Loadout'|l}}</strong> {% for card in data.domainCards %}{% if not card.vault %}<span>{% include "reference-link.html" card %}</span>{% endif %}{% endfor %}</p>
       {% endif %}
 
       {# class modules, when the character has them #}
       {% if data.companion.name %}
-      <p><strong><em>{{'Character.Companion'|l}}:</em></strong> {{data.companion.name}} | {{'Common.Evasion'|l}} {{data.companion.evasion|default: 10}} | {{'Common.Stress'|l}} {{data.companion.stress.current|default: 0}} / {{data.companion.stressMaximum}}{% if data.companion.attack.damage %} | <a href="/roll/{{data.proficiency|default: 1}}{{data.companion.attack.damage}}/{{data.companion.name}}/damage">{{data.proficiency|default: 1}}{{data.companion.attack.damage}}</a> {{data.companion.attack.range|map: 'Range'}}{% endif %}</p>
+      <p><strong class="caption">{{'Character.Companion'|l}}</strong> {{data.companion.name}} · {{'Common.Evasion'|l}} {{data.companion.evasion|default: 10}} · {{'Common.Stress'|l}} {{data.companion.stress.current|default: 0}} / {{data.companion.stressMaximum}}{% if data.companion.attack.damage %} · <a href="/roll/{{data.proficiency|default: 1}}{{data.companion.attack.damage}}/{{data.companion.name}}/damage">{{data.proficiency|default: 1}}{{data.companion.attack.damage}}</a> {{data.companion.attack.range|map: 'Range'}}{% endif %}</p>
       {% endif %}
       {% if data.stances.known %}
-      <p><strong><em>{{'Character.MartialStances'|l}}:</em></strong> {{'Character.Focus'|l}} {{data.stances.focus|default: 0}}{% if data.stances.active %} | {{'Character.ActiveStance'|l}}: {{data.stances.active}}{% endif %}</p>
+      <p><strong class="caption">{{'Character.MartialStances'|l}}</strong> {{'Character.Focus'|l}} {{data.stances.focus|default: 0}}{% if data.stances.active %} · {{'Character.ActiveStance'|l}}: {{data.stances.active}}{% endif %}</p>
       {% endif %}
       {% if data.patron.name %}
-      <p><strong><em>{{'Character.Patron'|l}}:</em></strong> {{data.patron.name}}{% if data.patron.spheres %} ({{data.patron.spheres}}){% endif %} | {{'Character.Favor'|l}} {{data.patron.favor|default: 0}}</p>
+      <p><strong class="caption">{{'Character.Patron'|l}}</strong> {{data.patron.name}}{% if data.patron.spheres %} ({{data.patron.spheres}}){% endif %} · {{'Character.Favor'|l}} {{data.patron.favor|default: 0}}</p>
       {% endif %}
       {% if data.strangePattern %}
-      <p><strong><em>{{'Character.StrangePatterns'|l}}:</em></strong> {{data.strangePattern}}</p>
+      <p><strong class="caption">{{'Character.StrangePatterns'|l}}</strong> {{data.strangePattern}}</p>
       {% endif %}
       {% for resource in data.resources %}
-      <p><strong><em>{{resource.name}}:</em></strong> {{resource.current|default: 0}}{{resource.maximum|prefix: ' / '}}{{resource.die|prefix: ' '}}</p>
+      <p><strong class="caption">{{resource.name}}</strong> {{resource.current|default: 0}}{{resource.maximum|prefix: ' / '}}{{resource.die|prefix: ' '}}</p>
       {% endfor %}
       {% for project in data.projects %}
-      <p><strong><em>{{'Character.Project'|l}}: {{project.name}}</em></strong> {{project.current|default: 0}}{{project.maximum|prefix: ' / '}}</p>
+      <p><strong class="caption">{{'Character.Project'|l}}</strong> {{project.name}} {{project.current|default: 0}}{{project.maximum|prefix: ' / '}}</p>
       {% endfor %}
     </div>
   </section>
@@ -126,17 +175,17 @@
   {% endif %}
 
   {% if data.background %}
-  <h3>{{'Class.BackgroundQuestions'|l}}</h3>
+  <h4>{{'Class.BackgroundQuestions'|l}}</h4>
   {{data.background|md}}
   {% endif %}
 
   {% if data.connections %}
-  <h3>{{'Class.Connections'|l}}</h3>
+  <h4>{{'Class.Connections'|l}}</h4>
   {{data.connections|md}}
   {% endif %}
 
   {% if notes %}
-  <h3>{{'Common.Notes'|l}}</h3>
+  <h4>{{'Common.Notes'|l}}</h4>
   {{notes|md}}
   {% endif %}
 
@@ -148,4 +197,24 @@
 
   {% include "footer.html" %}
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  // HP, Stress and Hope tick on the card as on the sheet, through the SDK: a box sets the count to
+  // it, the last marked one lowers it by one (EP.bind's data-count); the card's texts come from the
+  // template, so it doesn't need the system's labels
+  EP.configure({ labels: false })
+  const character = EP.entity
+
+  character.addEventListener("error", (event) => {
+    console.warn("character changes refused:", event.detail.errors.map((error) => error.message).join("; "))
+  })
+
+  // a change made elsewhere that the bound boxes don't show (a maximum, a scar, the sheet's other
+  // values) renders <main> again
+  EP.bind(document, character, { refresh: "main" })
+})()
+</script>
 {% endblock %}

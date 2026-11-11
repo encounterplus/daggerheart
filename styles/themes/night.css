@@ -50,6 +50,12 @@
       --stat-block-bg: color-mix(in srgb, var(--light-gray-color) 22%, black);
     }
 
+    /* the GM card stays light, as the sheet's panels on its dark page; the card toned down toward
+       the sheet's ink, the white panel in it as it is */
+    #character .stat-block {
+      --stat-block-bg: color-mix(in srgb, var(--paper-color) 84%, var(--ink-color));
+    }
+
     /* questions panel (class, transformation): a stronger brass panel than the shared tint, it stands out as a block;
        gold headings, the thin heading font needs the extra contrast */
     section.questions {

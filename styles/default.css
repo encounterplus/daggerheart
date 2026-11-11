@@ -1582,6 +1582,22 @@ section.questions {
 
 /******** 12. Character Card & Sheet ********/
 
+/* the colors the GM card and the sheet share: the tracks' from the source material (HP brick, Stress
+   slate, Hope gold, armor brass), the printed sheet's violet, ink, paper and gold trim */
+#character {
+  --hp-color: var(--brick-color);
+  --stress-color: var(--slate-color);
+  --hope-color: var(--gold-color);
+  --armor-color: var(--brass-color);
+
+  --violet-color: #3E3189;
+  --ink-color: #17142A;
+  --paper-color: #F6F4EF;
+  --ribbon-plate-color: #E48B3C;
+  --ribbon-edge-color: #F3C267;
+  --trim-color: var(--ribbon-edge-color);
+}
+
 /* the GM card's way to the sheet (views/character.html): a round button fixed in the top right corner */
 #character .open-sheet {
   position: fixed;
@@ -1601,6 +1617,388 @@ section.questions {
   &:hover,
   &:focus-visible {
     background-color: var(--brass-color);
+  }
+}
+
+/* the GM card: the sheet's look in a stat block's room. The name on the sheet's violet plate, edge to
+   edge; under it Evasion, Armor and its slots and the damage thresholds; then, as an adversary's, the
+   white panel with the tracks and the traits, and the rest a line each under a small violet caption.
+   Its class names stay clear of the sheet's (.traits, .track, .pips…), which are #character's too;
+   .shield and .thresholds are shared on purpose */
+
+/* the shields (.shield, the sheet's) and the slots, then the thresholds; the thresholds below them
+   once they don't fit */
+#character .stat-block .defenses {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding-top: 0.6rem;
+
+  .shields {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .shield .value {
+    width: 3.1rem;
+    aspect-ratio: 210 / 231;
+    padding-bottom: 0.55rem;
+    background-image: url("../images/scores/score-evasion.svg");
+    font-size: 1.35rem;
+  }
+
+  .shield .label {
+    min-width: 3.6rem;
+    margin-top: -0.85rem;
+    padding-inline: 0.3rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .shield.armor .value {
+    background-image: url("../images/scores/score-armor.svg");
+  }
+
+  /* the Armor Slots, six a row: small drawn shields, marked filled */
+  .slots {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 0.2rem;
+
+    i {
+      width: 0.85rem;
+      height: 0.95rem;
+      background: url("../images/shield.svg") center / contain no-repeat;
+
+      &.marked {
+        background-image: url("../images/shield-filled.svg");
+      }
+    }
+  }
+
+  .thresholds {
+    flex: 1 1 17rem;
+    margin: 0;
+
+    .severity strong {
+      min-height: 2.1rem;
+      padding-block: 0.15rem;
+      font-size: 0.65rem;
+    }
+
+    .threshold {
+      min-width: 1.8rem;
+      height: 1.8rem;
+      margin-block-start: 0.15rem;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+/* the open sheet button stays clear of the level */
+#character:has(> .open-sheet) .stat-block .banner {
+  padding-right: 3.5rem;
+}
+
+#character .stat-block {
+  --stat-block-bg: var(--paper-color);
+  --stat-block-border: var(--trim-color);
+  --stat-block-stats-bg: white;
+  --stat-block-link: var(--violet-color);
+  --stat-block-rule: var(--sand-color);
+
+  --stat-block-padding: 0.6rem;
+  padding: var(--stat-block-padding);
+
+  /* the plate: edge to edge across the top, a gold rule under it */
+  .banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: calc(-1 * var(--stat-block-padding)) calc(-1 * var(--stat-block-padding)) 0;
+    padding: var(--stat-block-padding);
+    border-bottom: 2px solid var(--trim-color);
+    border-radius: calc(0.6rem - 2px) calc(0.6rem - 2px) 0 0;
+    background:
+      linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent), transparent 60%),
+      linear-gradient(to right, var(--ink-color), color-mix(in srgb, var(--violet-color) 55%, var(--ink-color)) 10rem);
+    color: var(--light-color);
+
+    a {
+      --pico-color: var(--trim-color);
+      --pico-underline: color-mix(in srgb, var(--trim-color) 50%, transparent);
+      --pico-primary-hover: var(--light-color);
+      --pico-primary-hover-underline: var(--light-color);
+    }
+  }
+
+  /* the token in a gold ring, as the sheet's portrait */
+  .banner .token {
+    float: none;
+    flex: none;
+    margin: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--trim-color);
+      box-shadow: 0 0 0 2px var(--ink-color), 0 0 0 3px color-mix(in srgb, var(--trim-color) 55%, transparent);
+    }
+  }
+
+  .banner .name {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .banner hgroup {
+    margin-bottom: 0.15rem;
+
+    h1.title {
+      --pico-color: white;
+      margin-bottom: 0.1rem;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .banner hgroup > .subtitle:last-child {
+    color: var(--trim-color);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .banner .heritage {
+    --pico-color: var(--light-color);
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  .banner .domains {
+    flex: none;
+    display: flex;
+    gap: 0.5rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
+
+    .domain-icon {
+      width: 1.7rem;
+    }
+  }
+
+  /* the level on its shield (.shield, the sheet's), smaller */
+  .shield.level {
+    flex: none;
+
+    .value {
+      width: 2.9rem;
+      aspect-ratio: 191 / 230;
+      padding-bottom: 0.6rem;
+      background-image: url("../images/scores/score-level.svg");
+      font-size: 1.3rem;
+    }
+
+    .label {
+      min-width: 3.1rem;
+      margin-top: -0.85rem;
+      padding-inline: 0.3rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  /* captions: a small violet name before a value or a line */
+  .caption {
+    margin-right: 0.35rem;
+    color: var(--violet-color);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    small {
+      margin-left: 0.15rem;
+      color: var(--stat-block-color);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+  }
+
+  /* HP, Stress, Hope and Proficiency, as the sheet draws them */
+  .tracks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1.25rem;
+  }
+
+  .meter {
+    display: flex;
+    align-items: center;
+  }
+
+  /* HP, Stress and Hope are checkboxes, bound to their counts (views/character.html); Proficiency
+     plain marks */
+  .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem;
+
+    :is(i, input[type=checkbox]) {
+      width: 1rem;
+      height: 0.75rem;
+      margin: 0;
+      padding: 0;
+      border: 1.5px solid var(--dark-color);
+      border-radius: 0.2rem;
+      background-color: white;
+      background-image: none;
+      box-shadow: none;
+    }
+
+    input[type=checkbox] {
+      cursor: pointer;
+
+      &:checked {
+        border-color: var(--pip-color);
+        background-color: var(--pip-color);
+        background-image: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--violet-color);
+        outline-offset: 1px;
+      }
+
+      &:disabled {
+        cursor: default;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .hp {
+    --pip-color: var(--hp-color);
+  }
+
+  .stress {
+    --pip-color: var(--stress-color);
+  }
+
+  /* Hope as HP and Stress, in gold; a scar's slot crossed out */
+  .hope-meter {
+    --pip-color: var(--hope-color);
+
+    input[type=checkbox].crossed {
+      opacity: 0.6;
+      background-image:
+        linear-gradient(35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%),
+        linear-gradient(-35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%);
+    }
+  }
+
+  .proficiency-meter .boxes i {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+
+    &.marked {
+      border-color: var(--violet-color);
+      background-color: var(--violet-color);
+    }
+  }
+
+  /* the six traits in a row, three a row on a phone: the name over the roll */
+  .scores {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 0.3rem;
+    text-align: center;
+
+    > div + div {
+      border-left: 1px dashed var(--sand-color);
+    }
+
+    .caption {
+      display: block;
+      margin: 0;
+      font-size: 0.6rem;
+    }
+
+    a {
+      --pico-color: var(--dark-color);
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+  }
+
+  /* Hidden, Restrained…: brick pills */
+  .chips > span {
+    display: inline-block;
+    margin-right: 0.25rem;
+    padding: 0 0.45rem;
+    border: 1.5px solid var(--brick-color);
+    border-radius: 999px;
+    color: var(--brick-color);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .features {
+    padding-top: 0.6rem;
+
+    p {
+      padding-left: 0;
+    }
+  }
+
+  /* the weapons, the armor and a Beastform in the white panel; its rule gone with nothing equipped */
+  .gear:not(:has(> p)) {
+    display: none;
+  }
+
+  /* a weapon's and the armor's names in full, as the sheet's */
+  .item > strong:first-child {
+    margin-right: 0.2rem;
+  }
+}
+
+@media (min-width: 476px) {
+  #character .stat-block {
+    --stat-block-padding: 0.8rem;
+  }
+}
+
+@media (max-width: 475.98px) {
+  #character .stat-block {
+    .banner .domains {
+      display: none;
+    }
+
+    .scores {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      > div:nth-child(3n + 1) {
+        border-left: none;
+      }
+    }
   }
 }
 
@@ -1637,15 +2035,6 @@ section.questions {
 }
 
 #character.sheet {
-  --hp-color: var(--brick-color);
-  --stress-color: var(--slate-color);
-  --hope-color: var(--gold-color);
-  --armor-color: var(--brass-color);
-
-  --violet-color: #3E3189;
-  --ink-color: #17142A;
-  /* --trim-color: var(--gold-color); */
-  --paper-color: #F6F4EF;
   --panel-gap: 1.6rem;
 
   /* the Hope band's outline, for clip-path */
@@ -1672,8 +2061,6 @@ section.questions {
   --ribbon-band: polygon(
     0.74em 50%, 1.58em 0.26em, calc(100% - 1.58em) 0.26em,
     calc(100% - 0.74em) 50%, calc(100% - 1.58em) calc(100% - 0.26em), 1.58em calc(100% - 0.26em));
-  --ribbon-plate-color: #E48B3C;
-  --ribbon-edge-color: #F3C267;
   --ribbon-band-color: var(--ink-color);
   --ribbon-font-size: 1rem;
 
@@ -1683,8 +2070,6 @@ section.questions {
   --pico-primary-underline: color-mix(in srgb, var(--gold-color) 50%, transparent);
   --pico-primary-hover: var(--light-color);
   --pico-primary-hover-underline: var(--light-color);
-
-  --trim-color: var(--ribbon-edge-color);
 
   max-width: 68rem;
   margin-inline: auto;
@@ -2206,8 +2591,7 @@ section.questions {
     min-width: 0;
   }
 
-  /* the class's domains and the multiclass's, one above another past a thin rule; the icons
-     (images/domains) are one-color drawings, masked so they take the trim's color */
+  /* the class's domains and the multiclass's, one above another past a thin rule */
   .domains {
     flex: none;
     display: flex;
@@ -2215,25 +2599,6 @@ section.questions {
     gap: 0.35rem;
     padding-left: 1rem;
     border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
-  }
-
-  .domain-icon {
-    display: block;
-    width: 1.9rem;
-    aspect-ratio: 1;
-    background-color: var(--trim-color);
-    mask: var(--domain-icon) center / contain no-repeat;
-
-    &[data-domain=arcana] { --domain-icon: url("../images/domains/arcana.svg"); }
-    &[data-domain=blade] { --domain-icon: url("../images/domains/blade.svg"); }
-    &[data-domain=bone] { --domain-icon: url("../images/domains/bone.svg"); }
-    &[data-domain=codex] { --domain-icon: url("../images/domains/codex.svg"); }
-    &[data-domain=dread] { --domain-icon: url("../images/domains/dread.svg"); }
-    &[data-domain=grace] { --domain-icon: url("../images/domains/grace.svg"); }
-    &[data-domain=midnight] { --domain-icon: url("../images/domains/midnight.svg"); }
-    &[data-domain=sage] { --domain-icon: url("../images/domains/sage.svg"); }
-    &[data-domain=splendor] { --domain-icon: url("../images/domains/splendor.svg"); }
-    &[data-domain=valor] { --domain-icon: url("../images/domains/valor.svg"); }
   }
 
   /* side by side and larger once the header has the room, as the defense and the traits' row */
@@ -2295,6 +2660,27 @@ section.questions {
       font-size: 0.65rem;
     }
   }
+}
+
+/* a domain's icon (images/domains), a one-color drawing masked so it takes the trim's color: the
+   sheet's title and the GM card's */
+#character .domain-icon {
+  display: block;
+  width: 1.9rem;
+  aspect-ratio: 1;
+  background-color: var(--trim-color);
+  mask: var(--domain-icon) center / contain no-repeat;
+
+  &[data-domain=arcana] { --domain-icon: url("../images/domains/arcana.svg"); }
+  &[data-domain=blade] { --domain-icon: url("../images/domains/blade.svg"); }
+  &[data-domain=bone] { --domain-icon: url("../images/domains/bone.svg"); }
+  &[data-domain=codex] { --domain-icon: url("../images/domains/codex.svg"); }
+  &[data-domain=dread] { --domain-icon: url("../images/domains/dread.svg"); }
+  &[data-domain=grace] { --domain-icon: url("../images/domains/grace.svg"); }
+  &[data-domain=midnight] { --domain-icon: url("../images/domains/midnight.svg"); }
+  &[data-domain=sage] { --domain-icon: url("../images/domains/sage.svg"); }
+  &[data-domain=splendor] { --domain-icon: url("../images/domains/splendor.svg"); }
+  &[data-domain=valor] { --domain-icon: url("../images/domains/valor.svg"); }
 }
 
 /* a number on a shield, its name on a dark tab: the traits, Evasion, Armor and the level; each shield
@@ -2580,13 +2966,13 @@ section.questions {
 }
 
 /* Damage & Health: the damage severities with the thresholds between them, then HP and Stress */
-#character .health {
-  .thresholds {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: start;
-    margin-bottom: 0.75rem;
-  }
+/* the damage thresholds, as the printed sheet's: violet labels, the numbers in white boxes between
+   them pointing on; Damage & Health and the GM card */
+#character .thresholds {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  margin-bottom: 0.75rem;
 
   .severity {
     display: flex;
@@ -2673,7 +3059,6 @@ section.questions {
   .threshold + .severity strong {
     padding-inline-start: 1.1rem;
   }
-
 }
 
 /* HP and Stress, and the companion's Stress and the Strange Patterns number (Features tab) alike:
