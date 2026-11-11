@@ -35,7 +35,7 @@
       {:else}
         <button class="outline" onclick={() => set(character, `${path(entry)}.vault`, true)}>To vault</button>
       {/if}
-      <RemoveButton name={entry.name} onremove={() => character.remove(path(entry)).catch(() => {})} />
+      <RemoveButton name={entry.name} onremove={() => character.remove(path(entry))} />
     </div>
   </FeatureCard>
 {/snippet}

@@ -9,7 +9,7 @@ import { report } from './notice.svelte'
  */
 export function change(character: Character, fn: (data: CharacterData) => void) {
   try {
-    character.update(fn).catch(() => {})
+    character.update(fn)
   } catch (error) {
     report((error as Error).message)
   }
@@ -17,5 +17,5 @@ export function change(character: Character, fn: (data: CharacterData) => void) 
 
 /** Sets one value; a refusal reaches the status line through the store's error event. */
 export function set(character: Character, path: string, value: unknown) {
-  character.set(path, value).catch(() => {})
+  character.set(path, value)
 }

@@ -1598,28 +1598,6 @@ section.questions {
   --trim-color: var(--ribbon-edge-color);
 }
 
-/* the GM card's way to the sheet (views/character.html): a round button fixed in the top right corner */
-#character .open-sheet {
-  position: fixed;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background-color: var(--dark-color);
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  text-decoration: none;
-
-  &:hover,
-  &:focus-visible {
-    background-color: var(--brass-color);
-  }
-}
-
 /* the GM card: the sheet's look in a stat block's room. The name on the sheet's violet plate, edge to
    edge; under it Evasion, Armor and its slots and the damage thresholds; then, as an adversary's, the
    white panel with the tracks and the traits, and the rest a line each under a small violet caption.
@@ -1698,11 +1676,6 @@ section.questions {
   }
 }
 
-/* the open sheet button stays clear of the level */
-#character:has(> .open-sheet) .stat-block .banner {
-  padding-right: 3.5rem;
-}
-
 #character .stat-block {
   --stat-block-bg: var(--paper-color);
   --stat-block-border: var(--trim-color);
@@ -1765,7 +1738,9 @@ section.questions {
     h1.title {
       --pico-color: white;
       margin-bottom: 0.1rem;
-      overflow-wrap: anywhere;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
@@ -1794,7 +1769,7 @@ section.questions {
     border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
 
     .domain-icon {
-      width: 1.7rem;
+      width: 2.2rem;
     }
   }
 
@@ -1818,6 +1793,45 @@ section.questions {
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
+  }
+
+  /* the way to the sheet: a dark pill on the plate's gold rule, at the right, as the sheet's
+     section buttons (.panel-header button.outline); it takes its lower half's room */
+  .sheet-link {
+    --pill-height: 1.8rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: calc(var(--pill-height) / -2);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      height: var(--pill-height);
+      padding: 0 0.9rem;
+      border: 2px solid var(--trim-color);
+      border-radius: 999px;
+      background-color: var(--ink-color);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    a:hover,
+    a:focus-visible {
+      background-color: var(--violet-color);
+    }
+  }
+
+  /* room under the level for the pill */
+  .banner:has(+ .sheet-link) {
+    padding-bottom: calc(var(--stat-block-padding) + 0.2rem);
+  }
+
+  .sheet-link + .defenses {
+    padding-top: 0.2rem;
   }
 
   /* captions: a small violet name before a value or a line */
@@ -1983,6 +1997,15 @@ section.questions {
 @media (min-width: 476px) {
   #character .stat-block {
     --stat-block-padding: 0.8rem;
+
+    /* the domains' icons right after the name, the level pushed to the right edge */
+    .banner .name {
+      flex: 0 1 auto;
+    }
+
+    .shield.level {
+      margin-left: auto;
+    }
   }
 }
 
@@ -1990,6 +2013,16 @@ section.questions {
   #character .stat-block {
     .banner .domains {
       display: none;
+    }
+
+    /* a long name a little smaller to fit its room: the template passes its length (--name-length),
+       an uppercase letter is about 0.7em wide; never under 1.3rem, past that it's cut with an ellipsis */
+    .banner .name {
+      container-type: inline-size;
+    }
+
+    .banner hgroup h1.title {
+      font-size: clamp(1.3rem, calc(100cqi / (var(--name-length, 1) * 0.7)), 1.75rem);
     }
 
     .scores {

@@ -75,7 +75,7 @@
                       ? change(character, (draft) => equip(draft, index))
                       : set(character, `${weapon.path}.equipped`, false)}>
                 </td>
-                <td><RemoveButton name={weapon.name} onremove={() => character.remove(weapon.path).catch(() => {})} /></td>
+                <td><RemoveButton name={weapon.name} onremove={() => character.remove(weapon.path)} /></td>
               </tr>
             {/each}
           </tbody>
@@ -120,7 +120,7 @@
                   <input type="checkbox" role="switch" aria-label="Active" checked={!view.armor.unequipped}
                     onchange={(event) => set(character, 'data.armor.unequipped', !event.currentTarget.checked)}>
                 </td>
-                <td><RemoveButton name={view.armor.name} onremove={() => character.remove('data.armor').catch(() => {})} /></td>
+                <td><RemoveButton name={view.armor.name} onremove={() => character.remove('data.armor')} /></td>
               </tr>
             {:else}
               <tr><td colspan="3" class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</td></tr>
@@ -174,7 +174,7 @@
                 <!-- library copies come without a quantity: one -->
                 <input type="number" class="quantity" min="0" placeholder="1" aria-label={t('Common.Quantity')} use:EP.field={{ store: character, path: `${item.path}.quantity` }}>
               </td>
-              <td><RemoveButton name={item.name} onremove={() => character.remove(item.path).catch(() => {})} /></td>
+              <td><RemoveButton name={item.name} onremove={() => character.remove(item.path)} /></td>
             </tr>
           {:else}
             <tr><td colspan="3" class="empty">Nothing carried.</td></tr>

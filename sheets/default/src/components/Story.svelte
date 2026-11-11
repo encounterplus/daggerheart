@@ -43,7 +43,7 @@
   <div class="panel-header">
     <h3>{t('Character.Projects')}</h3>
     <div class="actions">
-      <button class="outline add" onclick={() => character.insert('data.projects', { name: '', current: 0, maximum: 4 }).catch(() => {})}>Add Project</button>
+      <button class="outline add" onclick={() => character.insert('data.projects', { name: '', current: 0, maximum: 4 })}>Add Project</button>
     </div>
   </div>
   <p class="hint">{t('Character.ProjectsHint')}</p>
@@ -54,7 +54,7 @@
         <input type="number" class="modifier" min="0" aria-label={t('Common.Current')} title={t('Common.Current')} use:EP.field={{ store: character, path: `data.projects[${project.id}].current` }}>
         <span class="of">/</span>
         <input type="number" class="modifier" min="0" aria-label={t('Common.Maximum')} title={t('Common.Maximum')} use:EP.field={{ store: character, path: `data.projects[${project.id}].maximum` }}>
-        <RemoveButton name={project.name} onremove={() => character.remove(`data.projects[${project.id}]`).catch(() => {})} />
+        <RemoveButton name={project.name} onremove={() => character.remove(`data.projects[${project.id}]`)} />
       </div>
       {#if project.maximum && (project.current ?? 0) >= project.maximum}
         <p class="note done">Complete</p>

@@ -46,7 +46,7 @@
         <!-- marking a Stress to transform is the player's; Evolution spends 3 Hope instead -->
         <button class="outline" onclick={chooseBeastform}>{view.beastform?.name ? 'Change form' : 'Transform'}</button>
         {#if view.beastform?.name}
-          <button class="outline" onclick={() => character.remove('data.beastform').catch(() => {})}>Drop out</button>
+          <button class="outline" onclick={() => character.remove('data.beastform')}>Drop out</button>
         {/if}
       </div>
     </div>
@@ -101,11 +101,11 @@
       <div class="row experience">
         <input type="text" aria-label="Experience" use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].name` }}>
         <input type="number" class="modifier" aria-label="Modifier" use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].modifier` }}>
-        <RemoveButton name={experience.name} onremove={() => character.remove(`data.companion.experiences[${experience.id}]`).catch(() => {})} />
+        <RemoveButton name={experience.name} onremove={() => character.remove(`data.companion.experiences[${experience.id}]`)} />
       </div>
     {/each}
     <div class="actions">
-      <button class="outline" onclick={() => character.insert('data.companion.experiences', { name: '', modifier: 2 }).catch(() => {})}>Add Experience</button>
+      <button class="outline" onclick={() => character.insert('data.companion.experiences', { name: '', modifier: 2 })}>Add Experience</button>
     </div>
     <h4>{t('Character.CompanionUpgrades')}</h4>
     <!-- as the Advancement tab's options: the boxes, then the name and what it does -->
@@ -160,7 +160,7 @@
          slots, as the companion's Stress; none is 1–12's nothing, so unmarking the last removes it -->
     <div class="track">
       <div class="label">Number <small>{data.strangePattern ?? '–'}</small></div>
-      <Pips value={data.strangePattern} boxes={12} label={t('Character.StrangePatterns')} onchange={(count) => count ? set(character, 'data.strangePattern', count) : character.remove('data.strangePattern').catch(() => {})} />
+      <Pips value={data.strangePattern} boxes={12} label={t('Character.StrangePatterns')} onchange={(count) => count ? set(character, 'data.strangePattern', count) : character.remove('data.strangePattern')} />
     </div>
   </section>
 {/if}
@@ -176,12 +176,12 @@
         <input type="number" class="modifier" min="0" aria-label={t('Common.Maximum')} title={t('Common.Maximum')} use:EP.field={{ store: character, path: `data.resources[${resource.id}].maximum` }}>
         <input type="text" class="modifier" aria-label={t('Character.Die')} placeholder="d6" use:EP.field={{ store: character, path: `data.resources[${resource.id}].die` }}>
         {#if resource.die}<RollLink formula={resource.die} label={resource.name}>Roll</RollLink>{/if}
-        <RemoveButton name={resource.name} onremove={() => character.remove(`data.resources[${resource.id}]`).catch(() => {})} />
+        <RemoveButton name={resource.name} onremove={() => character.remove(`data.resources[${resource.id}]`)} />
       </div>
       <Markdown html={resource.textHTML} />
     </div>
   {/each}
   <div class="actions">
-    <button class="outline" onclick={() => character.insert('data.resources', { name: '', current: 0 }).catch(() => {})}>Add Resource</button>
+    <button class="outline" onclick={() => character.insert('data.resources', { name: '', current: 0 })}>Add Resource</button>
   </div>
 </section>

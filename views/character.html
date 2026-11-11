@@ -5,17 +5,6 @@
    Features are listed by name; their text is on the linked cards. #}
 <main id="character" class="container-fluid">
 
-  {# always in the top right corner, over whatever is scrolled under it #}
-  {% if env.sheetURL %}
-  <a href="{{env.sheetURL}}" class="open-sheet" title="Open sheet" aria-label="Open sheet">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
-      <path d="M14 3v5h5"/>
-      <path d="M9 13h6M9 17h6"/>
-    </svg>
-  </a>
-  {% endif %}
-
   <section class="stat-block">
     {# the plate: token, name, class and heritage, the domains' icons and the level #}
     <header class="banner">
@@ -24,7 +13,7 @@
       {% endif %}
       <div class="name">
         <hgroup>
-          <h1 class="title">{{name}}</h1>
+          <h1 class="title" style="--name-length: {{name.count}}">{{name}}</h1>
           <p class="subtitle">{% if data.class.name %}{% include "reference-link.html" data.class %}{% endif %}{% if data.subclass.name %} ({% include "reference-link.html" data.subclass %}){% endif %}{% if data.multiclass.class.name %} / {% include "reference-link.html" data.multiclass.class %}{% if data.multiclass.subclass.name %} ({% include "reference-link.html" data.multiclass.subclass %}){% endif %}{% endif %}</p>
         </hgroup>
         <p class="heritage">
@@ -46,6 +35,12 @@
         <div class="label">{{'Common.Level'|l}}</div>
       </div>
     </header>
+    {# the way to the sheet: a pill astride the plate's gold rule, as the sheet's section buttons #}
+    {% if env.sheetURL %}
+    <div class="sheet-link">
+      <a href="{{env.sheetURL}}">{{'Character.OpenSheet'|l}}</a>
+    </div>
+    {% endif %}
 
     {# Evasion, Armor and its slots and the damage thresholds under the plate, as the sheet's header;
        the slots and tracks are drawn one <i> each: marked up to the current count; a range needs a

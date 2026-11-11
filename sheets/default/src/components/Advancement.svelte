@@ -35,7 +35,7 @@
     }
     change(character, levelUp)
     if (achievement) {
-      character.insert('data.experiences', { ...newExperience }).catch(() => {})
+      character.insert('data.experiences', { ...newExperience })
     }
   }
 

@@ -57,7 +57,7 @@
         <h3>{t('Character.Experiences')}</h3>
         <div class="actions">
           <!-- in a narrow column under the heading, as on a phone (default.css) -->
-          <button class="outline add" onclick={() => character.insert('data.experiences', { name: '', modifier: 2 }).catch(() => {})}>Add Experience</button>
+          <button class="outline add" onclick={() => character.insert('data.experiences', { name: '', modifier: 2 })}>Add Experience</button>
         </div>
       </div>
       <!-- spend a Hope to add one to a roll -->
@@ -65,7 +65,7 @@
         <div class="row experience">
           <input type="text" aria-label="Experience" placeholder="Experience" use:EP.field={{ store: character, path: `data.experiences[${experience.id}].name` }}>
           <input type="number" class="modifier" aria-label="Modifier" use:EP.field={{ store: character, path: `data.experiences[${experience.id}].modifier` }}>
-          <RemoveButton name={experience.name} onremove={() => character.remove(`data.experiences[${experience.id}]`).catch(() => {})} />
+          <RemoveButton name={experience.name} onremove={() => character.remove(`data.experiences[${experience.id}]`)} />
         </div>
       {:else}
         <p class="empty">No Experiences yet.</p>
