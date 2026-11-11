@@ -13,6 +13,7 @@
   import Advancement from './components/Advancement.svelte'
   import Footer from './components/Footer.svelte'
   import Downtime from './components/Downtime.svelte'
+  import CardModal from './components/CardModal.svelte'
   import Status from './components/Status.svelte'
 
   // the sheet renders from the store's snapshots; inputs write through `EP.field` and the store
@@ -69,5 +70,6 @@
   <Footer {character} snapshot={$character} />
   <!-- in the sheet, for its colors and controls (default.css) -->
   <Downtime {character} snapshot={$character} />
+  <CardModal {character} snapshot={$character} />
 </main>
 <Status {character} snapshot={$character} />

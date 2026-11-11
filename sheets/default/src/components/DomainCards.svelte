@@ -5,7 +5,7 @@
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { loadoutLimit, moveToLoadout } from '../lib/rules'
   import FeatureCard from '../lib/FeatureCard.svelte'
-  import Reference from '../lib/Reference.svelte'
+  import { cardModal } from '../lib/cardModal.svelte'
   import RemoveButton from '../lib/RemoveButton.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -24,7 +24,8 @@
 {#snippet card(entry: any)}
   <FeatureCard {character} feature={entry} path={path(entry)} textKey="descr" source={`${label('Domain', entry.domain)} ${entry.level ?? ''} · ${label('DomainCardType', entry.type)}${entry.recall ? ` · Recall ${entry.recall}` : ''}`}>
     <div class="card-actions">
-      {#if entry.reference}<Reference entry={{ name: 'Open card', reference: entry.reference }} />{/if}
+      <!-- the printed card, in a dialog over the sheet (components/CardModal) -->
+      <button class="outline" onclick={() => (cardModal.id = entry.id)}>Open card</button>
       {#if entry.vault}
         <!-- free at the start of a rest; otherwise mark Stress equal to its Recall Cost -->
         <button class="outline" disabled={full} onclick={() => change(character, (draft) => moveToLoadout(draft, entry.id, false))}>To loadout</button>
