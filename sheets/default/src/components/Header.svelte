@@ -18,7 +18,7 @@
 </script>
 
 <header class="sheet-title">
-  {#if portrait}<img class="portrait" alt="portrait" src={portrait}>{/if}
+  {#if portrait}<img class="portrait" alt={t('Character.Portrait')} src={portrait}>{/if}
   <!-- the name, then the domains' icons in a column of their own, on the plate (default.css) -->
   <div class="plate">
     <div class="name">

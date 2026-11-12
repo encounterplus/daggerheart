@@ -1,16 +1,18 @@
 <script lang="ts">
+  import { t, tf } from './labels'
+
   // Removes a list entry once the user confirms it, in ep-ui.js's dialog.
   let { name, onremove }: { name?: string, onremove: () => void } = $props()
 
   async function onclick() {
-    if (await EP.confirm(`Remove ${name || 'this entry'}?`, { action: 'Remove', destructive: true })) {
+    if (await EP.confirm(tf('Common.RemoveConfirm', { name: name || t('Common.ThisEntry') }), { action: t('Common.Remove'), destructive: true })) {
       onremove()
     }
   }
 </script>
 
 <!-- the icon: Lucide's trash-2 (ISC) -->
-<button class="remove" aria-label="Remove" title="Remove" {onclick}>
+<button class="remove" aria-label={t('Common.Remove')} title={t('Common.Remove')} {onclick}>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M3 6h18" />
     <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />

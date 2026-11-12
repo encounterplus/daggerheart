@@ -3,7 +3,7 @@
   import { change, set } from '../lib/change'
   import { tick } from 'svelte'
   import { downtime } from '../lib/downtime.svelte'
-  import { t } from '../lib/labels'
+  import { t, tf } from '../lib/labels'
   import { downtimeFeatures, downtimeMoveCount, downtimeMoves, downtimeRoll, finishRest, hasBedroll, loadoutLimit, moveToLoadout, needsRoll, reset } from '../lib/rules'
   import type { DowntimeMove, DowntimeMoveKey, Rest } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
@@ -21,8 +21,8 @@
   const features = $derived(downtimeFeatures(view))
 
   const rests = [
-    { key: 'shortRest', title: 'Short Rest', hint: 'About an hour to catch your breath. Clear 1d4 + Tier with each move.' },
-    { key: 'longRest', title: 'Long Rest', hint: 'Making camp for several hours. Clear everything with each move.' }
+    { key: 'shortRest', title: 'Downtime.ShortRest', hint: 'Downtime.ShortRestHint' },
+    { key: 'longRest', title: 'Downtime.LongRest', hint: 'Downtime.LongRestHint' }
   ] as const
 
   let rest = $state<Rest>('shortRest')
@@ -74,7 +74,8 @@
   }
 
   function title(key: DowntimeMoveKey, at: Rest = rest) {
-    return downtimeMoves.find((move) => move.key === key)?.[at] ?? ''
+    const name = downtimeMoves.find((move) => move.key === key)?.[at]
+    return name ? t(name) : ''
   }
 
   function chooseRest(key: Rest) {
@@ -100,9 +101,10 @@
 
   /** What a move made on an ally leaves for them to clear on their own sheet. */
   function reminder(move: DowntimeMove) {
-    const what = move.key === 'wounds' ? 'Hit Points' : 'Armor Slots'
-    const amount = rest === 'longRest' ? 'all their' : move.amount ?? downtimeRoll(tier)
-    return `${title(move.key)}: your ally clears ${amount} ${what}.`
+    const what = move.key === 'wounds' ? 'HitPoints' : 'ArmorSlots'
+    return rest === 'longRest'
+      ? tf(`Downtime.AllyClearsAll${what}`, { move: title(move.key) })
+      : tf(`Downtime.AllyClears${what}`, { move: title(move.key), amount: move.amount ?? downtimeRoll(tier) })
   }
 
   function finish() {
@@ -120,7 +122,7 @@
     <header>
       <h2 id="downtime-title">{t('Character.Downtime')}</h2>
       <!-- not Pico's `.close`, which brings its own icon and margins -->
-      <button class="dismiss" aria-label="Close" onclick={close}>
+      <button class="dismiss" aria-label={t('Common.Close')} onclick={close}>
         <!-- Lucide's x (ISC) -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
       </button>
@@ -128,34 +130,34 @@
 
     {#if finished}
       <section class="finished">
-        <h3>{rests.find((entry) => entry.key === finished?.rest)?.title} finished</h3>
-        <p class="note">Your moves are made, and the uses that come back with {finished.rest === 'longRest' ? 'a long rest' : 'a short rest'} are cleared.</p>
+        <h3>{tf('Downtime.RestFinished', { rest: t(rests.find((entry) => entry.key === finished?.rest)?.title ?? '') })}</h3>
+        <p class="note">{t(finished.rest === 'longRest' ? 'Downtime.LongRestFinishedNote' : 'Downtime.ShortRestFinishedNote')}</p>
         {#each finished.reminders as text}
           <p class="reminder">{text}</p>
         {/each}
-        <button onclick={close}>Done</button>
+        <button onclick={close}>{t('Common.Done')}</button>
       </section>
     {:else}
-      <div class="rests" role="radiogroup" aria-label="Rest">
+      <div class="rests" role="radiogroup" aria-label={t('Downtime.Rest')}>
         {#each rests as entry}
-          <button role="radio" aria-checked={rest === entry.key} class:outline={rest !== entry.key} onclick={() => chooseRest(entry.key)}>{entry.title}</button>
+          <button role="radio" aria-checked={rest === entry.key} class:outline={rest !== entry.key} onclick={() => chooseRest(entry.key)}>{t(entry.title)}</button>
         {/each}
       </div>
-      <p class="note">{rests.find((entry) => entry.key === rest)?.hint} After three short rests in a row, the next must be a long rest.</p>
+      <p class="note">{t(rests.find((entry) => entry.key === rest)?.hint ?? '')} {t('Downtime.ThreeShortRests')}</p>
 
       {#if cards.length > loadout.length}
         <!-- before the moves, cards move between the loadout and the vault for free -->
         <section>
           <h3>{t('Character.Loadout')} <small class:over={loadout.length > loadoutLimit}>{loadout.length} / {loadoutLimit}</small></h3>
-          <p class="note">Swap cards between your loadout and vault for free.</p>
+          <p class="note">{t('Downtime.SwapCards')}</p>
           <ul class="swaps">
             {#each cards as card (card.id)}
               <li class:vault={card.vault}>
                 <span>{card.name}</span>
                 {#if card.vault}
-                  <button class="outline" disabled={loadout.length >= loadoutLimit} onclick={() => change(character, (draft) => moveToLoadout(draft, card.id, false))}>To loadout</button>
+                  <button class="outline" disabled={loadout.length >= loadoutLimit} onclick={() => change(character, (draft) => moveToLoadout(draft, card.id, false))}>{t('Character.ToLoadout')}</button>
                 {:else}
-                  <button class="outline" onclick={() => set(character, `data.domainCards[${card.id}].vault`, true)}>To vault</button>
+                  <button class="outline" onclick={() => set(character, `data.domainCards[${card.id}].vault`, true)}>{t('Character.ToVault')}</button>
                 {/if}
               </li>
             {/each}
@@ -164,44 +166,44 @@
       {/if}
 
       <section>
-        <h3>Moves <small class:over={moves.length > limit}>{moves.length} / {limit}</small></h3>
+        <h3>{t('Downtime.Moves')} <small class:over={moves.length > limit}>{moves.length} / {limit}</small></h3>
         {#each moves as move, index}
           {@const info = downtimeMoves.find((entry) => entry.key === move.key)}
           <div class="move">
             <div class="move-title">
               <strong>{title(move.key)}</strong>
-              <button class="remove" aria-label="Remove {title(move.key)}" title="Remove" onclick={() => moves.splice(index, 1)}>
+              <button class="remove" aria-label={tf('Common.RemoveName', { name: title(move.key) })} title={t('Common.Remove')} onclick={() => moves.splice(index, 1)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
               </button>
             </div>
 
             {#if info?.ally}
-              <div class="targets" role="radiogroup" aria-label="On whom">
-                <label><input type="radio" name="target-{index}" checked={!move.ally} onchange={() => (move.ally = false)}> Yourself</label>
-                <label><input type="radio" name="target-{index}" checked={move.ally} onchange={() => (move.ally = true)}> An ally</label>
+              <div class="targets" role="radiogroup" aria-label={t('Downtime.OnWhom')}>
+                <label><input type="radio" name="target-{index}" checked={!move.ally} onchange={() => (move.ally = false)}> {t('Downtime.Yourself')}</label>
+                <label><input type="radio" name="target-{index}" checked={move.ally} onchange={() => (move.ally = true)}> {t('Downtime.AnAlly')}</label>
               </div>
             {/if}
 
             {#if move.key === 'prepare'}
-              <label><input type="checkbox" role="switch" bind:checked={move.together}> With the party: 2 Hope each</label>
-              <p class="note">Hope {data.hope ?? 0} / {view.hopeMaximum ?? 6}</p>
+              <label><input type="checkbox" role="switch" bind:checked={move.together}> {t('Downtime.WithTheParty')}</label>
+              <p class="note">{t('Common.Hope')} {data.hope ?? 0} / {view.hopeMaximum ?? 6}</p>
             {:else if move.key === 'project'}
               {#if projects.length}
                 <div class="row">
                   <select aria-label={t('Character.Project')} bind:value={move.project}>
                     {#each projects as project (project.id)}
-                      <option value={project.id}>{project.name || 'Unnamed'} ({project.current ?? 0}{project.maximum ? ` / ${project.maximum}` : ''})</option>
+                      <option value={project.id}>{project.name || t('Common.Unnamed')} ({project.current ?? 0}{project.maximum ? ` / ${project.maximum}` : ''})</option>
                     {/each}
                   </select>
-                  <label class="advance">Advance <input type="number" min="0" bind:value={move.advance}></label>
+                  <label class="advance">{t('Downtime.Advance')} <input type="number" min="0" bind:value={move.advance}></label>
                 </div>
-                <p class="note">The GM says whether it advances on its own or with an action roll.</p>
+                <p class="note">{t('Downtime.ProjectNote')}</p>
               {:else}
-                <p class="note warning">No projects yet: add one on the Story tab.</p>
+                <p class="note warning">{t('Downtime.NoProjects')}</p>
               {/if}
             {:else if rest === 'shortRest'}
               <div class="amounts">
-                <button class="outline roll" onclick={() => roll(move)}>Roll {downtimeRoll(tier)}</button>
+                <button class="outline roll" onclick={() => roll(move)}>{tf('Common.RollName', { name: downtimeRoll(tier) })}</button>
                 {#each amounts as amount}
                   <button class:outline={move.amount !== amount} aria-pressed={move.amount === amount} onclick={() => (move.amount = amount)}>{amount}</button>
                 {/each}
@@ -209,13 +211,13 @@
             {/if}
 
             {#if move.ally}
-              <p class="note">Your ally clears it on their own sheet.</p>
+              <p class="note">{t('Downtime.AllyClearsOnOwnSheet')}</p>
             {:else if move.key === 'wounds'}
-              <p class="note">{data.hp?.current ?? 0} Hit Points marked</p>
+              <p class="note">{tf('Downtime.HitPointsMarked', { count: data.hp?.current ?? 0 })}</p>
             {:else if move.key === 'stress'}
-              <p class="note">{data.stress?.current ?? 0} Stress marked{#if data.companion?.stress?.current}; your companion clears as many{/if}</p>
+              <p class="note">{tf('Downtime.StressMarked', { count: data.stress?.current ?? 0 })}{#if data.companion?.stress?.current}{t('Downtime.CompanionClearsToo')}{/if}</p>
             {:else if move.key === 'armor'}
-              <p class="note">{data.armor?.marked ?? 0} Armor Slots marked</p>
+              <p class="note">{tf('Downtime.ArmorSlotsMarked', { count: data.armor?.marked ?? 0 })}</p>
             {/if}
           </div>
         {/each}
@@ -223,24 +225,24 @@
         <div class="choices">
           {#each downtimeMoves as entry}
             {#if entry[rest]}
-              <button class="outline" disabled={moves.length >= limit} title={entry.text} onclick={() => add(entry.key)}>+ {entry[rest]}</button>
+              <button class="outline" disabled={moves.length >= limit} title={t(entry.text)} onclick={() => add(entry.key)}>+ {t(entry[rest] ?? '')}</button>
             {/if}
           {/each}
         </div>
         <div class="extra">
-          <span class="note">Extra moves (a feature, item or place grants them)</span>
-          <button class="outline" aria-label="One fewer extra move" disabled={!extra} onclick={() => (extra -= 1)}>−</button>
+          <span class="note">{t('Downtime.ExtraMoves')}</span>
+          <button class="outline" aria-label={t('Downtime.FewerExtraMoves')} disabled={!extra} onclick={() => (extra -= 1)}>−</button>
           <span>{extra}</span>
-          <button class="outline" aria-label="One more extra move" onclick={() => (extra += 1)}>+</button>
+          <button class="outline" aria-label={t('Downtime.MoreExtraMoves')} onclick={() => (extra += 1)}>+</button>
         </div>
         {#if hasBedroll(data)}
-          <p class="note">Premium Bedroll: you clear a Stress too.</p>
+          <p class="note">{t('Downtime.PremiumBedroll')}</p>
         {/if}
       </section>
 
       {#if features.length}
         <section>
-          <h3>Your Features</h3>
+          <h3>{t('Downtime.YourFeatures')}</h3>
           {#each features as feature}
             <details class="reference">
               <summary>{feature.name}</summary>
@@ -251,11 +253,11 @@
       {/if}
 
       <footer>
-        <button disabled={!ready || moves.length > limit} onclick={finish}>Finish {rests.find((entry) => entry.key === rest)?.title}</button>
+        <button disabled={!ready || moves.length > limit} onclick={finish}>{tf('Downtime.FinishRest', { rest: t(rests.find((entry) => entry.key === rest)?.title ?? '') })}</button>
         <!-- the other resets: uses spent "once per scene" or "once per session" -->
         <div class="resets">
-          <button class="outline" title={'Clears uses spent "once per scene"'} onclick={() => change(character, (draft) => reset(draft, 'scene'))}>End Scene</button>
-          <button class="outline" title={'Clears uses spent "once per session"'} onclick={() => change(character, (draft) => reset(draft, 'session'))}>End Session</button>
+          <button class="outline" title={t('Downtime.EndSceneHint')} onclick={() => change(character, (draft) => reset(draft, 'scene'))}>{t('Downtime.EndScene')}</button>
+          <button class="outline" title={t('Downtime.EndSessionHint')} onclick={() => change(character, (draft) => reset(draft, 'session'))}>{t('Downtime.EndSession')}</button>
         </div>
       </footer>
     {/if}

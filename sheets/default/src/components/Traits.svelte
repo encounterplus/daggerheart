@@ -11,7 +11,7 @@
   const hopeMaximum = $derived(snapshot.view.data.hopeMaximum)
   const marked = $derived(new Set(data.markedTraits ?? []))
 
-  /** What each trait is rolled for, as the character sheet lists them. */
+  /** What each trait is rolled for, as the character sheet lists them: `TraitVerb.*` keys. */
   const verbs: Record<string, string[]> = {
     agility: ['Sprint', 'Leap', 'Maneuver'],
     strength: ['Lift', 'Smash', 'Grapple'],
@@ -44,7 +44,7 @@
       <div class="value">
         <DualityRoll {character} {hopeMaximum} modifier={data.traits?.[trait] ?? 0} label={t(key(trait))}>{signed(data.traits?.[trait])}</DualityRoll>
       </div>
-      <div class="verbs">{#each verbs[trait] ?? [] as verb}<span>{verb}</span>{/each}</div>
+      <div class="verbs">{#each verbs[trait] ?? [] as verb}<span>{t(`TraitVerb.${verb}`)}</span>{/each}</div>
     </div>
   {/each}
 </div>

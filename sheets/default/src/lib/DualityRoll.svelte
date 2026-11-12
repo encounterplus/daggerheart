@@ -4,6 +4,7 @@
   import { change } from './change'
   import { during, report } from './notice.svelte'
   import { actionRoll, applyDuality, dualityOutcome } from './rules'
+  import { t, tf } from './labels'
 
   // An action roll: the Duality Dice, rolled through the SDK so the sheet gets the result, then
   // what its outcome gives — a Hope, a Stress cleared, the GM's Fear. A tap rolls it; its menu
@@ -28,10 +29,10 @@
     rolling = true
     try {
       // null when the roller closed before the dice stopped: nothing to give
-      const result = await during(label ? `Rolling ${label}…` : 'Rolling…', () => EP.roll(formula, { label, type, mode }).catch(() => null))
+      const result = await during(label ? tf('Common.RollingName', { name: label }) : t('Common.Rolling'), () => EP.roll(formula, { label, type, mode }).catch(() => null))
       const outcome = dualityOutcome(result)
       if (outcome === 'fear') {
-        await EP.adjustResource('fear', 1).catch((error) => report(`The GM's Fear wasn't added: ${error.message}`))
+        await EP.adjustResource('fear', 1).catch((error) => report(tf('Character.FearNotAdded', { reason: error.message })))
       } else if (outcome) {
         change(character, (data) => applyDuality(data, outcome, hopeMaximum))
       }
@@ -57,4 +58,4 @@
   })
 </script>
 
-<a bind:this={link} {href} title={label ? `Roll ${label}` : undefined} {onclick}>{@render children()}</a>
+<a bind:this={link} {href} title={label ? tf('Common.RollName', { name: label }) : undefined} {onclick}>{@render children()}</a>

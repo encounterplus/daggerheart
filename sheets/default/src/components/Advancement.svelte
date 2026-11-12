@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
-  import { t } from '../lib/labels'
+  import { t, tf } from '../lib/labels'
   import { advancements, advancementTiers, isTierAchievement, levelUp, newExperience, tier } from '../lib/rules'
   import Pips from '../lib/Pips.svelte'
 
@@ -27,21 +27,19 @@
   async function onLevelUp() {
     const next = level + 1
     const achievement = isTierAchievement(next)
-    const message = achievement
-      ? `Level up to ${next}: a new tier. You gain +1 Proficiency and a new Experience at +2${next >= 5 ? ', and your marked traits clear' : ''}. Then choose two advancements and a domain card.`
-      : `Level up to ${next}? Then choose two advancements and a domain card.`
-    if (!(await EP.confirm(message, { action: 'Level up' }))) {
+    const message = tf(achievement ? (next >= 5 ? 'Advancement.LevelUpTierTraitsConfirm' : 'Advancement.LevelUpTierConfirm') : 'Advancement.LevelUpConfirm', { level: next })
+    if (!(await EP.confirm(message, { action: t('Advancement.LevelUp') }))) {
       return
     }
     change(character, levelUp)
     if (achievement) {
-      character.insert('data.experiences', { ...newExperience })
+      character.insert('data.experiences', { ...newExperience, name: t(newExperience.name) })
     }
   }
 
   /** The domain card option names its tier's highest level, but in the last tier. */
   function optionLabel(option: (typeof advancements)[number], entry: (typeof tiers)[number]) {
-    return option.key === 'domainCard' && entry.tier < 4 ? `${option.label.slice(0, -1)} (up to level ${entry.last}).` : option.label
+    return option.key === 'domainCard' && entry.tier < 4 ? tf('AdvancementOption.DomainCardUpTo', { level: entry.last }) : t(option.label)
   }
 </script>
 
@@ -49,7 +47,7 @@
   <div class="panel-header">
     <h3>{t('Character.Advancement')} <small>{t('Common.Level')} {level} · {t(`Tier.Tier${current}`)} · <span class:over={marked > allowed}>{marked} / {allowed}</span></small></h3>
     <div class="actions">
-      <button class="outline" disabled={level >= 10} onclick={onLevelUp}>Level up</button>
+      <button class="outline" disabled={level >= 10} onclick={onLevelUp}>{t('Advancement.LevelUp')}</button>
     </div>
   </div>
 
@@ -58,12 +56,12 @@
     {#each tiers as entry (entry.key)}
       <div class="advancements" class:locked={!entry.reached}>
         <h4>{t(`TierLevels.Tier${entry.tier}`)}</h4>
-        <p class="achievement">{entry.achievement}</p>
-        <p class="note">Choose two options from the list below{entry.tier > 2 ? ' or any from the previous tier' : ''} and mark them.</p>
+        <p class="achievement">{t(entry.achievement)}</p>
+        <p class="note">{t(entry.tier > 2 ? 'Advancement.ChooseTwoOrPrevious' : 'Advancement.ChooseTwo')}</p>
         <div class="options">
           {#each advancements.filter((option) => option.from <= entry.tier) as option}
             <div class="advancement" class:double={'double' in option}>
-              <Pips value={data.advancements?.[entry.key]?.[option.key]} boxes={option.slots} max={entry.reached ? undefined : 0} label={option.label} onchange={(count) => set(character, `data.advancements.${entry.key}.${option.key}`, count)} />
+              <Pips value={data.advancements?.[entry.key]?.[option.key]} boxes={option.slots} max={entry.reached ? undefined : 0} label={t(option.label)} onchange={(count) => set(character, `data.advancements.${entry.key}.${option.key}`, count)} />
               <span>{optionLabel(option, entry)}</span>
             </div>
           {/each}

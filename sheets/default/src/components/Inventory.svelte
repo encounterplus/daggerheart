@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
-  import { label, t } from '../lib/labels'
+  import { label, t, tf } from '../lib/labels'
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { burden, burdenLimit, equip, ignoresBurden, inventoryWeaponLimit } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
@@ -20,7 +20,7 @@
 
   async function chooseArmor() {
     // the new armor comes without marked slots
-    if (data.armor?.marked && !(await EP.confirm(`${data.armor.name} has ${data.armor.marked} marked Armor Slots. Replace it?`, { action: 'Replace', destructive: true }))) {
+    if (data.armor?.marked && !(await EP.confirm(tf('Character.ReplaceArmorConfirm', { name: data.armor.name ?? '', count: data.armor.marked }), { action: t('Common.Replace'), destructive: true }))) {
       return
     }
     addFromLibrary(character, 'data.armor', 'Armor', copyKeys.Armor, false)
@@ -45,7 +45,7 @@
       <div class="panel-header">
         <h3>{t('Entity.Weapon.many')}</h3>
         <div class="actions">
-          <button class="outline" onclick={() => addFromLibrary(character, 'data.weapons', 'Weapon', copyKeys.Weapon)}>Add weapon</button>
+          <button class="outline" onclick={() => addFromLibrary(character, 'data.weapons', 'Weapon', copyKeys.Weapon)}>{t('Character.AddWeapon')}</button>
         </div>
       </div>
       <!-- the trait, range, damage and burden as a line under the name, so the table fits half the
@@ -56,7 +56,7 @@
           <thead>
             <tr>
               <th>{t('Common.Name')}</th>
-              <th>Active</th>
+              <th>{t('Character.Active')}</th>
               <th></th>
             </tr>
           </thead>
@@ -70,7 +70,7 @@
                   {#if weapon.feature?.name}<div class="feature"><em>{weapon.feature.name}:</em> <Markdown html={weapon.featureHTML} /></div>{/if}
                 </td>
                 <td>
-                  <input type="checkbox" role="switch" aria-label="Active" checked={Boolean(weapon.equipped)}
+                  <input type="checkbox" role="switch" aria-label={t('Character.Active')} checked={Boolean(weapon.equipped)}
                     onchange={(event) => event.currentTarget.checked
                       ? change(character, (draft) => equip(draft, index))
                       : set(character, `${weapon.path}.equipped`, false)}>
@@ -82,10 +82,10 @@
         </table>
       </div>
       {#if carried > inventoryWeaponLimit}
-        <p class="warning">A character carries at most {inventoryWeaponLimit} Inventory Weapons besides the active ones ({carried} now).</p>
+        <p class="warning">{tf('Character.TooManyWeapons', { limit: inventoryWeaponLimit, count: carried })}</p>
       {/if}
       {#if hands > burdenLimit && !ignoresBurden(data)}
-        <p class="warning">The Active Weapons take {hands} hands; a character has {burdenLimit}.</p>
+        <p class="warning">{tf('Character.TooManyHands', { hands, limit: burdenLimit })}</p>
       {/if}
     </section>
 
@@ -93,7 +93,7 @@
       <div class="panel-header">
         <h3>{t('Entity.Armor')}</h3>
         <div class="actions">
-          <button class="outline" onclick={chooseArmor}>{data.armor?.name ? 'Change armor' : 'Choose armor'}</button>
+          <button class="outline" onclick={chooseArmor}>{t(data.armor?.name ? 'Character.ChangeArmor' : 'Character.ChooseArmor')}</button>
         </div>
       </div>
       <!-- one armor at a time, the Active Armor: removing or replacing it clears its marked slots;
@@ -104,7 +104,7 @@
           <thead>
             <tr>
               <th>{t('Common.Name')}</th>
-              <th>Active</th>
+              <th>{t('Character.Active')}</th>
               <th></th>
             </tr>
           </thead>
@@ -117,13 +117,13 @@
                   {#if view.armor.feature?.name}<div class="feature"><em>{view.armor.feature.name}:</em> <Markdown html={view.armor.feature.textHTML} /></div>{/if}
                 </td>
                 <td>
-                  <input type="checkbox" role="switch" aria-label="Active" checked={!view.armor.unequipped}
+                  <input type="checkbox" role="switch" aria-label={t('Character.Active')} checked={!view.armor.unequipped}
                     onchange={(event) => set(character, 'data.armor.unequipped', !event.currentTarget.checked)}>
                 </td>
                 <td><RemoveButton name={view.armor.name} onremove={() => character.remove('data.armor')} /></td>
               </tr>
             {:else}
-              <tr><td colspan="3" class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level.</td></tr>
+              <tr><td colspan="3" class="empty">{t('Character.Unarmored')}</td></tr>
             {/if}
           </tbody>
         </table>
@@ -148,7 +148,7 @@
     <div class="panel-header">
       <h3>{t('Character.Inventory')}</h3>
       <div class="actions">
-        <button class="outline" onclick={() => addFromLibrary(character, 'data.inventory', 'Item', copyKeys.Item)}>Add item</button>
+        <button class="outline" onclick={() => addFromLibrary(character, 'data.inventory', 'Item', copyKeys.Item)}>{t('Character.AddItem')}</button>
       </div>
     </div>
     <!-- as the weapons: the name with its rarity and description, then the quantity; names are
@@ -177,7 +177,7 @@
               <td><RemoveButton name={item.name} onremove={() => character.remove(item.path)} /></td>
             </tr>
           {:else}
-            <tr><td colspan="3" class="empty">Nothing carried.</td></tr>
+            <tr><td colspan="3" class="empty">{t('Character.NothingCarried')}</td></tr>
           {/each}
         </tbody>
       </table>

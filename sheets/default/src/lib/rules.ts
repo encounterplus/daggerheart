@@ -1,5 +1,6 @@
 // Daggerheart's rules the sheet applies: game rules belong to the system, never to the SDK.
 import type { CharacterData, Trait, TrackedFeature } from '../../../../cache/schemas/character'
+import { tf } from './labels'
 
 /** The traits in the character sheet's order. */
 export const traits: Trait[] = ['agility', 'strength', 'finesse', 'instinct', 'presence', 'knowledge']
@@ -136,14 +137,15 @@ export type Rest = 'shortRest' | 'longRest'
 
 /**
  * The downtime moves, by the rest they're chosen in: a short rest's clear 1d4 + Tier, a long
- * rest's all of it. `ally` moves can be made on an ally, whose own sheet clears it.
+ * rest's all of it. `ally` moves can be made on an ally, whose own sheet clears it. The names and
+ * texts are label keys (lang/).
  */
 export const downtimeMoves = [
-  { key: 'wounds', shortRest: 'Tend to Wounds', longRest: 'Tend to All Wounds', ally: true, text: 'Clear Hit Points for yourself or an ally.' },
-  { key: 'stress', shortRest: 'Clear Stress', longRest: 'Clear All Stress', ally: false, text: 'Clear Stress.' },
-  { key: 'armor', shortRest: 'Repair Armor', longRest: 'Repair All Armor', ally: true, text: 'Clear Armor Slots from your or an ally\'s armor.' },
-  { key: 'prepare', shortRest: 'Prepare', longRest: 'Prepare', ally: false, text: 'Describe how you prepare, then gain a Hope; 2 Hope each when you Prepare with one or more members of your party.' },
-  { key: 'project', shortRest: null, longRest: 'Work on a Project', ally: false, text: 'With GM approval, advance a long-term project\'s countdown, automatically or with an action roll (GM\'s choice).' }
+  { key: 'wounds', shortRest: 'Downtime.TendToWounds', longRest: 'Downtime.TendToAllWounds', ally: true, text: 'Downtime.TendToWoundsText' },
+  { key: 'stress', shortRest: 'Downtime.ClearStress', longRest: 'Downtime.ClearAllStress', ally: false, text: 'Downtime.ClearStressText' },
+  { key: 'armor', shortRest: 'Downtime.RepairArmor', longRest: 'Downtime.RepairAllArmor', ally: true, text: 'Downtime.RepairArmorText' },
+  { key: 'prepare', shortRest: 'Downtime.Prepare', longRest: 'Downtime.Prepare', ally: false, text: 'Downtime.PrepareText' },
+  { key: 'project', shortRest: null, longRest: 'Downtime.WorkOnAProject', ally: false, text: 'Downtime.WorkOnAProjectText' }
 ] as const
 
 export type DowntimeMoveKey = typeof downtimeMoves[number]['key']
@@ -318,13 +320,13 @@ export function moveToLoadout(data: CharacterData, id: string, recall: boolean) 
     return
   }
   if (cards.filter((entry) => !entry.vault).length >= loadoutLimit) {
-    throw new Error(`The loadout holds ${loadoutLimit} cards: move one to the vault first.`)
+    throw new Error(tf('Character.LoadoutFull', { limit: loadoutLimit }))
   }
   if (recall && card.recall) {
     const stress = data.stress ?? {}
     const current = stress.current ?? 0
     if (current + card.recall > (stress.maximum ?? 0)) {
-      throw new Error(`Recalling ${card.name} marks ${card.recall} Stress, more than is left.`)
+      throw new Error(tf('Character.RecallTooMuchStress', { name: card.name ?? '', stress: card.recall }))
     }
     data.stress = { ...stress, current: current + card.recall }
   }
@@ -334,38 +336,38 @@ export function moveToLoadout(data: CharacterData, id: string, recall: boolean) 
 // LEVELING UP
 
 /**
- * The advancement options in the printed sheet's words, the tiers they open at and their slots in
- * a tier; `double` takes both of a level's advancements.
+ * The advancement options in the printed sheet's words (label keys), the tiers they open at and
+ * their slots in a tier; `double` takes both of a level's advancements.
  */
 export const advancements = [
-  { key: 'traits', label: 'Gain a +1 bonus to two unmarked character traits and mark them.', slots: 3, from: 2 },
-  { key: 'hp', label: 'Permanently gain one Hit Point slot.', slots: 2, from: 2 },
-  { key: 'stress', label: 'Permanently gain one Stress slot.', slots: 2, from: 2 },
-  { key: 'experiences', label: 'Permanently gain a +1 bonus to two Experiences.', slots: 1, from: 2 },
-  { key: 'domainCard', label: 'Choose an additional domain card of your level or lower from a domain you have access to.', slots: 1, from: 2 },
-  { key: 'evasion', label: 'Permanently gain a +1 bonus to your Evasion.', slots: 1, from: 2 },
-  { key: 'subclass', label: 'Take an upgraded subclass card. Then cross out the multiclass option for this tier.', slots: 1, from: 3 },
-  { key: 'proficiency', label: 'Increase your Proficiency by +1.', slots: 2, from: 3, double: true },
-  { key: 'multiclass', label: 'Multiclass: Choose an additional class for your character, then cross out an unused “Take an upgraded subclass card” and the other multiclass option on this sheet.', slots: 2, from: 3, double: true }
+  { key: 'traits', label: 'AdvancementOption.Traits', slots: 3, from: 2 },
+  { key: 'hp', label: 'AdvancementOption.Hp', slots: 2, from: 2 },
+  { key: 'stress', label: 'AdvancementOption.Stress', slots: 2, from: 2 },
+  { key: 'experiences', label: 'AdvancementOption.Experiences', slots: 1, from: 2 },
+  { key: 'domainCard', label: 'AdvancementOption.DomainCard', slots: 1, from: 2 },
+  { key: 'evasion', label: 'AdvancementOption.Evasion', slots: 1, from: 2 },
+  { key: 'subclass', label: 'AdvancementOption.Subclass', slots: 1, from: 3 },
+  { key: 'proficiency', label: 'AdvancementOption.Proficiency', slots: 2, from: 3, double: true },
+  { key: 'multiclass', label: 'AdvancementOption.Multiclass', slots: 2, from: 3, double: true }
 ] as const
 
-/** The Beastbound companion's level-up options in the SRD's words, with their slots. */
+/** The Beastbound companion's level-up options in the SRD's words (label keys), with their slots. */
 export const companionUpgrades = [
-  { key: 'intelligent', slots: 3, text: 'Your companion gains a permanent +1 bonus to a Companion Experience of your choice.' },
-  { key: 'lightInTheDark', slots: 1, text: 'Use this as an additional Hope slot your character can mark.' },
-  { key: 'creatureComfort', slots: 1, text: 'Once per rest, when you take time during a quiet moment to give your companion love and attention, you can gain a Hope or you can both clear a Stress.' },
-  { key: 'armored', slots: 1, text: 'When your companion takes damage, you can mark one of your Armor Slots instead of marking one of their Stress.' },
-  { key: 'vicious', slots: 3, text: 'Increase your companion\'s damage dice or range by one step (d6 to d8, Close to Far, etc.).' },
-  { key: 'resilient', slots: 3, text: 'Your companion gains an additional Stress slot.' },
-  { key: 'bonded', slots: 1, text: 'When you mark your last Hit Point, your companion rushes to your side to comfort you. Roll a number of d6s equal to the unmarked Stress slots they have and mark them. If any roll a 6, your companion helps you up. Clear your last Hit Point and return to the scene.' },
-  { key: 'aware', slots: 1, text: 'Your companion gains a permanent +2 bonus to their Evasion.' }
+  { key: 'intelligent', slots: 3, text: 'CompanionUpgradeText.Intelligent' },
+  { key: 'lightInTheDark', slots: 1, text: 'CompanionUpgradeText.LightInTheDark' },
+  { key: 'creatureComfort', slots: 1, text: 'CompanionUpgradeText.CreatureComfort' },
+  { key: 'armored', slots: 1, text: 'CompanionUpgradeText.Armored' },
+  { key: 'vicious', slots: 3, text: 'CompanionUpgradeText.Vicious' },
+  { key: 'resilient', slots: 3, text: 'CompanionUpgradeText.Resilient' },
+  { key: 'bonded', slots: 1, text: 'CompanionUpgradeText.Bonded' },
+  { key: 'aware', slots: 1, text: 'CompanionUpgradeText.Aware' }
 ] as const
 
-/** The tiers that advance, with their levels and what their first level brings by itself. */
+/** The tiers that advance, with their levels and what their first level brings by itself (a label key). */
 export const advancementTiers = [
-  { tier: 2, first: 2, last: 4, achievement: 'At level 2, gain an additional Experience at +2 and gain a +1 bonus to your Proficiency.' },
-  { tier: 3, first: 5, last: 7, achievement: 'At level 5, gain an additional Experience at +2 and clear all marks on character traits. Then gain a +1 bonus to your Proficiency.' },
-  { tier: 4, first: 8, last: 10, achievement: 'At level 8, gain an additional Experience at +2 and clear all marks on character traits. Then gain a +1 bonus to your Proficiency.' }
+  { tier: 2, first: 2, last: 4, achievement: 'TierAchievement.Tier2' },
+  { tier: 3, first: 5, last: 7, achievement: 'TierAchievement.Tier3' },
+  { tier: 4, first: 8, last: 10, achievement: 'TierAchievement.Tier4' }
 ] as const
 
 /** The levels at which a new tier starts, with its achievements. */
@@ -376,8 +378,8 @@ export function isTierAchievement(level: number) {
   return tierAchievements.includes(level)
 }
 
-/** The Experience a tier achievement brings, named by the player afterwards. */
-export const newExperience = { name: 'New Experience', modifier: 2 }
+/** The Experience a tier achievement brings, named by the player afterwards; `name` is a label key. */
+export const newExperience = { name: 'Character.NewExperience', modifier: 2 }
 
 /**
  * Raises the level by one with what comes with it alone: the tier achievements' +1 Proficiency

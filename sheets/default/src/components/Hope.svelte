@@ -22,7 +22,7 @@
   <div class="track">
     <Pips value={data.hope} max={view.hopeMaximum} crossed={data.scars ?? 0} boxes={hopeSlots} shape="diamond" dividers label={t('Common.Hope')} onchange={(count) => set(character, 'data.hope', count)} />
   </div>
-  <p class="note">Spend a Hope to use an Experience or help an ally.</p>
+  <p class="note">{t('Character.HopeHint')}</p>
   {#if hopeFeature?.name}
     <div class="feature"><strong><em>{hopeFeature.name}:</em></strong> <Markdown html={hopeFeature.textHTML} /></div>
   {/if}

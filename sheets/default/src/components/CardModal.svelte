@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { cardModal } from '../lib/cardModal.svelte'
-  import { label } from '../lib/labels'
+  import { label, t } from '../lib/labels'
   import Markdown from '../lib/Markdown.svelte'
 
   // A domain card as the printed card, in the dialog the ancestry view shows its card in
@@ -51,7 +51,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <form method="dialog">
-          <button class="modal-close" aria-label="Close">
+          <button class="modal-close" aria-label={t('Common.Close')}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>

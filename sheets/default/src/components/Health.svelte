@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
-  import { t } from '../lib/labels'
+  import { t, tf } from '../lib/labels'
   import Pips from '../lib/Pips.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -18,11 +18,11 @@
   <h3>{t('Character.DamageAndHealth')}</h3>
   <!-- marked HP by damage: below Major 1, from Major 2, from Severe 3 -->
   <div class="thresholds">
-    <div class="severity"><strong>Minor Damage</strong><small>Mark 1 HP</small></div>
+    <div class="severity"><strong>{t('Character.MinorDamage')}</strong><small>{tf('Character.MarkHP', { count: 1 })}</small></div>
     <div class="threshold" title={t('Common.MajorThreshold')}>{view.thresholds?.major ?? ''}</div>
-    <div class="severity"><strong>Major Damage</strong><small>Mark 2 HP</small></div>
+    <div class="severity"><strong>{t('Character.MajorDamage')}</strong><small>{tf('Character.MarkHP', { count: 2 })}</small></div>
     <div class="threshold" title={t('Common.SevereThreshold')}>{view.thresholds?.severe ?? ''}</div>
-    <div class="severity"><strong>Severe Damage</strong><small>Mark 3 HP</small></div>
+    <div class="severity"><strong>{t('Character.SevereDamage')}</strong><small>{tf('Character.MarkHP', { count: 3 })}</small></div>
   </div>
   <div class="track hp">
     <div class="label">{t('Common.HP')} <small>{data.hp?.current ?? 0} / {data.hp?.maximum ?? 0}</small></div>

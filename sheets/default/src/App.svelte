@@ -32,7 +32,7 @@
   const open = $derived(sections.some(({ id }) => id === section.open) ? section.open : 'main')
 
   $effect(() => {
-    document.title = $character.model.name || 'Character'
+    document.title = $character.model.name || t('Entity.Character')
   })
 </script>
 
@@ -45,7 +45,7 @@
   </div>
 
   <!-- the tabs; on a phone a menu that the round button in the corner opens (default.css) -->
-  <button class="sections-button" popovertarget="sections" aria-label="Sections" title="Sections">
+  <button class="sections-button" popovertarget="sections" aria-label={t('Character.Sections')} title={t('Character.Sections')}>
     <!-- the icon: Lucide's layout-grid (ISC) -->
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <rect width="7" height="7" x="3" y="3" rx="1" />

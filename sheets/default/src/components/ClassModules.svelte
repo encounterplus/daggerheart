@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
-  import { label, t } from '../lib/labels'
+  import { label, t, tf } from '../lib/labels'
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { actionRoll, companionUpgrades, damageRoll, signed } from '../lib/rules'
   import FeatureCard from '../lib/FeatureCard.svelte'
@@ -44,9 +44,9 @@
       <h3>{t('Entity.Beastform')}</h3>
       <div class="actions">
         <!-- marking a Stress to transform is the player's; Evolution spends 3 Hope instead -->
-        <button class="outline" onclick={chooseBeastform}>{view.beastform?.name ? 'Change form' : 'Transform'}</button>
+        <button class="outline" onclick={chooseBeastform}>{t(view.beastform?.name ? 'Beastform.ChangeForm' : 'Beastform.Transform')}</button>
         {#if view.beastform?.name}
-          <button class="outline" onclick={() => character.remove('data.beastform')}>Drop out</button>
+          <button class="outline" onclick={() => character.remove('data.beastform')}>{t('Beastform.DropOut')}</button>
         {/if}
       </div>
     </div>
@@ -63,7 +63,7 @@
         <FeatureCard {character} {feature} path={feature.path} source={view.beastform.name} />
       {/each}
     {:else}
-      <p class="empty">Not transformed.</p>
+      <p class="empty">{t('Beastform.NotTransformed')}</p>
     {/if}
   </section>
 {/if}
@@ -80,7 +80,7 @@
          drops it out of the scene; three slots and the Resilient upgrades' (views/transforms) -->
     <div class="track stress">
       <div class="label">{t('Common.Stress')} <small>{data.companion?.stress?.current ?? 0} / {view.companion?.stressMaximum ?? 3}</small></div>
-      <Pips value={data.companion?.stress?.current} max={view.companion?.stressMaximum ?? 3} boxes={6} label="Companion Stress" onchange={(count) => set(character, 'data.companion.stress.current', count)} />
+      <Pips value={data.companion?.stress?.current} max={view.companion?.stressMaximum ?? 3} boxes={6} label={t('Character.CompanionStress')} onchange={(count) => set(character, 'data.companion.stress.current', count)} />
     </div>
     <div class="grid-fields">
       <label>{t('Common.Attack')} <input type="text" use:EP.field={{ store: character, path: 'data.companion.attack.name' }}></label>
@@ -94,18 +94,18 @@
     </div>
     {#if attack.damage}
       <!-- its damage uses the character's Proficiency -->
-      <p>{t('Common.Damage')}: <RollLink formula={damageRoll(attack.damage, data.proficiency ?? 1)} label={`${data.companion?.name || t('Character.Companion')} damage`}>{damageRoll(attack.damage, data.proficiency ?? 1)}</RollLink></p>
+      <p>{t('Common.Damage')}: <RollLink formula={damageRoll(attack.damage, data.proficiency ?? 1)} label={tf('Common.NameDamage', { name: data.companion?.name || t('Character.Companion') })}>{damageRoll(attack.damage, data.proficiency ?? 1)}</RollLink></p>
     {/if}
     <h4>{t('Character.Experiences')}</h4>
     {#each data.companion?.experiences ?? [] as experience (experience.id)}
       <div class="row experience">
-        <input type="text" aria-label="Experience" use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].name` }}>
-        <input type="number" class="modifier" aria-label="Modifier" use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].modifier` }}>
+        <input type="text" aria-label={t('Common.Experience')} use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].name` }}>
+        <input type="number" class="modifier" aria-label={t('Common.Modifier')} use:EP.field={{ store: character, path: `data.companion.experiences[${experience.id}].modifier` }}>
         <RemoveButton name={experience.name} onremove={() => character.remove(`data.companion.experiences[${experience.id}]`)} />
       </div>
     {/each}
     <div class="actions">
-      <button class="outline" onclick={() => character.insert('data.companion.experiences', { name: '', modifier: 2 })}>Add Experience</button>
+      <button class="outline" onclick={() => character.insert('data.companion.experiences', { name: '', modifier: 2 })}>{t('Character.AddExperience')}</button>
     </div>
     <h4>{t('Character.CompanionUpgrades')}</h4>
     <!-- as the Advancement tab's options: the boxes, then the name and what it does -->
@@ -113,7 +113,7 @@
       {#each companionUpgrades as upgrade}
         <div class="upgrade">
           <Pips value={data.companion?.upgrades?.[upgrade.key]} boxes={upgrade.slots} label={upgradeLabel(upgrade.key)} onchange={(count) => set(character, `data.companion.upgrades.${upgrade.key}`, count)} />
-          <span><strong>{upgradeLabel(upgrade.key)}:</strong> {upgrade.text}</span>
+          <span><strong>{upgradeLabel(upgrade.key)}:</strong> {t(upgrade.text)}</span>
         </div>
       {/each}
     </div>
@@ -137,7 +137,7 @@
     </div>
     <!-- stances are written in the form (Main → Class Modules) -->
     {#each view.stances?.known ?? [] as stance (stance.path)}
-      <FeatureCard {character} feature={stance} path={stance.path} source={stance.name === data.stances?.active ? 'Active' : undefined} />
+      <FeatureCard {character} feature={stance} path={stance.path} source={stance.name === data.stances?.active ? t('Character.Active') : undefined} />
     {/each}
   </section>
 {/if}
@@ -159,7 +159,7 @@
     <!-- rolling it on a Duality Die gains a Hope or clears a Stress; the number marked across twelve
          slots, as the companion's Stress; none is 1–12's nothing, so unmarking the last removes it -->
     <div class="track">
-      <div class="label">Number <small>{data.strangePattern ?? '–'}</small></div>
+      <div class="label">{t('Character.Number')} <small>{data.strangePattern ?? '–'}</small></div>
       <Pips value={data.strangePattern} boxes={12} label={t('Character.StrangePatterns')} onchange={(count) => count ? set(character, 'data.strangePattern', count) : character.remove('data.strangePattern')} />
     </div>
   </section>
@@ -175,13 +175,13 @@
         <input type="number" class="modifier" min="0" aria-label={t('Common.Current')} title={t('Common.Current')} use:EP.field={{ store: character, path: `data.resources[${resource.id}].current` }}>
         <input type="number" class="modifier" min="0" aria-label={t('Common.Maximum')} title={t('Common.Maximum')} use:EP.field={{ store: character, path: `data.resources[${resource.id}].maximum` }}>
         <input type="text" class="modifier" aria-label={t('Character.Die')} placeholder="d6" use:EP.field={{ store: character, path: `data.resources[${resource.id}].die` }}>
-        {#if resource.die}<RollLink formula={resource.die} label={resource.name}>Roll</RollLink>{/if}
+        {#if resource.die}<RollLink formula={resource.die} label={resource.name}>{t('Common.Roll')}</RollLink>{/if}
         <RemoveButton name={resource.name} onremove={() => character.remove(`data.resources[${resource.id}]`)} />
       </div>
       <Markdown html={resource.textHTML} />
     </div>
   {/each}
   <div class="actions">
-    <button class="outline" onclick={() => character.insert('data.resources', { name: '', current: 0 })}>Add Resource</button>
+    <button class="outline" onclick={() => character.insert('data.resources', { name: '', current: 0 })}>{t('Character.AddResource')}</button>
   </div>
 </section>

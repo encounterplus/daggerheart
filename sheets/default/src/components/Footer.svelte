@@ -12,12 +12,12 @@
 <footer>
   <div class="source">
     {#if token}
-      <a href={token} target="_blank"><img src={token} alt="token"></a>
+      <a href={token} target="_blank"><img src={token} alt={t('Character.Token')}></a>
     {/if}
     <div>
       <p>
         {#if view.sourceFormatted}<strong>{t('Common.Source')}:</strong> {view.sourceFormatted}<br>{/if}
-        <strong>{t('Common.Location')}:</strong> {view.locationFormatted || 'System'}
+        <strong>{t('Common.Location')}:</strong> {view.locationFormatted || t('Common.System')}
       </p>
     </div>
   </div>

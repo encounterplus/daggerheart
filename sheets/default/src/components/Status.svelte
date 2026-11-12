@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { activity, notice } from '../lib/notice.svelte'
+  import { t, tf } from '../lib/labels'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
 
@@ -23,12 +24,12 @@
 </script>
 
 {#if refusal}
-  <p class="status refused" role="alert">Not saved: {refusal}</p>
+  <p class="status refused" role="alert">{tf('Character.NotSaved', { reason: refusal })}</p>
 {:else if notice.message}
   <!-- a rule the sheet applies said no (lib/notice) -->
   <p class="status refused" role="alert">{notice.message}</p>
 {:else if snapshot.status !== 'connected'}
-  <p class="status" role="status">{snapshot.status === 'connecting' ? 'Connecting…' : 'Disconnected — trying again'}</p>
+  <p class="status" role="status">{t(snapshot.status === 'connecting' ? 'Common.Connecting' : 'Common.Disconnected')}</p>
 {:else if activity.message}
   <!-- what the sheet is waiting on, a roll's dice (lib/notice) -->
   <p class="status" role="status">{activity.message}</p>

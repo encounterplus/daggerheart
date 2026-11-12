@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { change, set } from '../lib/change'
-  import { label, t } from '../lib/labels'
+  import { label, t, tf } from '../lib/labels'
   import { addFromLibrary, copyKeys } from '../lib/library'
   import { loadoutLimit, moveToLoadout } from '../lib/rules'
   import FeatureCard from '../lib/FeatureCard.svelte'
@@ -22,18 +22,18 @@
 </script>
 
 {#snippet card(entry: any)}
-  <FeatureCard {character} feature={entry} path={path(entry)} textKey="descr" source={`${label('Domain', entry.domain)} ${entry.level ?? ''} · ${label('DomainCardType', entry.type)}${entry.recall ? ` · Recall ${entry.recall}` : ''}`}>
+  <FeatureCard {character} feature={entry} path={path(entry)} textKey="descr" source={`${label('Domain', entry.domain)} ${entry.level ?? ''} · ${label('DomainCardType', entry.type)}${entry.recall ? ` · ${t('Common.Recall')} ${entry.recall}` : ''}`}>
     <div class="card-actions">
       <!-- the printed card, in a dialog over the sheet (components/CardModal) -->
-      <button class="outline" onclick={() => (cardModal.id = entry.id)}>Open card</button>
+      <button class="outline" onclick={() => (cardModal.id = entry.id)}>{t('Character.OpenCard')}</button>
       {#if entry.vault}
         <!-- free at the start of a rest; otherwise mark Stress equal to its Recall Cost -->
-        <button class="outline" disabled={full} onclick={() => change(character, (draft) => moveToLoadout(draft, entry.id, false))}>To loadout</button>
+        <button class="outline" disabled={full} onclick={() => change(character, (draft) => moveToLoadout(draft, entry.id, false))}>{t('Character.ToLoadout')}</button>
         {#if entry.recall}
-          <button class="outline" disabled={full} onclick={() => change(character, (draft) => moveToLoadout(draft, entry.id, true))}>Recall ({entry.recall} Stress)</button>
+          <button class="outline" disabled={full} onclick={() => change(character, (draft) => moveToLoadout(draft, entry.id, true))}>{tf('Character.RecallForStress', { stress: entry.recall })}</button>
         {/if}
       {:else}
-        <button class="outline" onclick={() => set(character, `${path(entry)}.vault`, true)}>To vault</button>
+        <button class="outline" onclick={() => set(character, `${path(entry)}.vault`, true)}>{t('Character.ToVault')}</button>
       {/if}
       <RemoveButton name={entry.name} onremove={() => character.remove(path(entry))} />
     </div>
@@ -45,14 +45,14 @@
     <h3>{t('Character.Loadout')} <small class:over={loadout.length > loadoutLimit}>{loadout.length} / {loadoutLimit}</small></h3>
     <div class="actions">
       <!-- a card gained at level-up can go straight into the loadout -->
-      <button class="outline" onclick={() => addFromLibrary(character, 'data.domainCards', 'DomainCard', copyKeys.DomainCard)}>Add card</button>
+      <button class="outline" onclick={() => addFromLibrary(character, 'data.domainCards', 'DomainCard', copyKeys.DomainCard)}>{t('Character.AddCard')}</button>
     </div>
   </div>
   <div class="cards">
     {#each loadout as entry (entry.id)}
       {@render card(entry)}
     {:else}
-      <p class="empty">No cards in the loadout.</p>
+      <p class="empty">{t('Character.NoCardsInLoadout')}</p>
     {/each}
   </div>
 </section>

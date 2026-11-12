@@ -50,7 +50,7 @@
           <div class="panel-header">
             <h3>{subclass.name}</h3>
             <!-- the last card taken unlocks its features and those before it -->
-            <select aria-label="Rank" use:EP.field={{ store: character, path: `${path}.rank` }}>
+            <select aria-label={t('Subclass.Rank')} use:EP.field={{ store: character, path: `${path}.rank` }}>
               {#each ranks as rank}<option value={rank}>{label('SubclassRank', rank)}</option>{/each}
             </select>
           </div>

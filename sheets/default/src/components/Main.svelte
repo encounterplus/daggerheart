@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
-  import { label, properties, t } from '../lib/labels'
+  import { label, properties, t, tf } from '../lib/labels'
   import { damageRoll, signed } from '../lib/rules'
   import Markdown from '../lib/Markdown.svelte'
   import Health from './Health.svelte'
@@ -57,25 +57,25 @@
         <h3>{t('Character.Experiences')}</h3>
         <div class="actions">
           <!-- in a narrow column under the heading, as on a phone (default.css) -->
-          <button class="outline add" onclick={() => character.insert('data.experiences', { name: '', modifier: 2 })}>Add Experience</button>
+          <button class="outline add" onclick={() => character.insert('data.experiences', { name: '', modifier: 2 })}>{t('Character.AddExperience')}</button>
         </div>
       </div>
       <!-- spend a Hope to add one to a roll -->
       {#each data.experiences ?? [] as experience (experience.id)}
         <div class="row experience">
-          <input type="text" aria-label="Experience" placeholder="Experience" use:EP.field={{ store: character, path: `data.experiences[${experience.id}].name` }}>
-          <input type="number" class="modifier" aria-label="Modifier" use:EP.field={{ store: character, path: `data.experiences[${experience.id}].modifier` }}>
+          <input type="text" aria-label={t('Common.Experience')} placeholder={t('Common.Experience')} use:EP.field={{ store: character, path: `data.experiences[${experience.id}].name` }}>
+          <input type="number" class="modifier" aria-label={t('Common.Modifier')} use:EP.field={{ store: character, path: `data.experiences[${experience.id}].modifier` }}>
           <RemoveButton name={experience.name} onremove={() => character.remove(`data.experiences[${experience.id}]`)} />
         </div>
       {:else}
-        <p class="empty">No Experiences yet.</p>
+        <p class="empty">{t('Character.NoExperiences')}</p>
       {/each}
     </section>
   </div>
 
   <div class="column">
     <section class="panel">
-      <h3>Active Weapons</h3>
+      <h3>{t('Character.ActiveWeapons')}</h3>
       <!-- the dice of a damage roll, as on the printed sheet's Active Weapons -->
       <div class="proficiency">
         <span class="label">{t('Common.Proficiency')}</span>
@@ -91,7 +91,7 @@
           <div class="rolls">
             <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" modifier={traitModifier(trait) + (view.beastform.traitModifier ?? 0)} label={attack.name || view.beastform.name}>{label('Trait', trait)} {signed(traitModifier(trait) + (view.beastform.traitModifier ?? 0))}</DualityRoll>
             {#if attack.damage}
-              <RollLink formula={damageRoll(attack.damage, proficiency)} label={`${view.beastform.name} damage`}>{damageRoll(attack.damage, proficiency)}</RollLink>
+              <RollLink formula={damageRoll(attack.damage, proficiency)} label={tf('Common.NameDamage', { name: view.beastform.name })}>{damageRoll(attack.damage, proficiency)}</RollLink>
             {/if}
           </div>
         </div>
@@ -106,12 +106,12 @@
             <div class="rolls">
               <DualityRoll {character} hopeMaximum={view.hopeMaximum} type="attack" modifier={traitModifier(weapon.trait)} label={weapon.name}>{label('Trait', weapon.trait)} {signed(traitModifier(weapon.trait))}</DualityRoll>
               {#if weapon.damage}
-                <RollLink formula={damageRoll(weapon.damage, proficiency)} label={`${weapon.name} damage`}>{damageRoll(weapon.damage, proficiency)}</RollLink>
+                <RollLink formula={damageRoll(weapon.damage, proficiency)} label={tf('Common.NameDamage', { name: weapon.name })}>{damageRoll(weapon.damage, proficiency)}</RollLink>
               {/if}
             </div>
           </div>
         {:else}
-          <p class="empty">No weapon equipped: equip one on the Inventory tab.</p>
+          <p class="empty">{t('Character.NoWeaponEquipped')}</p>
         {/each}
       {/if}
     </section>
@@ -127,9 +127,9 @@
           {/if}
         </div>
       {:else if view.armor?.name}
-        <p class="empty">Unarmored: {view.armor.name} is taken off. Put it back on on the Inventory tab.</p>
+        <p class="empty">{tf('Character.ArmorTakenOffHint', { name: view.armor.name })}</p>
       {:else}
-        <p class="empty">Unarmored: Armor Score 0, Major threshold your level, Severe twice your level. Equip armor on the Inventory tab.</p>
+        <p class="empty">{t('Character.Unarmored')} {t('Character.EquipArmorHint')}</p>
       {/if}
     </section>
 
@@ -145,12 +145,12 @@
       </div>
       <div class="tags">
         {#each data.otherConditions ?? [] as name}
-          <button class="tag" title="Remove" onclick={() => removeCondition(name)}>{name} ×</button>
+          <button class="tag" title={t('Common.Remove')} onclick={() => removeCondition(name)}>{name} ×</button>
         {/each}
       </div>
       <form class="row ruled" onsubmit={addCondition}>
         <input type="text" placeholder={t('Character.OtherConditions')} bind:value={condition}>
-        <button class="outline" type="submit">Add</button>
+        <button class="outline" type="submit">{t('Common.Add')}</button>
       </form>
     </section>
   </div>

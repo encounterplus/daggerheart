@@ -43,7 +43,7 @@
   <div class="panel-header">
     <h3>{t('Character.Projects')}</h3>
     <div class="actions">
-      <button class="outline add" onclick={() => character.insert('data.projects', { name: '', current: 0, maximum: 4 })}>Add Project</button>
+      <button class="outline add" onclick={() => character.insert('data.projects', { name: '', current: 0, maximum: 4 })}>{t('Character.AddProject')}</button>
     </div>
   </div>
   <p class="hint">{t('Character.ProjectsHint')}</p>
@@ -57,12 +57,12 @@
         <RemoveButton name={project.name} onremove={() => character.remove(`data.projects[${project.id}]`)} />
       </div>
       {#if project.maximum && (project.current ?? 0) >= project.maximum}
-        <p class="note done">Complete</p>
+        <p class="note done">{t('Character.ProjectComplete')}</p>
       {/if}
       <textarea rows="2" aria-label={t('Common.Description')} placeholder={t('Common.Description')} use:EP.field={{ store: character, path: `data.projects[${project.id}].text` }}></textarea>
     </div>
   {:else}
-    <p class="empty">No projects yet.</p>
+    <p class="empty">{t('Character.NoProjects')}</p>
   {/each}
 </section>
 

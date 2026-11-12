@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, CharacterSnapshot } from '../lib/character'
   import { set } from '../lib/change'
-  import { t } from '../lib/labels'
+  import { t, tf } from '../lib/labels'
   import Pips from '../lib/Pips.svelte'
 
   let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
@@ -27,14 +27,14 @@
       <!-- <div class="label">Armor Slots <small>{data.armor?.marked ?? 0} / {view.armorScore ?? 0}</small></div> -->
       {#if data.armor?.unequipped}
         <!-- its marked slots stay with it until it's back on -->
-        <p class="empty">{data.armor.name} taken off.</p>
+        <p class="empty">{tf('Character.ArmorNameTakenOff', { name: data.armor.name ?? '' })}</p>
       {:else if data.armor && view.armorScore}
         <!-- the steppers show only when the slots sit below the shields (default.css) -->
-        <button class="step" aria-label="Clear an Armor Slot" disabled={!data.armor.marked} onclick={() => set(character, 'data.armor.marked', Math.max((data.armor?.marked ?? 0) - 1, 0))}>−</button>
-        <Pips value={data.armor.marked} boxes={view.armorScore} label="Armor Slots" onchange={(count) => set(character, 'data.armor.marked', count)} />
-        <button class="step" aria-label="Mark an Armor Slot" disabled={(data.armor.marked ?? 0) >= view.armorScore} onclick={() => set(character, 'data.armor.marked', Math.min((data.armor?.marked ?? 0) + 1, view.armorScore ?? 0))}>+</button>
+        <button class="step" aria-label={t('Character.ClearArmorSlot')} disabled={!data.armor.marked} onclick={() => set(character, 'data.armor.marked', Math.max((data.armor?.marked ?? 0) - 1, 0))}>−</button>
+        <Pips value={data.armor.marked} boxes={view.armorScore} label={t('Character.ArmorSlots')} onchange={(count) => set(character, 'data.armor.marked', count)} />
+        <button class="step" aria-label={t('Character.MarkArmorSlot')} disabled={(data.armor.marked ?? 0) >= view.armorScore} onclick={() => set(character, 'data.armor.marked', Math.min((data.armor?.marked ?? 0) + 1, view.armorScore ?? 0))}>+</button>
       {:else}
-        <p class="empty">{data.armor?.name ? 'No Armor Slots.' : 'No armor equipped.'}</p>
+        <p class="empty">{t(data.armor?.name ? 'Character.NoArmorSlots' : 'Character.NoArmorEquipped')}</p>
       {/if}
     </div>
   </div>
