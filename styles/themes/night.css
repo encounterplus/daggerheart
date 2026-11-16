@@ -25,7 +25,6 @@
 
     main {
       background-image: none;
-      background-repeat: repeat;
 
       /* gold on hover and tap, the entity colors main uses by default are too dark here */
       --pico-primary-hover: var(--gold-color);

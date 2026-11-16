@@ -3,7 +3,7 @@
   import { set } from '../lib/change'
   import { label, t, tf } from '../lib/labels'
   import { addFromLibrary, copyKeys } from '../lib/library'
-  import { actionRoll, companionUpgrades, damageRoll, signed } from '../lib/rules'
+  import { companionUpgrades, damageRoll, signed } from '../lib/rules'
   import FeatureCard from '../lib/FeatureCard.svelte'
   import Markdown from '../lib/Markdown.svelte'
   import Pips from '../lib/Pips.svelte'

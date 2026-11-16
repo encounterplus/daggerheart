@@ -24,7 +24,6 @@
       <div class="label">{t('Entity.Armor')}</div>
     </div>
     <div class="armor-slots">
-      <!-- <div class="label">Armor Slots <small>{data.armor?.marked ?? 0} / {view.armorScore ?? 0}</small></div> -->
       {#if data.armor?.unequipped}
         <!-- its marked slots stay with it until it's back on -->
         <p class="empty">{tf('Character.ArmorNameTakenOff', { name: data.armor.name ?? '' })}</p>
