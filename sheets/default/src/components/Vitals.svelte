@@ -1,0 +1,42 @@
+<script lang="ts">
+  import type { Character, CharacterSnapshot } from '../lib/character'
+  import { set } from '../lib/change'
+  import { t, tf } from '../lib/labels'
+  import Pips from '../lib/Pips.svelte'
+
+  let { character, snapshot }: { character: Character, snapshot: CharacterSnapshot } = $props()
+
+  const data = $derived(snapshot.model.data)
+  // Evasion and the Armor Score: views/transforms/character.json
+  const view = $derived(snapshot.view.data)
+</script>
+
+<!-- the sheet header lays these out as its own (default.css: .vitals is `display: contents`) -->
+<div class="vitals">
+  <div class="defense">
+    <div class="shield">
+      <div class="value">{view.evasion ?? ''}</div>
+      <div class="label">{t('Common.Evasion')}</div>
+    </div>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="shield armor">
+      <div class="value">{view.armorScore ?? 0}</div>
+      <div class="label">{t('Entity.Armor')}</div>
+    </div>
+    <div class="armor-slots">
+      {#if data.armor?.unequipped}
+        <!-- its marked slots stay with it until it's back on -->
+        <p class="empty">{tf('Character.ArmorNameTakenOff', { name: data.armor.name ?? '' })}</p>
+      {:else if data.armor && view.armorScore}
+        <!-- the steppers show only when the slots sit below the shields (default.css) -->
+        <button class="step" aria-label={t('Character.ClearArmorSlot')} disabled={!data.armor.marked} onclick={() => set(character, 'data.armor.marked', Math.max((data.armor?.marked ?? 0) - 1, 0))}>−</button>
+        <Pips value={data.armor.marked} boxes={view.armorScore} label={t('Character.ArmorSlots')} onchange={(count) => set(character, 'data.armor.marked', count)} />
+        <button class="step" aria-label={t('Character.MarkArmorSlot')} disabled={(data.armor.marked ?? 0) >= view.armorScore} onclick={() => set(character, 'data.armor.marked', Math.min((data.armor?.marked ?? 0) + 1, view.armorScore ?? 0))}>+</button>
+      {:else}
+        <p class="empty">{t(data.armor?.name ? 'Character.NoArmorSlots' : 'Character.NoArmorEquipped')}</p>
+      {/if}
+    </div>
+  </div>
+  <!-- the rule between the defense and the traits, when they share a row (default.css) -->
+  <div class="defense-divider" aria-hidden="true"></div>
+</div>

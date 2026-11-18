@@ -1,0 +1,36 @@
+// Definitions shared by every Daggerheart schema.
+{
+  // A named feature, as forms/partials/generic-feature.json writes it.
+  "Feature": {
+    "name": "string",
+    "text": "text"
+  },
+
+  // An adversary or environment feature, as forms/partials/adversary-feature.json writes it.
+  // nameDetail is the bracketed count after the name, such as "3" or "X".
+  "AdversaryFeature": {
+    "name": "string",
+    "nameDetail": "string",
+    "type": "AdversaryFeatureType",
+    "text": "text"
+  },
+
+  // A standard attack: adversaries name theirs, beastforms give the trait it uses.
+  "Attack": {
+    "name": "string",
+    "trait": "Trait",
+    "range": "Range",
+    "damage": "dice",
+    "damageType": "Damage"
+  },
+
+  "Thresholds": {
+    "major": { "type": "integer", "min": 0 },
+    "severe": { "type": "integer", "min": 0 }
+  },
+
+  "Experience": {
+    "name": "string",
+    "modifier": "integer"
+  }
+}

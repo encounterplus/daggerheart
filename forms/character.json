@@ -1,0 +1,400 @@
+{
+  "title": "Entity.Character",
+  // tabbed form
+  "tabs": [
+    // MAIN
+    {
+      "title": "Character.Main",
+      "icon": "person",
+      "sections": [
+        {
+          "type": "group",
+          "fields": [
+            { "title": "Common.Level", "type": "number", "attribute": "data.level" },
+            { "title": "Character.Pronouns", "type": "text", "attribute": "data.pronouns" },
+            { "title": "Character.Player", "type": "text", "attribute": "data.player" }
+          ]
+        },
+        {
+          "title": "Character.Heritage",
+          "type": "group",
+          "fields": [
+            {
+              "type": "form",
+              "title": "{{data.ancestry.name}}",
+              "attribute": "data.ancestry",
+              "attributeType": "Ancestry",
+              "custom": {
+                "map": { "features": "data.features" }
+              },
+              "form": {
+                "title": "Entity.Ancestry",
+                "partial": "character-ancestry"
+              }
+            },
+            {
+              "type": "form",
+              "title": "{{data.community.name}}",
+              "attribute": "data.community",
+              "attributeType": "Community",
+              "custom": {
+                "map": { "features": "data.features" }
+              },
+              "form": {
+                "title": "Entity.Community",
+                "partial": "character-community"
+              }
+            },
+            {
+              "type": "form",
+              "title": "{{data.transformation.name}}",
+              "attribute": "data.transformation",
+              "attributeType": "Transformation",
+              "custom": {
+                "map": {
+                  "features": "data.features"
+                }
+              },
+              "form": {
+                "title": "Entity.Transformation",
+                "partial": "character-transformation"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Common.Class",
+          "type": "group",
+          "fields": [
+            {
+              "type": "form",
+              "title": "{{data.class.name}}",
+              "attribute": "data.class",
+              "attributeType": "Class",
+              "custom": {
+                "map": {
+                  "domains": "data.domains",
+                  "evasion": "data.evasion",
+                  "hp": "data.hp",
+                  "hopeFeature": "data.hopeFeature",
+                  "features": "data.features"
+                }
+              },
+              "form": {
+                "title": "Entity.Class",
+                "partial": "character-class"
+              }
+            },
+            {
+              "type": "form",
+              "title": "{{data.subclass.name}}",
+              "attribute": "data.subclass",
+              "attributeType": "Subclass",
+              "custom": {
+                "map": {
+                  "spellcastTrait": "data.spellcastTrait",
+                  "foundations": "data.foundations",
+                  "specializations": "data.specializations",
+                  "masteries": "data.masteries"
+                }
+              },
+              "form": {
+                "title": "Entity.Subclass",
+                "partial": "character-subclass"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "fields": [
+            {
+              // no attribute: the form edits the character, by full paths
+              "type": "form",
+              "title": "Character.Advancement",
+              "form": {
+                "title": "Character.Advancement",
+                "partial": "character-advancement"
+              }
+            },
+            {
+              // filled in only by the classes and subclasses that use them
+              "type": "form",
+              "title": "Character.ClassModules",
+              "form": {
+                "title": "Character.ClassModules",
+                "partial": "character-class-modules"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Character.Traits",
+          "type": "group",
+          "fields": [
+            {
+              "type": "hStack",
+              "fields": [
+                { "title": "Trait.Agility", "type": "number", "alignment": "top", "attribute": "data.traits.agility" },
+                { "title": "Trait.Strength", "type": "number", "alignment": "top", "attribute": "data.traits.strength" },
+                { "title": "Trait.Finesse", "type": "number", "alignment": "top", "attribute": "data.traits.finesse" }
+              ]
+            },
+            {
+              "type": "hStack",
+              "fields": [
+                { "title": "Trait.Instinct", "type": "number", "alignment": "top", "attribute": "data.traits.instinct" },
+                { "title": "Trait.Presence", "type": "number", "alignment": "top", "attribute": "data.traits.presence" },
+                { "title": "Trait.Knowledge", "type": "number", "alignment": "top", "attribute": "data.traits.knowledge" }
+              ]
+            },
+            { "title": "Character.MarkedTraits", "type": "multiPicker", "attribute": "data.markedTraits", "attributeType": "Trait" }
+          ]
+        },
+        {
+          "title": "Character.DamageAndHealth",
+          "type": "group",
+          "fields": [
+            { "title": "Common.Proficiency", "type": "number", "attribute": "data.proficiency" },
+            {
+              "type": "hStack",
+              "title": "Common.HP",
+              "fields": [
+                // { "title": "Common.HP", "type": "label" },
+                { "title": "Common.Current", "type": "number", "alignment": "top", "attribute": "data.hp.current" },
+                { "title": "Common.Maximum", "type": "number", "alignment": "top", "attribute": "data.hp.maximum" }
+              ]
+            },
+            {
+              "type": "hStack",
+              "title": "Common.Stress",
+              "fields": [
+                { "title": "Common.Current", "type": "number", "alignment": "top", "attribute": "data.stress.current" },
+                { "title": "Common.Maximum", "type": "number", "alignment": "top", "attribute": "data.stress.maximum" }
+              ]
+            },
+            { "title": "Common.Hope", "type": "number", "attribute": "data.hope" },
+            { "title": "Character.Scars", "type": "number", "attribute": "data.scars" }
+          ]
+        },
+        {
+          // permanent bonuses on top of the class's Evasion and the armor's score and thresholds
+          "title": "Character.Bonuses",
+          "type": "group",
+          "fields": [
+            { "title": "Common.Evasion", "type": "number", "attribute": "data.bonuses.evasion" },
+            { "title": "Character.ArmorScore", "type": "number", "attribute": "data.bonuses.armorScore" },
+            { "title": "Common.MajorThreshold", "type": "number", "attribute": "data.bonuses.majorThreshold" },
+            { "title": "Common.SevereThreshold", "type": "number", "attribute": "data.bonuses.severeThreshold" }
+          ]
+        },
+        {
+          "title": "Character.Conditions",
+          "type": "group",
+          "fields": [
+            { "title": "Condition.Hidden", "type": "toggle", "attribute": "data.conditions.hidden" },
+            { "title": "Condition.Restrained", "type": "toggle", "attribute": "data.conditions.restrained" },
+            { "title": "Condition.Vulnerable", "type": "toggle", "attribute": "data.conditions.vulnerable" },
+            { "title": "Character.OtherConditions", "type": "tags", "attribute": "data.otherConditions" }
+          ]
+        },
+        {
+          "title": "Character.Experiences",
+          "type": "list",
+          "attribute": "data.experiences",
+          "custom": {
+            "itemDetail": "{{ modifier|signed }}"
+          },
+          "form": {
+            "title": "Common.Experience",
+            "partial": "character-experience"
+          }
+        }
+      ]
+    },
+
+    // EQUIPMENT
+    {
+      "title": "Character.Equipment",
+      "icon": "shield",
+      "sections": [
+        {
+          "title": "Character.ActiveArmor",
+          "type": "group",
+          "fields": [
+            {
+              "type": "form",
+              "title": "{{data.armor.name}}",
+              "attribute": "data.armor",
+              "attributeType": "Armor",
+              "custom": {
+                "map": {
+                  "tier": "data.tier",
+                  "score": "data.score",
+                  "thresholds": "data.thresholds",
+                  "feature": "data.feature"
+                }
+              },
+              "form": {
+                "title": "Entity.Armor",
+                "partial": "character-armor"
+              }
+            },
+            { "title": "Character.MarkedArmorSlots", "type": "number", "attribute": "data.armor.marked" }
+          ]
+        },
+        {
+          // equipped weapons are the Active Weapons, the others the Inventory Weapons
+          "title": "Entity.Weapon.many",
+          "type": "list",
+          "attribute": "data.weapons",
+          "attributeType": "Weapon",
+          "custom": {
+            "map": {
+              "category": "data.category",
+              "tier": "data.tier",
+              "type": "data.type",
+              "trait": "data.trait",
+              "range": "data.range",
+              "damage": "data.damage",
+              "damageType": "data.damageType",
+              "burden": "data.burden",
+              "feature": "data.feature"
+            },
+            "itemValue": "{% if equipped %}✓ {% endif %}{{ damage }} {{ damageType|map: 'Damage' }}"
+          },
+          "form": {
+            "title": "Entity.Weapon",
+            "partial": "character-weapon"
+          }
+        },
+        {
+          "title": "Character.Gold",
+          "type": "group",
+          "fields": [
+            {
+              "type": "hStack",
+              "fields": [
+                { "title": "Gold.Handfuls", "type": "number", "alignment": "top", "attribute": "data.gold.handfuls" },
+                { "title": "Gold.Bags", "type": "number", "alignment": "top", "attribute": "data.gold.bags" },
+                { "title": "Gold.Chest", "type": "number", "alignment": "top", "attribute": "data.gold.chests" }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Character.Inventory",
+          "type": "list",
+          "attribute": "data.inventory",
+          "attributeType": "Item",
+          "custom": {
+            "map": {
+              "rarity": "data.rarity",
+              "descr": "descr"
+            },
+            "itemValue": "{{ quantity|default: 1 }}×"
+          },
+          "form": {
+            "title": "Common.Item",
+            "partial": "character-item"
+          }
+        }
+      ]
+    },
+
+    // DOMAIN CARDS
+    {
+      "title": "Entity.DomainCard.many",
+      "icon": "rectangle.stack",
+      "sections": [
+        {
+          // vaulted cards are inactive; the loadout holds up to five
+          "title": "Entity.DomainCard.many",
+          "type": "list",
+          "attribute": "data.domainCards",
+          "attributeType": "DomainCard",
+          "custom": {
+            "map": {
+              "domain": "data.domain",
+              "type": "data.type",
+              "level": "data.level",
+              "recall": "data.recall",
+              "descr": "descr"
+            },
+            "itemDetail": "{{ domain|map: 'Domain' }} {{ level }}{% if vault %} · {{ 'Character.Vault'|l }}{% endif %}"
+          },
+          "form": {
+            "title": "Entity.DomainCard",
+            "partial": "character-domain-card"
+          }
+        }
+      ]
+    },
+
+    // STORY
+    {
+      "title": "Character.Story",
+      "icon": "book",
+      "sections": [
+        {
+          "title": "Character.Appearance",
+          "type": "group",
+          "fields": [
+            { "title": "Appearance.Clothes", "type": "text", "attribute": "data.appearance.clothes" },
+            { "title": "Appearance.Eyes", "type": "text", "attribute": "data.appearance.eyes" },
+            { "title": "Appearance.Body", "type": "text", "attribute": "data.appearance.body" },
+            { "title": "Appearance.Skin", "type": "text", "attribute": "data.appearance.skin" },
+            { "title": "Appearance.Attitude", "type": "text", "attribute": "data.appearance.attitude" }
+          ]
+        },
+        {
+          "title": "Class.BackgroundQuestions",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "data.background" }
+          ]
+        },
+        {
+          "title": "Class.Connections",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "data.connections" }
+          ]
+        },
+        {
+          "title": "Character.Projects",
+          "type": "list",
+          "attribute": "data.projects",
+          "custom": {
+            "itemDetail": "{{ current|default: 0 }}{{ maximum|prefix: ' / ' }}"
+          },
+          "form": {
+            "title": "Character.Project",
+            "partial": "character-project"
+          }
+        },
+        {
+          "title": "Character.Journal",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "data.journal" }
+          ]
+        },
+        {
+          "title": "Common.Description",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "descr" }
+          ]
+        },
+        {
+          "title": "Common.Notes",
+          "type": "group",
+          "fields": [
+            { "type": "textArea", "attribute": "notes" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -3,15 +3,16 @@
 # Build the system archive from the files currently on disk.
 #
 # Usage:
-#   ./scripts/build.sh dnd5e.system
-#   ./scripts/build.sh /tmp/builds/dnd5e.system
+#   ./scripts/build.sh daggerheart.system
+#   ./scripts/build.sh /tmp/builds/daggerheart.system
 #
 # The output path is taken verbatim from the first argument; relative paths
 # resolve against the directory you ran the script from, not the repo root.
 #
-# Packaging files are left out of the archive: the paths marked `export-ignore`
-# in .gitattributes (so this matches what the Release workflow ships), plus
-# version-control and macOS clutter.
+# The archive is made by `git archive`, like the Release workflow, from a
+# throwaway index of the working tree: uncommitted changes are included,
+# .gitignore'd files (cache/, node_modules/, .DS_Store) are not, and the paths
+# marked `export-ignore` in .gitattributes are left out exactly as on release.
 
 set -euo pipefail
 
@@ -49,27 +50,20 @@ if [ "$DOWNLOAD" != "$EXPECTED_DOWNLOAD" ]; then
 fi
 [ "$fail" -eq 0 ] || exit 1
 
-# Always-excluded clutter, then everything .gitattributes marks export-ignore
-# so the two exclusion lists cannot drift apart.
-EXCLUDES=( '.git/*' '*/.DS_Store' '.DS_Store' '*/._*' '._*' )
-
-while read -r pattern attrs; do
-  case "$attrs" in
-    *export-ignore*) ;;
-    *) continue ;;
-  esac
-  case "$pattern" in
-    */) EXCLUDES+=( "${pattern}*" ) ;;   # directory: exclude its contents
-     *) EXCLUDES+=( "$pattern" ) ;;
-  esac
-done < <(grep -v '^\s*#' .gitattributes | grep -v '^\s*$')
+# Stage the working tree into a temporary index, leaving the real one alone.
+# Sheets' node_modules/ are never packed, even if .gitignore stops covering them.
+export GIT_INDEX_FILE
+GIT_INDEX_FILE=$(mktemp)
+trap 'rm -f "$GIT_INDEX_FILE"' EXIT
+rm -f "$GIT_INDEX_FILE"
+git add -A -- . ':(exclude,glob)sheets/*/node_modules/**'
+TREE=$(git write-tree)
 
 mkdir -p "$(dirname "$OUTPUT")"
 rm -f "$OUTPUT"
 
-zip -qr -X "$OUTPUT" . -x "${EXCLUDES[@]}"
+git archive --format=zip --output "$OUTPUT" "$TREE"
 
 echo "${SYSTEM_ID} ${VERSION}"
-echo "  excluded: ${EXCLUDES[*]}"
 unzip -l "$OUTPUT" | tail -1
 ls -lh "$OUTPUT" | awk '{print "  " $5, $NF}'

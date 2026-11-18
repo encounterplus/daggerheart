@@ -1,0 +1,68 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Subclass.Rank",
+          "type": "picker",
+          "attribute": "rank",
+          "attributeType": "SubclassRank"
+        },
+        {
+          "title": "Subclass.SpellcastTrait",
+          "type": "picker",
+          "attribute": "spellcastTrait",
+          "attributeType": "Trait"
+        }
+      ]
+    },
+    {
+      "title": "Subclass.FoundationFeatures",
+      "type": "list",
+      "attribute": "foundations",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "title": "Subclass.SpecializationFeatures",
+      "type": "list",
+      "attribute": "specializations",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "title": "Subclass.MasteryFeatures",
+      "type": "list",
+      "attribute": "masteries",
+      "form": {
+        "title": "Common.Feature",
+        "partial": "character-feature"
+      }
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Subclass"
+        }
+      ]
+    }
+  ]
+}

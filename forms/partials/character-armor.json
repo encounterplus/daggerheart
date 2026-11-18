@@ -1,0 +1,85 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Character.TakenOff",
+          "type": "toggle",
+          "attribute": "unequipped"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Armor.BaseScore",
+          "type": "number",
+          "attribute": "score"
+        },
+        {
+          "title": "Common.MajorThreshold",
+          "type": "number",
+          "attribute": "thresholds.major"
+        },
+        {
+          "title": "Common.SevereThreshold",
+          "type": "number",
+          "attribute": "thresholds.severe"
+        }
+      ]
+    },
+    {
+      "title": "Common.Feature",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "feature.name"
+        },
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "feature.text"
+        },
+        {
+          "title": "Character.Tokens",
+          "type": "number",
+          "attribute": "feature.tokens"
+        },
+        {
+          "title": "Character.Used",
+          "type": "toggle",
+          "attribute": "feature.used"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Armor"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Evasion",
+          "type": "number",
+          "attribute": "evasion"
+        },
+        {
+          "type": "hStack",
+          "fields": [
+            {
+              "title": "Common.Stress",
+              "type": "number",
+              "alignment": "top",
+              "attribute": "stress.current"
+            },
+            {
+              "title": "Common.Maximum",
+              "type": "number",
+              "alignment": "top",
+              "attribute": "stress.maximum"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Common.Attack",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "attack.name"
+        },
+        {
+          "title": "Common.Trait",
+          "type": "picker",
+          "attribute": "attack.trait",
+          "attributeType": "Trait"
+        },
+        {
+          "title": "Common.Range",
+          "type": "picker",
+          "attribute": "attack.range",
+          "attributeType": "Range"
+        },
+        {
+          "title": "Common.Damage",
+          "attribute": "attack.damage"
+        },
+        {
+          "title": "Common.DamageType",
+          "type": "picker",
+          "attribute": "attack.damageType",
+          "attributeType": "Damage"
+        }
+      ]
+    },
+    {
+      "title": "Character.Experiences",
+      "type": "list",
+      "attribute": "experiences",
+      "custom": {
+        "itemDetail": "{{ modifier|signed }}"
+      },
+      "form": {
+        "title": "Common.Experience",
+        "partial": "character-experience"
+      }
+    },
+    {
+      "title": "Character.CompanionUpgrades",
+      "type": "group",
+      "fields": [
+        {
+          "title": "CompanionUpgrade.Intelligent",
+          "type": "number",
+          "attribute": "upgrades.intelligent"
+        },
+        {
+          "title": "CompanionUpgrade.LightInTheDark",
+          "type": "number",
+          "attribute": "upgrades.lightInTheDark"
+        },
+        {
+          "title": "CompanionUpgrade.CreatureComfort",
+          "type": "number",
+          "attribute": "upgrades.creatureComfort"
+        },
+        {
+          "title": "CompanionUpgrade.Armored",
+          "type": "number",
+          "attribute": "upgrades.armored"
+        },
+        {
+          "title": "CompanionUpgrade.Vicious",
+          "type": "number",
+          "attribute": "upgrades.vicious"
+        },
+        {
+          "title": "CompanionUpgrade.Resilient",
+          "type": "number",
+          "attribute": "upgrades.resilient"
+        },
+        {
+          "title": "CompanionUpgrade.Bonded",
+          "type": "number",
+          "attribute": "upgrades.bonded"
+        },
+        {
+          "title": "CompanionUpgrade.Aware",
+          "type": "number",
+          "attribute": "upgrades.aware"
+        }
+      ]
+    },
+    {
+      "title": "Common.Notes",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "text"
+        }
+      ]
+    }
+  ]
+}

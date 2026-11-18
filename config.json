@@ -5,18 +5,21 @@
         "renderer": "html"
       },
       "combatant": {
+        // Hit Points and Stress are marked: a combatant starts at 0 and is down when every slot is
         "bars": [
           {
             "attribute": "data.hp",
             "title": "Common.HitPoints",
             "label": "Common.HP",
-            "temporary": false
+            "temporary": false,
+            "type": "marked"
           },
           {
             "attribute": "data.stress",
             "title": "Common.Stress",
             "label": "Common.Stress",
-            "temporary": false
+            "temporary": false,
+            "type": "marked"
           }
         ]
       }
@@ -45,9 +48,21 @@
     },
     "Character": {
       "role": "friendly",
+      // opens as the GM card (views/character.html), whose "Open sheet" button opens sheets/default
+      "view": {
+        "renderer": "html",
+        "sheet": "default"
+      },
       "collection": {
         "detail": "{{data.class.name|default: 'Custom'}}"
-      }
+      },
+      // the conditions the sheet toggles, shown as status effects on the character's combatant.
+      // The rules are in the SRD module; without it the links still work, from name and icon here.
+      "statusEffects": [
+        { "attribute": "data.conditions.hidden", "reference": "/condition/hidden", "name": "Condition.Hidden", "icon": "gi-hood" },
+        { "attribute": "data.conditions.restrained", "reference": "/condition/restrained", "name": "Condition.Restrained", "icon": "gi-manacles" },
+        { "attribute": "data.conditions.vulnerable", "reference": "/condition/vulnerable", "name": "Condition.Vulnerable", "icon": "gi-broken-shield" }
+      ]
     }
   },
   "resources": [
@@ -67,6 +82,28 @@
       "visibility": "players"
     }
   ],
+  // the duality dice: a sheet rolls 1d12[Hope] + 1d12[Fear] + modifier; the roller colours the two
+  // dice, and the log marks the roll with the outcome. Gaining Hope or Fear is the sheet's to apply.
+  "dice": {
+    "labels": {
+      "Hope": { "color": "#D2B25F", "textColor": "#231F20" },
+      "Fear": { "color": "#6B3FA0", "textColor": "#FAF3E6" },
+      "Advantage": { "color": "#FAF3E6", "textColor": "#231F20" },
+      "Disadvantage": { "color": "#8F332E", "textColor": "#FAF3E6" }
+    },
+    "outcomes": [
+      { "id": "critical", "label": "Roll.Critical", "color": "#D2B25F", "when": { "equal": ["Hope", "Fear"] } },
+      { "id": "hope", "label": "Roll.WithHope", "color": "#D2B25F", "when": { "greater": ["Hope", "Fear"] } },
+      { "id": "fear", "label": "Roll.WithFear", "color": "#8A5CC2", "when": { "greater": ["Fear", "Hope"] } }
+    ],
+    "options": [
+      { "id": "advantage", "label": "Roll.Advantage", "when": { "labels": ["Hope", "Fear"] }, "add": "1d6[Advantage]" },
+      { "id": "disadvantage", "label": "Roll.Disadvantage", "when": { "labels": ["Hope", "Fear"] }, "add": "-1d6[Disadvantage]" }
+    ]
+  },
+  "statusEffects": {
+    "menuProvider": ["Rule:condition"]
+  },
   "viewThemes": [
     { "id": "night", "label": "Night (dark interface)" }
   ],

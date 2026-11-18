@@ -1,0 +1,115 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Character.Equipped",
+          "type": "toggle",
+          "attribute": "equipped"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Category",
+          "type": "picker",
+          "attribute": "category",
+          "attributeType": "WeaponCategory"
+        },
+        {
+          "title": "Common.Tier",
+          "type": "picker",
+          "attribute": "tier",
+          "attributeType": "Tier"
+        },
+        {
+          "title": "Common.Type",
+          "type": "picker",
+          "attribute": "type",
+          "attributeType": "WeaponType"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Trait",
+          "type": "picker",
+          "attribute": "trait",
+          "attributeType": "Trait"
+        },
+        {
+          "title": "Common.Range",
+          "type": "picker",
+          "attribute": "range",
+          "attributeType": "Range"
+        },
+        {
+          "title": "Common.Damage",
+          "attribute": "damage"
+        },
+        {
+          "title": "Common.DamageType",
+          "type": "picker",
+          "attribute": "damageType",
+          "attributeType": "Damage"
+        },
+        {
+          "title": "Weapon.Burden",
+          "type": "picker",
+          "attribute": "burden",
+          "attributeType": "WeaponBurden"
+        }
+      ]
+    },
+    {
+      "title": "Common.Feature",
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "feature.name"
+        },
+        {
+          "title": "Common.Description",
+          "type": "textArea",
+          "attribute": "feature.text"
+        },
+        {
+          "title": "Character.Tokens",
+          "type": "number",
+          "attribute": "feature.tokens"
+        },
+        {
+          "title": "Character.Used",
+          "type": "toggle",
+          "attribute": "feature.used"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "Weapon"
+        }
+      ]
+    }
+  ]
+}

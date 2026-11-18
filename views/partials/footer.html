@@ -1,8 +1,8 @@
 <footer>
 
-  <div style="display: flex; flex-direction: row; gap: 0.8rem;  align-items: center; margin-bottom: 0.4rem;">
+  <div class="source">
     {% if token %}
-    <a href="{{token|resolvePath}}" target="_blank"><img style="height: 100%; max-height: 50px;" src="{{token|resolvePath}}" /></a>
+    <a href="{{token|resolvePath}}" target="_blank"><img src="{{token|resolvePath}}" /></a>
     {% endif %}
 
     <div>

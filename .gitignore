@@ -24,3 +24,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Local app cache
+cache/
+
+# Sheet build tooling: each sheet with a package.json installs its own; its dist/ is committed
+sheets/*/node_modules/

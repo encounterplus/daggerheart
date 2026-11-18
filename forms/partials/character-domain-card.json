@@ -1,0 +1,81 @@
+{
+  "sections": [
+    {
+      "type": "group",
+      "fields": [
+        {
+          "placeholder": "Common.Name",
+          "attribute": "name"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Character.InVault",
+          "type": "toggle",
+          "attribute": "vault"
+        },
+        {
+          "title": "Character.Tokens",
+          "type": "number",
+          "attribute": "tokens"
+        },
+        {
+          "title": "Character.Used",
+          "type": "toggle",
+          "attribute": "used"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Domain",
+          "type": "picker",
+          "attribute": "domain",
+          "attributeType": "Domain"
+        },
+        {
+          "title": "Common.Type",
+          "type": "picker",
+          "attribute": "type",
+          "attributeType": "DomainCardType"
+        },
+        {
+          "title": "Common.Level",
+          "type": "number",
+          "attribute": "level"
+        },
+        {
+          "title": "Common.Recall",
+          "type": "number",
+          "attribute": "recall"
+        }
+      ]
+    },
+    {
+      "title": "Common.Description",
+      "type": "group",
+      "fields": [
+        {
+          "type": "textArea",
+          "attribute": "descr"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "fields": [
+        {
+          "title": "Common.Reference",
+          "type": "reference",
+          "attribute": "reference",
+          "attributeType": "DomainCard"
+        }
+      ]
+    }
+  ]
+}

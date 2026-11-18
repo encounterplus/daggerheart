@@ -39,6 +39,8 @@
   {
     "name": "Consumable",
     "label": "consumable",
+    // a character's inventory holds both (schemas/character.json)
+    "extends": "Item",
     "collection": {
       "label": "consumables"
     },

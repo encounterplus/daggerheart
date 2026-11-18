@@ -14,6 +14,8 @@
 <body>
   {% block content %}{% endblock %}
   
+  {# the app's runtime: page.js for pages; for every view the SDK and the roll-link menu #}
+  {{ runtime }}
   {% block scripts %}{% endblock %}
   {% for src in env.scripts %}<script src="{{ src }}"></script>{% endfor %}
 </body>

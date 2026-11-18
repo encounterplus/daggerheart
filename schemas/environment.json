@@ -1,0 +1,12 @@
+{
+  "data": {
+    "tier": "Tier",
+    "type": "EnvironmentType",
+    "typeDetail": "text",
+    "impulses": "string",
+    // usually a number, but some environments describe it: Special (see "Relative Strength")
+    "difficulty": "string",
+    "adversaries": "string",
+    "features": ["AdversaryFeature"]
+  }
+}

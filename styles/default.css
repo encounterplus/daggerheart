@@ -10,12 +10,25 @@
    3. color schemes
    4. page layout
    5. typography
-   6. content elements: lists, blockquote, code, tables
-   7. generic components: tags, tabs, hero
+   6. content elements: lists, blockquote, tables
+   7. generic components: tags, tabs, hero, artwork, footer
    8. stat block
    9. cards: playing card, domain, ancestry, community, subclass, tier picker
   10. card button, card stage & card modal
   11. entity themes & special sections
+  12. character GM card (views/character.html) and the colors it shares with the sheet
+  13. character sheet (sheets/default)
+      13.1 page, colors & form controls
+      13.2 panels & ribbon headings
+      13.3 section tabs
+      13.4 header: title plate, domains, shields, traits, defense
+      13.5 tab layouts, damage & tracks, Hope, pips
+      13.6 rows, fields, weapons, features, projects
+      13.7 downtime
+      13.8 cards, tables, gold, advancement, remove buttons
+      13.9 small screens
+
+ rules are in cascade order: many share a specificity, so moving one can change which wins
  */
 
 /******** 1. Fonts ********/
@@ -134,15 +147,8 @@
   --pico-font-weight: 400;
   --pico-typography-spacing-vertical: 0.6rem;
 
-  /* use this variable to change default font size */
-  /* --font-size: 100%; */
+  /* default font size, scaled by the app's --font-scale */
   --font-size: 87.5%;
-  /* --font-size: 93.75%; */
-  /* --font-size: 106.25%; */
-  /* --font-size: 112.5%; */
-  /* --font-size: 118.75%; */
-
-  /* calculate font size based on default font size and custom font scale */
   --pico-font-size: calc(var(--font-size, 100%) * var(--font-scale, 1));
 
   line-height: 1.4;
@@ -186,14 +192,26 @@
   --tint-amount: 12%;
   --primary-bg-color: color-mix(in srgb, var(--primary-color) var(--tint-amount), var(--tint-base-color));
 
-  --pico-background-color: Canvas;
+  /* the SDK's dialogs (ep-ui.js: pick, confirm) keep the system colors, light or dark, and take
+     brick for an action that removes something */
+  --ep-ui-danger: var(--brick-color);
+
+  /* iOS style controls (tier picker, card icon button, card modal header): label and fills,
+     the dark scheme's below */
+  --control-color: var(--dark-color);
+  --control-fill: rgba(120, 120, 128, 0.12);
+  --control-fill-pressed: rgba(120, 120, 128, 0.24);
+  --control-menu-bg: rgba(254, 254, 252, 0.8);
+  --modal-header-bg: rgba(120, 120, 128, 0.2);
+  --modal-header-border: rgba(0, 0, 0, 0.05);
 }
 
 
 /******** 3. Color Schemes ********/
 
-/* Light color scheme (Default) */
-/* Can be forced with data-theme="light" */
+/* the page's text and links are the light theme's in either scheme (night.css is the dark version);
+   only the canvas follows the system, it colors the app's navigation bar.
+   Light, or auto with no data-theme: this block; forced dark: the one below */
 [data-theme=light],
 :root:not([data-theme=dark]),
 :host(:not([data-theme=dark])) {
@@ -214,22 +232,32 @@
 
   --pico-table-border-color: var(--dark-brown-color);
 
-  /* --pico-background-color: var(--dark-bg-color); */
   --pico-background-color: Canvas;
 }
 
-/* Dark color scheme (Auto) */
-/* Automatically enabled if user has Dark mode enabled */
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --pico-background-color: Canvas;
+[data-theme="dark"] {
+  --pico-background-color: Canvas;
+}
+
+/* dark scheme controls: lighter label, stronger fills */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --control-color: var(--light-color);
+    --control-fill: rgba(120, 120, 128, 0.32);
+    --control-fill-pressed: rgba(120, 120, 128, 0.48);
+    --control-menu-bg: rgba(44, 44, 46, 0.8);
+    --modal-header-bg: rgba(120, 120, 128, 0.36);
+    --modal-header-border: rgba(255, 255, 255, 0.08);
   }
 }
 
-/* Dark color scheme (Forced) */
-/* Enabled if forced with data-theme="dark" */
-[data-theme="dark"] {
-  --pico-background-color: Canvas;
+[data-theme=dark] {
+  --control-color: var(--light-color);
+  --control-fill: rgba(120, 120, 128, 0.32);
+  --control-fill-pressed: rgba(120, 120, 128, 0.48);
+  --control-menu-bg: rgba(44, 44, 46, 0.8);
+  --modal-header-bg: rgba(120, 120, 128, 0.36);
+  --modal-header-border: rgba(255, 255, 255, 0.08);
 }
 
 
@@ -259,16 +287,6 @@ main:not(:has(> .card-stage)) {
   background-image: url("../images/paper.jpg");
   background-repeat: repeat;
 }
-
-/* .expanded {
-  body {
-    padding: 0.75rem !important;
-  }
-
-  main {
-    border-radius: 8px;
-  }
-} */
 
 main section {
   --pico-block-spacing-vertical: 0.6rem;
@@ -339,12 +357,9 @@ h4:not(.stat-block *, .hero *)::before {
   background-color: var(--gold-color);
 }
 
+/* entity name, a step smaller than a page title */
 h1.title {
   --pico-font-size: 1.75rem;
-  --pico-line-height: 1.125;
-  --pico-typography-spacing-top: 0rem;
-  --pico-font-weight: 800;
-  text-transform: uppercase;
 }
 
 hgroup {
@@ -409,11 +424,6 @@ blockquote {
   border-bottom: 2px solid var(--primary-color);
   border-inline: none;
   background-color: var(--primary-bg-color);
-}
-
-pre.code {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
 }
 
 /* full width, header on the theme color, every other row tinted with it */
@@ -531,7 +541,7 @@ table.table-responsive {
     button {
       flex: 1 1 0;
       min-width: 0;
-      padding: 0.5em 0.5em;
+      padding: 0.5em;
       border-bottom: none;
       background-color: var(--primary-bg-color);
       color: var(--primary-color);
@@ -613,6 +623,39 @@ table.table-responsive {
   }
 }
 
+/* the entity's image below its text, centered, opens full size on tap, e.g. <div class="artwork"> */
+.artwork {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    max-height: 512px;
+  }
+}
+
+/* the token beside the source and location: views/partials/footer.html and the sheet's footer */
+footer .source {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+
+  > a {
+    flex: none;
+  }
+
+  img {
+    display: block;
+    height: 50px;
+    width: auto;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
 
 /******** 8. Stat Block ********/
 
@@ -654,7 +697,7 @@ table.table-responsive {
     float: right;
     margin-left: 1rem;
     width: 3rem;
-    height: 3rem
+    height: 3rem;
   }
 
   hgroup {
@@ -716,7 +759,6 @@ table.table-responsive {
 
     h4 {
       --pico-font-size: 1.3rem;
-      text-transform: uppercase;
       margin-top: 0.3rem;
       margin-bottom: 0.2rem;
     }
@@ -746,7 +788,7 @@ table.table-responsive {
 
     .token {
       width: 4.5rem;
-      height: 4.5rem
+      height: 4.5rem;
     }
   }
 }
@@ -935,14 +977,9 @@ table.table-responsive {
 
   /* card type centered on the divider */
   .card-divider {
-    display: grid;
     align-items: center;
     justify-items: center;
     margin-bottom: -1px;
-
-    >* {
-      grid-area: 1 / 1;
-    }
   }
 
   .card-type {
@@ -953,7 +990,6 @@ table.table-responsive {
   }
 
   .card-title {
-    --pico-font-size: 1.5rem;
     text-align: center;
   }
 }
@@ -990,7 +1026,6 @@ table.table-responsive {
 
   >.card-spacer {
     flex: 0 1 160px;
-    min-height: 120px;
   }
 
   >.card-content {
@@ -1094,11 +1129,6 @@ table.table-responsive {
 
 /* pill button centered under the card, tiers in its pull-down list */
 details.card-tier-picker {
-  --picker-color: var(--dark-color);
-  --picker-button-bg: rgba(120, 120, 128, 0.12);
-  --picker-pressed-bg: rgba(120, 120, 128, 0.24);
-  --picker-menu-bg: rgba(254, 254, 252, 0.8);
-
   position: relative;
   margin: 0;
 
@@ -1109,11 +1139,11 @@ details.card-tier-picker {
     margin: 0;
     padding: 0.35rem 0.7rem 0.35rem 0.9rem;
     border-radius: 999px;
-    background-color: var(--picker-button-bg);
+    background-color: var(--control-fill);
     font-size: 0.85rem;
     font-weight: 600;
     line-height: 1.2;
-    color: var(--picker-color);
+    color: var(--control-color);
     text-transform: uppercase;
     list-style: none;
 
@@ -1137,7 +1167,7 @@ details.card-tier-picker {
     }
 
     &:active {
-      background-color: var(--picker-pressed-bg);
+      background-color: var(--control-fill-pressed);
     }
   }
 
@@ -1158,7 +1188,7 @@ details.card-tier-picker {
     padding: 0.25rem;
     border: none;
     border-radius: 0.75rem;
-    background-color: var(--picker-menu-bg);
+    background-color: var(--control-menu-bg);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     backdrop-filter: blur(20px) saturate(180%);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
@@ -1175,7 +1205,7 @@ details.card-tier-picker {
     border-radius: 0.5rem;
     font-size: 0.9rem;
     line-height: 1.2;
-    color: var(--picker-color);
+    color: var(--control-color);
     cursor: pointer;
 
     /* checkmark slot keeps labels aligned */
@@ -1189,7 +1219,7 @@ details.card-tier-picker {
     }
 
     &:active {
-      background-color: var(--picker-pressed-bg);
+      background-color: var(--control-fill-pressed);
     }
   }
 
@@ -1199,23 +1229,6 @@ details.card-tier-picker {
     opacity: 0;
     pointer-events: none;
   }
-}
-
-/* dark scheme, the page's light block pins --pico-color to --dark-color so the picker sets its own */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme=light]) details.card-tier-picker {
-    --picker-color: var(--light-color);
-    --picker-button-bg: rgba(120, 120, 128, 0.32);
-    --picker-pressed-bg: rgba(120, 120, 128, 0.48);
-    --picker-menu-bg: rgba(44, 44, 46, 0.8);
-  }
-}
-
-[data-theme=dark] details.card-tier-picker {
-  --picker-color: var(--light-color);
-  --picker-button-bg: rgba(120, 120, 128, 0.32);
-  --picker-pressed-bg: rgba(120, 120, 128, 0.48);
-  --picker-menu-bg: rgba(44, 44, 46, 0.8);
 }
 
 
@@ -1257,10 +1270,6 @@ details.card-tier-picker {
 
 /* no card image: plain round button with a three-line icon instead of the thumbnail */
 .card-button.card-button-icon {
-  --card-icon-color: var(--dark-color);
-  --card-icon-bg: rgba(120, 120, 128, 0.12);
-  --card-icon-pressed-bg: rgba(120, 120, 128, 0.24);
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1268,8 +1277,8 @@ details.card-tier-picker {
   height: 2.75rem;
   border: none;
   border-radius: 999px;
-  background-color: var(--card-icon-bg);
-  color: var(--card-icon-color);
+  background-color: var(--control-fill);
+  color: var(--control-color);
 
   svg {
     width: 1.25rem;
@@ -1278,22 +1287,8 @@ details.card-tier-picker {
 
   &:active {
     opacity: 1;
-    background-color: var(--card-icon-pressed-bg);
+    background-color: var(--control-fill-pressed);
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme=light]) .card-button.card-button-icon {
-    --card-icon-color: var(--light-color);
-    --card-icon-bg: rgba(120, 120, 128, 0.32);
-    --card-icon-pressed-bg: rgba(120, 120, 128, 0.48);
-  }
-}
-
-[data-theme=dark] .card-button.card-button-icon {
-  --card-icon-color: var(--light-color);
-  --card-icon-bg: rgba(120, 120, 128, 0.32);
-  --card-icon-pressed-bg: rgba(120, 120, 128, 0.48);
 }
 
 /* section break below the thumbnail doesn't run underneath it */
@@ -1313,10 +1308,6 @@ details.card-tier-picker {
 
 /* card shown in a modal dialog, pico's dialog provides the blurred full screen backdrop */
 dialog.card-modal {
-  --modal-header-color: var(--dark-color);
-  --modal-header-bg: rgba(120, 120, 128, 0.2);
-  --modal-header-border: rgba(0, 0, 0, 0.05);
-
   height: 100%;
   max-height: none;
   padding: var(--pico-spacing);
@@ -1375,7 +1366,7 @@ dialog.card-modal {
     border-radius: 999px;
     border: 1px solid var(--modal-header-border);
     background-color: var(--modal-header-bg);
-    color: var(--modal-header-color);
+    color: var(--control-color);
     text-align: center;
     text-overflow: ellipsis;
     text-transform: uppercase;
@@ -1385,21 +1376,6 @@ dialog.card-modal {
   &[open]>.modal-content {
     animation: card-modal-in 0.2s ease-out;
   }
-}
-
-/* dark scheme, light text on the dark blurred backdrop */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme=light]) dialog.card-modal {
-    --modal-header-color: var(--light-color);
-    --modal-header-bg: rgba(120, 120, 128, 0.36);
-    --modal-header-border: rgba(255, 255, 255, 0.08);
-  }
-}
-
-[data-theme=dark] dialog.card-modal {
-  --modal-header-color: var(--light-color);
-  --modal-header-bg: rgba(120, 120, 128, 0.36);
-  --modal-header-border: rgba(255, 255, 255, 0.08);
 }
 
 @keyframes card-modal-in {
@@ -1421,7 +1397,7 @@ dialog.card-modal {
   border-radius: 999px;
   background-color: transparent;
   box-shadow: none;
-  color: var(--modal-header-color, var(--dark-color));
+  color: var(--control-color);
   position: relative;
 
   svg {
@@ -1555,4 +1531,2853 @@ section.questions {
   margin: calc(-1 * var(--pico-spacing));
   padding: var(--pico-spacing);
   margin-block: calc(2 * var(--pico-spacing));
+}
+
+
+/******** 12. Character GM Card ********/
+
+/* the colors the GM card and the sheet share: the tracks' from the source material (HP brick, Stress
+   slate, Hope gold, armor brass), the printed sheet's violet, ink, paper and gold trim; then the
+   sheet's fields, as on the printed sheet's header: white boxes in a dark grey frame, the ruled
+   lines' turned up ends drawn (images/fields) */
+#character {
+  --hp-color: var(--brick-color);
+  --stress-color: var(--slate-color);
+  --hope-color: var(--gold-color);
+  --armor-color: var(--brass-color);
+
+  --violet-color: #3E3189;
+  --ink-color: #17142A;
+  --paper-color: #F6F4EF;
+  --ribbon-plate-color: #E48B3C;
+  --ribbon-edge-color: #F3C267;
+  --trim-color: var(--ribbon-edge-color);
+
+  --field-border: #6D6E71;
+  --field-rule: #D1D3D4;
+  --field-end: 12px;
+  --field-start-image: url("../images/fields/line-start.svg");
+  --field-end-image: url("../images/fields/line-end.svg");
+  --field-tray-image: url("../images/fields/experience-value.svg");
+
+  /* ancestry · community · pronouns · domains under the title */
+  .heritage {
+    font-style: italic;
+    margin-bottom: 0.2rem;
+
+    span:not(:last-child)::after {
+      content: " ·";
+    }
+  }
+
+  /* names in a line, comma separated: traits, experiences, features, the loadout */
+  .list>span:not(:last-child)::after {
+    content: ", ";
+  }
+}
+
+/* the GM card: the sheet's look in a stat block's room. The name on the sheet's violet plate, edge to
+   edge; under it Evasion, Armor and its slots and the damage thresholds; then, as an adversary's, the
+   white panel with the tracks and the traits, and the rest a line each under a small violet caption.
+   Its class names stay clear of the sheet's (.traits, .track, .pips…), which are #character's too;
+   .shield and .thresholds are shared on purpose */
+
+/* the shields (.shield, the sheet's) and the slots, then the thresholds; the thresholds below them
+   once they don't fit */
+#character .stat-block .defenses {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding-top: 0.6rem;
+
+  .shields {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .shield .value {
+    width: 3.1rem;
+    aspect-ratio: 210 / 231;
+    padding-bottom: 0.55rem;
+    background-image: url("../images/scores/score-evasion.svg");
+    font-size: 1.35rem;
+  }
+
+  .shield .label {
+    min-width: 3.6rem;
+    margin-top: -0.85rem;
+    padding-inline: 0.3rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .shield.armor .value {
+    background-image: url("../images/scores/score-armor.svg");
+  }
+
+  /* the Armor Slots, six a row: small drawn shields, marked filled */
+  .slots {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 0.2rem;
+
+    i {
+      width: 0.85rem;
+      height: 0.95rem;
+      background: url("../images/shield.svg") center / contain no-repeat;
+
+      &.marked {
+        background-image: url("../images/shield-filled.svg");
+      }
+    }
+  }
+
+  .thresholds {
+    flex: 1 1 17rem;
+    margin: 0;
+
+    .severity strong {
+      min-height: 2.1rem;
+      padding-block: 0.15rem;
+      font-size: 0.65rem;
+    }
+
+    .threshold {
+      min-width: 1.8rem;
+      height: 1.8rem;
+      margin-block-start: 0.15rem;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+#character .stat-block {
+  --stat-block-bg: var(--paper-color);
+  --stat-block-border: var(--trim-color);
+  --stat-block-stats-bg: white;
+  --stat-block-link: var(--violet-color);
+  --stat-block-rule: var(--sand-color);
+
+  --stat-block-padding: 0.6rem;
+  padding: var(--stat-block-padding);
+
+  /* the plate: edge to edge across the top, a gold rule under it */
+  .banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: calc(-1 * var(--stat-block-padding)) calc(-1 * var(--stat-block-padding)) 0;
+    padding: var(--stat-block-padding);
+    border-bottom: 2px solid var(--trim-color);
+    border-radius: calc(0.6rem - 2px) calc(0.6rem - 2px) 0 0;
+    background:
+      linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent), transparent 60%),
+      linear-gradient(to right, var(--ink-color), color-mix(in srgb, var(--violet-color) 55%, var(--ink-color)) 10rem);
+    color: var(--light-color);
+
+    a {
+      --pico-color: var(--trim-color);
+      --pico-underline: color-mix(in srgb, var(--trim-color) 50%, transparent);
+      --pico-primary-hover: var(--light-color);
+      --pico-primary-hover-underline: var(--light-color);
+    }
+  }
+
+  /* the image in a gold ring, as the sheet's portrait */
+  .banner .portrait {
+    float: none;
+    flex: none;
+    margin: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--trim-color);
+      box-shadow: 0 0 0 2px var(--ink-color), 0 0 0 3px color-mix(in srgb, var(--trim-color) 55%, transparent);
+    }
+  }
+
+  .banner .name {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .banner hgroup {
+    margin-bottom: 0.15rem;
+
+    h1.title {
+      --pico-color: white;
+      margin-bottom: 0.1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .banner hgroup > .subtitle:last-child {
+    color: var(--trim-color);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .banner .heritage {
+    --pico-color: var(--light-color);
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  .banner .domains {
+    flex: none;
+    display: flex;
+    gap: 0.5rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
+
+    .domain-icon {
+      width: 2.2rem;
+    }
+  }
+
+  /* the level on its shield (.shield, the sheet's), smaller */
+  .shield.level {
+    flex: none;
+
+    .value {
+      width: 2.9rem;
+      aspect-ratio: 191 / 230;
+      padding-bottom: 0.6rem;
+      background-image: url("../images/scores/score-level.svg");
+      font-size: 1.3rem;
+    }
+
+    .label {
+      min-width: 3.1rem;
+      margin-top: -0.85rem;
+      padding-inline: 0.3rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  /* the way to the sheet: a dark pill on the plate's gold rule, at the right, as the sheet's
+     section buttons (.panel-header button.outline); it takes its lower half's room */
+  .sheet-link {
+    --pill-height: 1.8rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: calc(var(--pill-height) / -2);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      height: var(--pill-height);
+      padding: 0 0.9rem;
+      border: 2px solid var(--trim-color);
+      border-radius: 999px;
+      background-color: var(--ink-color);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    a:hover,
+    a:focus-visible {
+      background-color: var(--violet-color);
+    }
+  }
+
+  /* room under the level for the pill */
+  .banner:has(+ .sheet-link) {
+    padding-bottom: calc(var(--stat-block-padding) + 0.2rem);
+  }
+
+  .sheet-link + .defenses {
+    padding-top: 0.2rem;
+  }
+
+  /* captions: a small violet name before a value or a line */
+  .caption {
+    margin-right: 0.35rem;
+    color: var(--violet-color);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    small {
+      margin-left: 0.15rem;
+      color: var(--stat-block-color);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+  }
+
+  /* HP, Stress and Hope, as the sheet draws them */
+  .tracks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1.25rem;
+  }
+
+  .meter {
+    display: flex;
+    align-items: center;
+  }
+
+  /* HP, Stress and Hope are checkboxes, bound to their counts (views/character.html) */
+  .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem;
+
+    input[type=checkbox] {
+      width: 1rem;
+      height: 0.75rem;
+      margin: 0;
+      padding: 0;
+      border: 1.5px solid var(--dark-color);
+      border-radius: 0.2rem;
+      background-color: white;
+      background-image: none;
+      box-shadow: none;
+      cursor: pointer;
+
+      &:checked {
+        border-color: var(--pip-color);
+        background-color: var(--pip-color);
+        background-image: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--violet-color);
+        outline-offset: 1px;
+      }
+
+      &:disabled {
+        cursor: default;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .hp {
+    --pip-color: var(--hp-color);
+  }
+
+  .stress {
+    --pip-color: var(--stress-color);
+  }
+
+  /* Hope as HP and Stress, in gold; a scar's slot crossed out */
+  .hope-meter {
+    --pip-color: var(--hope-color);
+
+    input[type=checkbox].crossed {
+      opacity: 0.6;
+      background-image:
+        linear-gradient(35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%),
+        linear-gradient(-35deg, transparent 42%, var(--dark-color) 42% 58%, transparent 58%);
+    }
+  }
+
+  /* the six traits in a row, three a row on a phone: the name over the roll */
+  .scores {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 0.3rem;
+    text-align: center;
+
+    > div + div {
+      border-left: 1px dashed var(--sand-color);
+    }
+
+    .caption {
+      display: block;
+      margin: 0;
+      font-size: 0.6rem;
+    }
+
+    a {
+      --pico-color: var(--dark-color);
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+  }
+
+  /* Hidden, Restrained…: brick pills */
+  .chips > span {
+    display: inline-block;
+    margin-right: 0.25rem;
+    padding: 0 0.45rem;
+    border: 1.5px solid var(--brick-color);
+    border-radius: 999px;
+    color: var(--brick-color);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .features {
+    padding-top: 0.6rem;
+
+    p {
+      padding-left: 0;
+    }
+  }
+
+  /* the weapons, the armor and a Beastform in the white panel; its rule gone with nothing equipped */
+  .gear:not(:has(> p)) {
+    display: none;
+  }
+
+  /* a weapon's and the armor's names in full, as the sheet's */
+  .item > strong:first-child {
+    margin-right: 0.2rem;
+  }
+}
+
+@media (min-width: 476px) {
+  #character .stat-block {
+    --stat-block-padding: 0.8rem;
+
+    /* the domains' icons right after the name, the level pushed to the right edge */
+    .banner .name {
+      flex: 0 1 auto;
+    }
+
+    .shield.level {
+      margin-left: auto;
+    }
+  }
+}
+
+@media (max-width: 475.98px) {
+  #character .stat-block {
+    .banner .domains {
+      display: none;
+    }
+
+    /* a long name a little smaller to fit its room: the template passes its length (--name-length),
+       an uppercase letter is about 0.7em wide; never under 1.3rem, past that it's cut with an ellipsis */
+    .banner .name {
+      container-type: inline-size;
+    }
+
+    .banner hgroup h1.title {
+      font-size: clamp(1.3rem, calc(100cqi / (var(--name-length, 1) * 0.7)), 1.75rem);
+    }
+
+    .scores {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      > div:nth-child(3n + 1) {
+        border-left: none;
+      }
+    }
+  }
+}
+
+/******** 13. Character Sheet ********/
+
+/* the character sheet (sheets/default): the printed sheet's shapes (shields, ribbon headings,
+   damage bands, the Hope diamonds) in light panels on a dark page, gold trimmed with violet accents;
+   track colors from the source material: HP brick, Stress slate, Hope gold, armor brass.
+   `.sheet` tells it from the GM card, which shares #character */
+
+/* ---- 13.1 Page, Colors & Form Controls ---- */
+
+/* the class is on <html> in the sheet's index.html, so the page has its background before Svelte mounts */
+:root.character-sheet {
+  /* the scrollbar always shown: tabs that fit and tabs that don't keep the same width */
+  overflow-y: scroll;
+  --pico-background-color: var(--dark-bg-color);
+  background-image: radial-gradient(120% 50rem at 50% 0, color-mix(in srgb, #3E3189 40%, transparent), transparent);
+  background-repeat: no-repeat;
+}
+
+#character.sheet {
+  --panel-gap: 1.6rem;
+
+  /* the Hope band's outline, for clip-path */
+  --ribbon-shape: polygon(0.8rem 0, calc(100% - 0.8rem) 0, 100% 50%, calc(100% - 0.8rem) 100%, 0.8rem 100%, 0 50%);
+  --ribbon-min-width: 25rem;
+
+  /* the panel heading, from the printed sheet's header art: the whole outline (centre plate, end
+     caps, the band's edge), the band's edge, and the band; in em, so they scale with the heading, the plate 47% wide */
+  --ribbon-frame: polygon(
+    0 0.94em, 0.4em 0.54em, 1.12em 0.54em, 1.52em 0.14em,
+    calc(26.3% + 0.25em) 0.14em, calc(26.3% + 0.39em) 0,
+    calc(73.7% - 0.39em) 0, calc(73.7% - 0.25em) 0.14em,
+    calc(100% - 1.52em) 0.14em, calc(100% - 1.12em) 0.54em, calc(100% - 0.4em) 0.54em,
+    100% 0.94em, 100% calc(100% - 0.94em),
+    calc(100% - 0.4em) calc(100% - 0.54em), calc(100% - 1.12em) calc(100% - 0.54em),
+    calc(100% - 1.52em) calc(100% - 0.14em),
+    calc(73.7% - 0.25em) calc(100% - 0.14em), calc(73.7% - 0.39em) 100%,
+    calc(26.3% + 0.39em) 100%, calc(26.3% + 0.25em) calc(100% - 0.14em),
+    1.52em calc(100% - 0.14em), 1.12em calc(100% - 0.54em), 0.4em calc(100% - 0.54em),
+    0 calc(100% - 0.94em));
+  --ribbon-edge: polygon(
+    0.56em 50%, 1.52em 0.14em, calc(100% - 1.52em) 0.14em,
+    calc(100% - 0.56em) 50%, calc(100% - 1.52em) calc(100% - 0.14em), 1.52em calc(100% - 0.14em));
+  --ribbon-band: polygon(
+    0.74em 50%, 1.58em 0.26em, calc(100% - 1.58em) 0.26em,
+    calc(100% - 0.74em) 50%, calc(100% - 1.58em) calc(100% - 0.26em), 1.58em calc(100% - 0.26em));
+  --ribbon-band-color: var(--ink-color);
+  --ribbon-font-size: 1rem;
+
+  /* light text on the dark page; the panels set their own */
+  --pico-color: var(--light-color);
+  --pico-primary: var(--gold-color);
+  --pico-primary-underline: color-mix(in srgb, var(--gold-color) 50%, transparent);
+  --pico-primary-hover: var(--light-color);
+  --pico-primary-hover-underline: var(--light-color);
+
+  /* form controls light in either color scheme, as the rest of the sheet: Pico's light scheme
+     values, which its dark scheme would replace */
+  --pico-muted-color: #646b79;
+  --pico-form-element-background-color: rgb(251, 251.5, 252.25);
+  --pico-form-element-selected-background-color: #dfe3eb;
+  --pico-form-element-border-color: #cfd5e2;
+  --pico-form-element-color: #23262c;
+  --pico-form-element-placeholder-color: var(--pico-muted-color);
+  --pico-form-element-active-background-color: #fff;
+  --pico-form-element-invalid-border-color: rgb(183.5, 105.5, 106.5);
+  --pico-form-element-invalid-active-border-color: rgb(200.25, 79.25, 72.25);
+  --pico-form-element-valid-border-color: rgb(76, 154.5, 137.5);
+  --pico-form-element-valid-active-border-color: rgb(39, 152.75, 118.75);
+  --pico-switch-background-color: #bfc7d9;
+  --pico-dropdown-background-color: #fff;
+  --pico-dropdown-border-color: #eff1f4;
+  --pico-dropdown-hover-background-color: #eff1f4;
+
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-block: 1rem 2rem;
+  background: none;
+  color: var(--pico-color);
+
+  /* compact form controls: Pico's are sized for forms, the sheet has many in a row */
+  input:not([type=checkbox], [type=radio]),
+  select,
+  textarea {
+    margin-bottom: 0;
+    padding: 0.3rem 0.5rem;
+    height: auto;
+    font-size: 0.95rem;
+  }
+
+  button {
+    margin-bottom: 0;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  h3 {
+    margin-bottom: 0.5rem;
+    font-family: "Eveleth Clean", var(--pico-font-family);
+    --pico-font-weight: 100;
+    text-transform: uppercase;
+
+    small {
+      font-family: var(--pico-font-family);
+      font-size: 0.8rem;
+      text-transform: none;
+      opacity: 0.75;
+    }
+  }
+
+  h4 {
+    margin: 0.75rem 0 0.4rem;
+    font-size: 1rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .empty,
+  .note {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  .over,
+  .warning {
+    color: var(--brick-color);
+    opacity: 1;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .markdown > :last-child {
+    margin-bottom: 0;
+  }
+
+  > hr {
+    border-top-color: color-mix(in srgb, var(--trim-color) 40%, transparent);
+  }
+
+  /* source and location, laid out by `footer .source` (section 7) */
+  > footer {
+    font-size: 0.85rem;
+    opacity: 0.75;
+  }
+}
+
+/* fields: white boxes in a dark grey frame, rounded where it cuts the corners (colors in the
+   #character block, section 12). Not the select in a heading, a pill on the frame (.panel-header) */
+#character :is(input:not([type=checkbox], [type=radio], [type=range], [type=file]), select:not(.panel-header *), textarea) {
+  --pico-form-element-background-color: white;
+  --pico-form-element-active-background-color: white;
+  --pico-form-element-border-color: var(--field-border);
+  border-width: 2px;
+  border-radius: 0.4rem;
+}
+
+/* the lines of Experiences, Conditions and Inventory: no box, a light rule with its ends turned up;
+   the ends are images (images/fields), the rule between them a gradient */
+#character .row:is(.experience, .ruled) input {
+  --pico-form-element-focus-color: transparent;
+  padding-inline: calc(var(--field-end) + 0.25rem);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    var(--field-start-image) left bottom / var(--field-end) var(--field-end) no-repeat,
+    var(--field-end-image) right bottom / var(--field-end) var(--field-end) no-repeat,
+    linear-gradient(var(--field-rule), var(--field-rule)) center bottom / calc(100% - 2 * var(--field-end)) 2px no-repeat;
+
+  /* focused, the rule and its ends (or the tray) turn violet */
+  &:focus {
+    --field-rule: var(--violet-color);
+    --field-start-image: url("../images/fields/line-start-focus.svg");
+    --field-end-image: url("../images/fields/line-end-focus.svg");
+    --field-tray-image: url("../images/fields/experience-value-focus.svg");
+  }
+
+  &[type=number] {
+    text-align: center;
+  }
+}
+
+/* an Experience: the name's rule runs on to the value, which sits in a tray */
+#character .row.experience {
+  gap: 0.25rem;
+
+  input[type=text] {
+    padding-inline-end: 0.25rem;
+    background:
+      var(--field-start-image) left bottom / var(--field-end) var(--field-end) no-repeat,
+      linear-gradient(var(--field-rule), var(--field-rule)) right bottom / calc(100% - var(--field-end)) 2px no-repeat;
+  }
+
+  /* padded as the other lines, so the browser's arrows (always shown in Safari) sit inside the tray */
+  input.modifier {
+    width: 5rem;
+    padding-left: 2rem;
+    padding-right: 0.7rem;
+    background: var(--field-tray-image) center bottom / 100% auto no-repeat;
+  }
+}
+
+/* ---- 13.2 Panels & Ribbon Headings ---- */
+
+/* a light panel in a gold frame: the header's boxes and the tabs' sections */
+#character :is(.panel, .box) {
+  --pico-color: var(--dark-color);
+  --pico-background-color: var(--paper-color);
+  --pico-primary: var(--ink-color);
+  --pico-primary-underline: color-mix(in srgb, var(--ink-color) 50%, transparent);
+  --pico-primary-hover: var(--violet-color);
+  --pico-primary-hover-underline: var(--violet-color);
+  /* checked boxes and switches violet, not Pico's blue */
+  --pico-primary-background: var(--violet-color);
+  --pico-primary-border: var(--violet-color);
+  --pico-primary-focus: color-mix(in srgb, var(--violet-color) 35%, transparent);
+  --pico-switch-checked-background-color: var(--violet-color);
+  --pico-h3-color: var(--ink-color);
+  --pico-h4-color: var(--ink-color);
+  /* light paper even in dark mode: the browser draws its own parts of controls (number arrows,
+     scrollbars) dark on it, not white */
+  color-scheme: light;
+
+  position: relative;
+  margin: 0 0 var(--panel-gap);
+  padding: 0.9rem;
+  border: 2px solid var(--trim-color);
+  border-radius: 0.6rem;
+  background-color: var(--paper-color);
+  color: var(--pico-color);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* its heading: the printed sheet's header, a dark band with pointed ends on an orange plate and end
+   caps, astride the frame's top; the heading's own background is the plate, under its two layers */
+#character :is(.panel, .box) > h3:first-child,
+#character .panel-header:first-child h3 {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  min-width: min(var(--ribbon-min-width), 100%);
+  max-width: 100%;
+  margin: calc(-0.9rem - 1.1 * var(--ribbon-font-size) - 2px) auto 0.75rem;
+  padding: 0 2em;
+  font-size: var(--ribbon-font-size);
+  --pico-font-weight: 400;
+  line-height: 2.2em;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: white;
+  background-color: var(--ribbon-plate-color);
+  clip-path: var(--ribbon-frame);
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  &::before {
+    clip-path: var(--ribbon-edge);
+    background-color: var(--ribbon-edge-color);
+  }
+
+  &::after {
+    clip-path: var(--ribbon-band);
+    background-color: var(--ribbon-band-color);
+  }
+
+  small {
+    margin-left: 0.3rem;
+    color: var(--trim-color);
+    opacity: 1;
+  }
+
+  small.over {
+    color: #F08A7E;
+  }
+}
+
+/* a heading with buttons beside it: the ribbon in the middle, the buttons at the right, both astride
+   the frame; on a phone the buttons go below */
+#character .panel-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(min(var(--ribbon-min-width), 100%), auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+
+  &:first-child {
+    margin-top: calc(-0.9rem - 1.1 * var(--ribbon-font-size) - 2px);
+  }
+
+  h3 {
+    grid-column: 2;
+    margin-bottom: 0;
+  }
+
+  &:first-child h3 {
+    margin: 0;
+  }
+
+  > :not(h3) {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  /* dark pills on the frame, as the ribbon */
+  button.outline,
+  select {
+    width: auto;
+    border: 2px solid var(--trim-color);
+    border-radius: 999px;
+    background-color: var(--ink-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  button.outline:hover,
+  button.outline:focus-visible {
+    background-color: var(--violet-color);
+  }
+
+  select {
+    padding-right: 2rem;
+    background-position: center right 0.6rem;
+  }
+
+  button.remove {
+    padding: 0.3rem;
+    border: 2px solid var(--trim-color);
+    border-radius: 50%;
+    background-color: var(--ink-color);
+    color: var(--sand-color);
+
+    svg {
+      width: 0.95rem;
+      height: 0.95rem;
+    }
+  }
+}
+
+/* a header too narrow for the ribbon and its buttons or the subclass's rank beside it (as in the
+   Main, Features and Inventory tabs' columns): the buttons or rank under the ribbon, as on a phone */
+#character .panel-header:has(> .actions, > select) {
+  container: panel-header / inline-size;
+}
+
+@container panel-header (max-width: 47rem) {
+  #character .panel-header > .actions,
+  #character .panel-header > select {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+/* ---- 13.3 Section Tabs ---- */
+
+/* the tabs: gold edged pills on a gold line, the open one violet; on a phone a menu instead, which
+   the round button in the corner opens (the bar is a popover: these undo the browser's popover style) */
+#character.sheet .tab-bar.band-tabs {
+  position: relative;
+  inset: auto;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: auto;
+  height: auto;
+  margin: 0 0 var(--panel-gap);
+  padding: 0.4rem 0;
+  border: none;
+  background: none;
+  color: inherit;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 2px;
+    background-color: var(--trim-color);
+  }
+
+  button {
+    position: relative;
+    flex: 0 1 auto;
+    min-width: max-content;
+    padding: 0.3rem 1.1rem;
+    border: 2px solid var(--trim-color);
+    border-radius: 999px;
+    background-color: var(--ink-color);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+
+  /* centred by margins, not justify-content, so a row too wide still scrolls to its first tab */
+  button:first-child {
+    margin-left: auto;
+  }
+
+  button:last-child {
+    margin-right: auto;
+  }
+
+  button:hover,
+  button:focus-visible {
+    color: var(--trim-color);
+  }
+
+  button[aria-selected="true"] {
+    background-color: var(--violet-color);
+    color: var(--trim-color);
+  }
+}
+
+@media (max-width: 959px) {
+  #character.sheet .tab-bar.band-tabs button {
+    padding-inline: 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+#character .sections-button {
+  display: none;
+}
+
+/* ---- 13.4 Header: Title Plate, Domains, Shields, Traits, Defense ---- */
+
+/* the header: portrait and name, then the defense and the traits; on a wide screen side by side, as
+   the printed sheet */
+#character .sheet-header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--panel-gap) 1.25rem;
+  margin-bottom: var(--panel-gap);
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  .vitals {
+    display: contents;
+  }
+
+  .box {
+    margin: 0;
+  }
+
+  /* the traits first, then Evasion, Armor and the slots; .defense isn't a child, .vitals is */
+  .sheet-title { order: 0; }
+  .traits { order: 1; }
+  .defense { order: 2; grid-column: 1 / -1; }
+  .defense-divider { order: 3; display: none; }
+}
+
+/* the defense and the traits in a row, as the printed sheet: the defense first, a strong rule in its
+   own column between them, the column gap either side of it */
+@media (min-width: 720px) {
+  #character .sheet-header {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) auto repeat(10, minmax(0, 1fr));
+
+    /* the shields and the slots centred on one another, and together on the traits' row */
+    .defense { order: 1; grid-column: 1 / span 5; align-self: center; align-items: center; }
+    .traits { order: 3; grid-column: 7 / -1; }
+
+    .defense-divider {
+      order: 2;
+      display: block;
+      grid-column: 6;
+      width: 2px;
+      margin-block: 0.25rem;
+      margin-left: auto;
+      background-color: color-mix(in srgb, var(--trim-color) 70%, transparent);
+    }
+  }
+}
+
+#character .sheet-title {
+  --pico-h1-color: var(--light-color);
+  --pico-primary: var(--trim-color);
+  --pico-primary-underline: transparent;
+  --pico-primary-hover: var(--light-color);
+  --pico-primary-hover-underline: var(--light-color);
+
+  /* the name plate, from the printed sheet's header art: in from the left behind the portrait, as
+     long as the name, its right edge slanted at the art's angle (142 across 274 down) */
+  --plate-padding: 0.75rem;
+  --plate-slant: 3.4rem;
+  --plate-start: 2rem;
+  --plate-color: color-mix(in srgb, var(--violet-color) 55%, var(--ink-color));
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding-block: var(--plate-padding);
+
+  .portrait {
+    flex: none;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--trim-color);
+    box-shadow: 0 0 0 2px var(--ink-color), 0 0 0 3px color-mix(in srgb, var(--trim-color) 55%, transparent);
+  }
+
+  &:has(> .portrait) {
+    --plate-start: 8rem;
+  }
+
+  /* as tall as the header, the name and the domains centred on it; room on the right for the slant */
+  .plate {
+    position: relative;
+    flex: 0 1 auto;
+    align-self: stretch;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    min-width: 0;
+    margin-right: auto;
+    padding-right: var(--plate-slant);
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: calc(-1 * var(--plate-padding)) 0 calc(-1 * var(--plate-padding)) calc(-1 * var(--plate-start));
+      clip-path: polygon(0 0, 100% 0, calc(100% - var(--plate-slant)) 100%, 0 100%);
+      background:
+        linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent), transparent 60%),
+        linear-gradient(to right, transparent, var(--plate-color) 6rem);
+    }
+  }
+
+  .name {
+    min-width: 0;
+  }
+
+  /* the class's domains and the multiclass's, one above another past a thin rule */
+  .domains {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 1rem;
+    border-left: 1px solid color-mix(in srgb, var(--trim-color) 40%, transparent);
+  }
+
+  /* side by side and larger once the header has the room, as the defense and the traits' row */
+  @media (min-width: 720px) {
+    .domains {
+      flex-direction: row;
+      gap: 0.75rem;
+    }
+
+    .domain-icon {
+      width: 3rem;
+    }
+  }
+
+  hgroup {
+    margin-bottom: 0.2rem;
+  }
+
+  h1 {
+    margin-bottom: 0.15rem;
+    overflow-wrap: anywhere;
+  }
+
+  .subtitle {
+    --pico-color: var(--trim-color);
+    color: var(--trim-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Svelte leaves no space between the spans, which the GM card's template does */
+  .heritage {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    opacity: 0.85;
+
+    span:not(:last-child)::after {
+      content: " · ";
+    }
+  }
+
+  .level {
+    flex: none;
+
+    /* the name across the lower part, as Evasion's and Armor's */
+    .value {
+      width: 4.7rem;
+      aspect-ratio: 191 / 230;
+      padding-bottom: 1.2rem;
+      background-image: url("../images/scores/score-level.svg");
+      font-size: 1.85rem;
+    }
+
+    .label {
+      margin-top: -1.8rem;
+      min-width: 5rem;
+      font-size: 0.65rem;
+    }
+  }
+}
+
+/* a domain's icon (images/domains), a one-color drawing masked so it takes the trim's color: the
+   sheet's title and the GM card's */
+#character .domain-icon {
+  display: block;
+  width: 1.9rem;
+  aspect-ratio: 1;
+  background-color: var(--trim-color);
+  mask: var(--domain-icon) center / contain no-repeat;
+
+  &[data-domain=arcana] { --domain-icon: url("../images/domains/arcana.svg"); }
+  &[data-domain=blade] { --domain-icon: url("../images/domains/blade.svg"); }
+  &[data-domain=blood] { --domain-icon: url("../images/domains/blood.svg"); }
+  &[data-domain=bone] { --domain-icon: url("../images/domains/bone.svg"); }
+  &[data-domain=codex] { --domain-icon: url("../images/domains/codex.svg"); }
+  &[data-domain=dread] { --domain-icon: url("../images/domains/dread.svg"); }
+  &[data-domain=grace] { --domain-icon: url("../images/domains/grace.svg"); }
+  &[data-domain=midnight] { --domain-icon: url("../images/domains/midnight.svg"); }
+  &[data-domain=sage] { --domain-icon: url("../images/domains/sage.svg"); }
+  &[data-domain=splendor] { --domain-icon: url("../images/domains/splendor.svg"); }
+  &[data-domain=valor] { --domain-icon: url("../images/domains/valor.svg"); }
+}
+
+/* a number on a shield, its name on a dark tab: the traits, Evasion, Armor and the level; each shield
+   is its own drawing (images/scores), outlines and colors in the art */
+#character .shield {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .value {
+    display: grid;
+    place-items: center;
+    width: 4.4rem;
+    padding-bottom: 0.5rem;
+    color: var(--dark-color);
+    background: center / contain no-repeat;
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+
+    a {
+      --pico-color: var(--dark-color);
+      --pico-primary-hover: var(--violet-color);
+      text-decoration: none;
+    }
+  }
+
+  .label {
+    position: relative;
+    z-index: 1;
+    margin-top: -0.85rem;
+    padding: 0.12rem 0rem 0.1rem 0;
+    border: 2px solid var(--trim-color);
+    border-radius: 0.35rem;
+    background-color: var(--ink-color);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+}
+
+/* the six traits in a row, three a row on a phone: the tab above the shield, the trait's uses below;
+   the circle by the name filled once a trait is raised this tier */
+#character .traits {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(5, auto minmax(0, 1fr));
+  gap: 1rem 0.4rem;
+
+  /* a dashed rule in its own column between two traits, from below the tabs to the uses' end */
+  .divider {
+    width: 1px;
+    margin-top: 1.5rem;
+    background-image: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--light-color) 35%, transparent) 0 3px, transparent 3px 7px);
+  }
+
+  /* a button that marks the trait: the tab's look, none of Pico's; the circle sits on the tab's
+     right end, as the printed sheet's, so the name keeps the width */
+  .trait .label {
+    order: -1;
+    min-width: 5rem;
+    margin: 0 0 -0.45rem;
+    padding-inline: 0.5rem;
+    box-shadow: none;
+    font-size: 0.62rem;
+    line-height: inherit;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--trim-color);
+      outline-offset: 2px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -0.45rem;
+      width: 0.7rem;
+      height: 0.7rem;
+      border: 2px solid var(--trim-color);
+      border-radius: 50%;
+      background-color: var(--ink-color);
+      translate: 0 -50%;
+    }
+  }
+
+  .trait.marked .label::after {
+    background-color: var(--trim-color);
+  }
+
+  .trait .value {
+    aspect-ratio: 186 / 196;
+    padding-top: 0.35rem;
+    background-image: url("../images/scores/score-trait.svg");
+  }
+
+  .verbs {
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    opacity: 0.8;
+
+    span {
+      display: block;
+    }
+  }
+}
+
+/* Evasion and Armor, then the Armor Slots, small shields */
+#character .defense {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+
+  /* Evasion and Armor in the same box, so their names sit on one line across the lower part, as the
+     printed sheet's */
+  .shield .value {
+    width: 5.8rem;
+    aspect-ratio: 210 / 231;
+    padding-bottom: 1rem;
+    background-image: url("../images/scores/score-evasion.svg");
+    font-size: 2rem;
+  }
+
+  .shield .label {
+    min-width: 6rem;
+    margin-top: -2rem;
+  }
+
+  .shield.armor .value {
+    background-image: url("../images/scores/score-armor.svg");
+  }
+
+  /* the light rule between Evasion and Armor, across the shields' middle */
+  .divider {
+    align-self: stretch;
+    flex: none;
+    width: 1px;
+    margin-block: 1.5rem 2.25rem;
+    background-color: color-mix(in srgb, var(--light-color) 30%, transparent);
+  }
+
+  .armor-slots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+
+    .empty {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    /* − and + either side of the slots, only when they sit below the shields (below) */
+    .step {
+      display: none;
+      flex: none;
+      width: 1.6rem;
+      height: 1.6rem;
+      padding: 0;
+      border: 2px solid var(--trim-color);
+      border-radius: 50%;
+      background-color: var(--ink-color);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+
+      &:hover:not(:disabled),
+      &:focus-visible {
+        background-color: var(--violet-color);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  /* three a row, four rows at most, as the printed sheet's; small drawn shields, marked filled */
+  .pips {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+
+    input[type=checkbox] {
+      width: 1.1rem;
+      height: 1.25rem;
+      border: none;
+      border-radius: 0;
+      background: url("../images/shield.svg") center / contain no-repeat transparent;
+    }
+
+    input[type=checkbox]:checked {
+      background: url("../images/shield-filled.svg") center / contain no-repeat transparent;
+    }
+  }
+}
+
+/* from a small tablet until the defense beside the traits has room for the slots' column: the slots
+   in two rows, as many a row as half of them rounded up (12 at most, so 6), − and + either side;
+   beside Evasion and Armor while the defense has the sheet's width, below them beside the traits */
+@media (min-width: 600px) and (max-width: 819.98px) {
+  #character .defense {
+    align-items: center;
+
+    @media (min-width: 720px) {
+      flex-wrap: wrap;
+      row-gap: 1rem;
+
+      .armor-slots {
+        flex-basis: 100%;
+      }
+    }
+
+    .armor-slots {
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.75rem;
+
+      .step {
+        display: block;
+      }
+    }
+
+    .pips {
+      grid-template-columns: repeat(var(--pip-columns, 1), auto);
+
+      &:has(> :nth-child(3)) { --pip-columns: 2; }
+      &:has(> :nth-child(5)) { --pip-columns: 3; }
+      &:has(> :nth-child(7)) { --pip-columns: 4; }
+      &:has(> :nth-child(9)) { --pip-columns: 5; }
+      &:has(> :nth-child(11)) { --pip-columns: 6; }
+    }
+  }
+}
+
+/* ---- 13.5 Tab Layouts, Damage & Tracks, Hope, Pips ---- */
+
+/* the Main tab: Damage & Health, Hope and the Experiences, then the weapons, armor and conditions;
+   the Features tab: the class and subclass, then the heritage and the class's modules;
+   the Story tab: the background questions, then the connections;
+   except on a phone in two columns, each its own stack */
+@media (min-width: 600px) {
+  #character :is(.main-columns, .feature-columns, .background-columns) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  /* from a tablet the first a little narrower, as the printed sheet's */
+  #character .main-columns {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  /* the Inventory tab: the weapons, armor and gold, then the inventory; side by side from a tablet */
+  #character .inventory-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.25rem;
+  }
+}
+
+/* Damage & Health: the damage thresholds, as the printed sheet's: violet labels, the numbers in white
+   boxes between them pointing on (the GM card's too); then HP and Stress */
+#character .thresholds {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  margin-bottom: 0.75rem;
+
+  .severity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    strong {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 2.6rem;
+      padding: 0.2rem 0.5rem;
+      /* the printed sheet's label: the body inset 0.15rem, a 0.55rem square tab out at each corner,
+         its outer corner clipped and a 45° step back to the body */
+      clip-path: polygon(
+        0.15rem 0.7rem, 0 0.55rem, 0 0.08rem, 0.08rem 0, 0.55rem 0, 0.7rem 0.15rem,
+        calc(100% - 0.7rem) 0.15rem, calc(100% - 0.55rem) 0, calc(100% - 0.08rem) 0, 100% 0.08rem,
+        100% 0.55rem, calc(100% - 0.15rem) 0.7rem,
+        calc(100% - 0.15rem) calc(100% - 0.7rem), 100% calc(100% - 0.55rem), 100% calc(100% - 0.08rem),
+        calc(100% - 0.08rem) 100%, calc(100% - 0.55rem) 100%, calc(100% - 0.7rem) calc(100% - 0.15rem),
+        0.7rem calc(100% - 0.15rem), 0.55rem 100%, 0.08rem 100%, 0 calc(100% - 0.08rem),
+        0 calc(100% - 0.55rem), 0.15rem calc(100% - 0.7rem));
+      background-color: var(--violet-color);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    small {
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+      opacity: 0.75;
+    }
+  }
+
+  .threshold {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    min-width: 2rem;
+    height: 2rem;
+    /* centred on the 2.6rem labels, not on the labels with their notes under them */
+    margin-block-start: 0.3rem;
+    margin-inline: -0.3rem;
+    padding-inline: 0.35rem;
+    border: 2px solid var(--violet-color);
+    border-radius: 0.3rem;
+    background-color: white;
+    font-size: 1.25rem;
+    font-weight: 800;
+
+    /* the printed sheet's arrow out of the box into the next label: a white triangle over the
+       box's right border, a violet one inside it on the same base */
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    &::before {
+      left: 100%;
+      width: 0.7rem;
+      height: 1.4rem;
+      background-color: white;
+    }
+
+    &::after {
+      left: calc(100% + 0.03rem);
+      width: 0.37rem;
+      height: 0.74rem;
+      background-color: var(--violet-color);
+    }
+  }
+
+  /* the labels after a threshold clear its arrow */
+  .threshold + .severity strong {
+    padding-inline-start: 1.1rem;
+  }
+}
+
+/* HP and Stress, and the companion's Stress and the Strange Patterns number (Features tab) alike:
+   the label, then the slots */
+#character :is(.health, .companion, .strange-patterns) .track {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.35rem;
+  border-top: 1px solid var(--sand-color);
+
+  .pips {
+    justify-content: flex-start;
+
+    input[type=checkbox] {
+      width: 1.45rem;
+      height: 1rem;
+      border-radius: 0.3rem;
+    }
+  }
+
+  &.hp .pips input:checked {
+    --pip-color: var(--hp-color);
+  }
+
+  &.stress .pips input:checked {
+    --pip-color: var(--stress-color);
+  }
+}
+
+/* in a column the 12 HP and Stress slots narrower rather than in a second row; too narrow for the
+   labels beside them as well, the labels above */
+@media (min-width: 600px) {
+  #character :is(.health, .companion, .strange-patterns) .track .pips {
+    flex-wrap: nowrap;
+
+    input[type=checkbox] {
+      flex: 0 1 1.45rem;
+      min-width: 0;
+    }
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  #character :is(.health, .companion, .strange-patterns) .track {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+}
+
+#character .track .label small {
+  font-weight: 400;
+  text-transform: none;
+}
+
+/* the Hope and Focus tracks, as the printed sheet's: gold diamonds on a violet band, a short
+   upright rule between two; .diamond outranks the shared diamond spacing below */
+#character :is(.hope, .focus) .pips.diamond {
+  --pip-color: var(--hope-color);
+  --cross-color: var(--light-color);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 1.7rem;
+  background-color: var(--violet-color);
+  clip-path: var(--ribbon-shape);
+
+  input[type=checkbox] {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-color: var(--trim-color);
+    background-color: var(--ink-color);
+  }
+
+  input[type=checkbox]:checked {
+    background-color: var(--pip-color);
+  }
+
+  .divider {
+    width: 2px;
+    height: 0.8rem;
+    border-radius: 1px;
+    background-color: var(--trim-color);
+  }
+}
+
+/* Martial Stances' Focus: its name, then the track */
+#character .track.focus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0.75rem;
+  margin-bottom: 0.75rem;
+
+  .label {
+    font-family: "Eveleth Clean", var(--pico-font-family);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
+/* Hope: the track, then what Hope is spent on and the class's Hope feature */
+#character .hope {
+  text-align: center;
+
+  .track {
+    display: flex;
+    justify-content: center;
+  }
+
+  .note {
+    margin: 0.5rem 0 0.4rem;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  .feature,
+  .feature .markdown,
+  .feature .markdown p {
+    font-size: 0.85rem;
+  }
+}
+
+/* counts across checkboxes (lib/Pips): slots, Hope, Proficiency, gold, advancements; past the
+   maximum faded, a scar's Hope slot crossed out */
+#character .pips {
+  --pip-color: var(--dark-color);
+  --pip-background: white;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+
+  input[type=checkbox] {
+    /* whole pixels, so every pip in the row rounds alike: no ovals */
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    border: 2px solid var(--dark-color);
+    border-radius: 3px;
+    background-color: var(--pip-background);
+    box-shadow: none;
+  }
+
+  input[type=checkbox]:checked {
+    border-color: var(--pip-color);
+    background-color: var(--pip-color);
+    background-image: none;
+  }
+
+  input[type=checkbox]:disabled {
+    opacity: 0.25;
+  }
+
+  input[type=checkbox].crossed {
+    opacity: 0.6;
+    background-image: linear-gradient(45deg, transparent 44%, var(--cross-color, var(--dark-color)) 44% 56%, transparent 56%),
+      linear-gradient(-45deg, transparent 44%, var(--cross-color, var(--dark-color)) 44% 56%, transparent 56%);
+  }
+
+  /* round: a ring, marked with a dot inside it; drawn by SVG masks, which keep their circles round
+     when the box rounds to a pixel narrower than it is tall, and colored from under them: the ring
+     in --pip-ring-color, the dot in --pip-color (the switch falls in the gap between them); a unit
+     of margin around the 16-unit ring, so its soft outer edge isn't clipped where the box snaps to
+     the pixels, and the box and gap sized for it: a 16px ring 4px apart */
+  &.round {
+    --pip-ring-color: var(--dark-color);
+    --pip-ring: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 18 18'><circle cx='8' cy='8' r='7' fill='none' stroke='black' stroke-width='2'/></svg>");
+    --pip-dot: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 18 18'><circle cx='8' cy='8' r='4'/></svg>");
+    gap: 0.125rem;
+  }
+
+  &.round input[type=checkbox] {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--pip-ring-color);
+    mask: var(--pip-ring) center / contain no-repeat;
+  }
+
+  &.round input[type=checkbox]:checked {
+    background-image: radial-gradient(circle closest-side, var(--pip-color) 55.5%, var(--pip-ring-color) 55.5%);
+    /* over Pico's checkmark sizing */
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    mask-image: var(--pip-ring), var(--pip-dot);
+  }
+
+  &.diamond {
+    gap: 0.45rem;
+    padding-inline: 0.2rem;
+
+    input[type=checkbox] {
+      transform: rotate(45deg) scale(0.85);
+      border-radius: 2px;
+    }
+  }
+}
+
+/* ---- 13.6 Rows, Fields, Weapons, Features, Projects ---- */
+
+/* a row of inputs: a name that fills it, short numbers, the remove button */
+#character .row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+
+  input[type=text] {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .modifier {
+    flex: 0 0 4.5rem;
+    width: 4.5rem;
+  }
+
+  button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+}
+
+#character .grid-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+/* the Background Questions', the Connections', the Projects' and the Journal's prompts, over their fields */
+#character :is(.background-columns, .projects, .journal) .hint {
+  margin: 0 0 0.5rem;
+  font-style: italic;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* Active Weapons: the Proficiency hangs from the heading, as on the printed sheet: a plate in the
+   heading's band colors, short tabs at the top, then 45° sides in to a narrower foot; then each
+   weapon's name and its rolls */
+#character .proficiency {
+  --plate-shape: polygon(
+    0 0,
+    100% 0,
+    100% 0.2rem,
+    calc(100% - 1rem) 100%,
+    1rem 100%,
+    0 0.2rem);
+  /* the outline inset 0.12rem all round (open at the top, under the heading): the tabs, then the
+     sides, which fall 1.5rem over 1rem, so 0.144rem across for 0.12rem square to them */
+  --plate-inner: polygon(
+    0.12rem 0,
+    calc(100% - 0.12rem) 0,
+    calc(100% - 0.12rem) 0.164rem,
+    calc(100% - 1.064rem) calc(100% - 0.12rem),
+    1.064rem calc(100% - 0.12rem),
+    0.12rem 0.164rem);
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+  max-width: 100%;
+  height: 1.7rem;
+  margin: -0.9rem auto 0.5rem;
+  padding: 0 1.6rem 0.1rem;
+  color: white;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  &::before {
+    clip-path: var(--plate-shape);
+    background-color: var(--ribbon-edge-color);
+  }
+
+  &::after {
+    clip-path: var(--plate-inner);
+    background-color: var(--ribbon-band-color);
+  }
+
+  /* a smaller ring, thinner and muted: about 14px across, 1.5px thick */
+  .pips {
+    --pip-color: var(--trim-color);
+    --pip-ring-color: color-mix(in srgb, var(--trim-color) 70%, var(--ink-color));
+    --pip-ring: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 18 18'><circle cx='8' cy='8' r='7.14' fill='none' stroke='black' stroke-width='1.72'/></svg>");
+  }
+
+  .pips input[type=checkbox] {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+#character :is(.weapon, .active-armor) {
+  /* the name, properties and feature on the left; the rolls on the right */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--sand-color);
+
+  > :not(.rolls) {
+    grid-column: 1;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  /* the properties under the name, as in the Inventory's weapons */
+  > small {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  .feature {
+    display: block;
+  }
+
+  .rolls {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 0.35rem 0.75rem;
+
+    a {
+      padding: 0.05rem 0.5rem;
+      border: 1.5px solid var(--violet-color);
+      border-radius: 0.3rem;
+      color: var(--violet-color);
+      font-weight: 700;
+      text-decoration: none;
+
+      &:hover {
+        background-color: var(--violet-color);
+        color: white;
+      }
+    }
+  }
+}
+
+/* the Main tab's columns at their narrowest: the damage under the attack, one width */
+@media (min-width: 600px) and (max-width: 767px) {
+  #character .weapon .rolls {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+#character .feature,
+#character .feature .markdown,
+#character .feature .markdown p {
+  display: inline;
+  font-size: 0.9rem;
+}
+
+#character .conditions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 0.5rem;
+
+  label {
+    margin: 0;
+  }
+}
+
+#character .tags {
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+
+  button.tag {
+    width: auto;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6rem;
+    cursor: pointer;
+  }
+}
+
+/* Projects (Story): a countdown each, its description under it */
+#character .project {
+  margin-bottom: 0.75rem;
+
+  .of {
+    opacity: 0.6;
+  }
+
+  .done {
+    margin: 0 0 0.4rem;
+    color: var(--slate-color);
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  textarea {
+    margin-bottom: 0;
+  }
+}
+
+/* ---- 13.7 Downtime ---- */
+
+/* the header's Downtime button: its icon in a dark round button in the gold trim, before the level */
+#character .sheet-title .downtime-button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  padding: 0.45rem;
+  border: 2px solid var(--trim-color);
+  border-radius: 999px;
+  background-color: var(--ink-color);
+  color: white;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--violet-color);
+  }
+}
+
+/* the Downtime panel (components/Downtime): a paper column sliding in from the right over the
+   dimmed sheet, its title on a dark band, Finish and the other resets kept at the foot */
+#character dialog.downtime {
+  --pico-modal-overlay-backdrop-filter: none;
+  --pad: 1.1rem;
+
+  justify-content: flex-end;
+  align-items: stretch;
+  padding: 0;
+  /* not a scroll container (Pico's is): the panel sliding in overflows it, and focusing the panel's
+     first button would scroll it into view, so it showed at once over a scrollbar */
+  overflow: clip;
+
+  > article {
+    display: flex;
+    flex-direction: column;
+    width: min(27rem, 100%);
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0 var(--pad);
+    overflow-y: auto;
+    border-width: 0 0 0 2px;
+    border-radius: 0;
+    box-shadow: -0.5rem 0 2rem rgb(0 0 0 / 0.4);
+  }
+
+  /* in from the right over a fading dimmer, out the same way: the sheet closes the dialog once
+     the closing animations end */
+  &[open] {
+    animation: downtime-dim-in 0.25s ease-out;
+
+    > article {
+      animation: downtime-slide-in 0.25s ease-out;
+    }
+  }
+
+  &[open].closing {
+    animation: downtime-dim-out 0.2s ease-in forwards;
+
+    > article {
+      animation: downtime-slide-out 0.2s ease-in forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[open],
+    &[open] > article {
+      animation: none !important;
+    }
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 calc(-1 * var(--pad)) 0.9rem;
+    padding: 0.7rem var(--pad);
+    border-bottom: 2px solid var(--trim-color);
+    border-radius: 0;
+    background-color: var(--ink-color);
+
+    h2 {
+      margin: 0;
+      color: var(--light-color);
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  }
+
+  button {
+    width: auto;
+    margin: 0;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+
+  .dismiss {
+    display: grid;
+    place-items: center;
+    padding: 0.2rem;
+    border: none;
+    background: none;
+    color: var(--light-color);
+
+    svg {
+      display: block;
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+
+  section {
+    margin: 0 0 1.25rem;
+  }
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    small {
+      margin-left: 0.3rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  .note {
+    margin: 0.3rem 0 0;
+    font-size: 0.85rem;
+  }
+
+  label {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .rests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  > article > .note {
+    margin-bottom: 1rem;
+  }
+
+  .swaps {
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.2rem 0;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    li.vault span {
+      opacity: 0.6;
+    }
+
+    button {
+      padding: 0.15rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .move {
+    margin-bottom: 0.5rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--ink-color) 20%, transparent);
+    border-radius: 0.5rem;
+    background-color: white;
+
+    > * + * {
+      margin-top: 0.45rem;
+    }
+
+    .row {
+      margin-bottom: 0;
+    }
+  }
+
+  .move-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .targets {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .amounts {
+    display: flex;
+    gap: 0.35rem;
+
+    button {
+      flex: 1;
+    }
+
+    .roll {
+      flex: 2;
+    }
+  }
+
+  .advance {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+
+    input {
+      width: 4rem;
+    }
+  }
+
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+
+    button {
+      font-size: 0.85rem;
+    }
+  }
+
+  .extra {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+
+    .note {
+      flex: 1;
+      margin: 0;
+    }
+
+    button {
+      width: 2rem;
+      padding: 0.1rem;
+    }
+  }
+
+  details.reference {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+
+    summary {
+      font-weight: 700;
+    }
+  }
+
+  footer {
+    position: sticky;
+    bottom: 0;
+    margin: auto calc(-1 * var(--pad)) 0;
+    padding: 0.75rem var(--pad) 1rem;
+    border-top: 1px solid var(--trim-color);
+    border-radius: 0;
+    background-color: var(--paper-color);
+
+    > button {
+      width: 100%;
+    }
+  }
+
+  .resets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+
+    button {
+      font-size: 0.8rem;
+    }
+  }
+
+  .finished {
+    .reminder {
+      margin: 0.75rem 0 0;
+      padding: 0.5rem 0.7rem;
+      border-left: 3px solid var(--gold-color);
+      background-color: white;
+      font-size: 0.9rem;
+    }
+
+    > button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+}
+
+@keyframes downtime-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes downtime-slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes downtime-dim-in {
+  from { background-color: transparent; }
+}
+
+@keyframes downtime-dim-out {
+  to { background-color: transparent; }
+}
+
+/* a phone: the panel the whole width */
+@media (max-width: 599px) {
+  #character dialog.downtime > article {
+    width: 100%;
+    border-left-width: 0;
+  }
+}
+
+/* ---- 13.8 Cards, Tables, Gold, Advancement, Remove Buttons ---- */
+
+/* a feature or domain card (lib/FeatureCard): its name on a dark band, faded once its use is spent */
+#character .feature-card {
+  margin: 0 0 0.75rem;
+  padding: 0 0 0.6rem;
+  overflow: hidden;
+  border: 2px solid var(--ink-color);
+  border-radius: 0.5rem;
+  background-color: white;
+  box-shadow: none;
+
+  > :not(header) {
+    margin-inline: 0.75rem;
+  }
+
+  > header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 0.5rem;
+    margin: 0 0 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-bottom: 2px solid var(--trim-color);
+    background-color: var(--ink-color);
+    color: white;
+
+    strong {
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    small {
+      color: var(--trim-color);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+
+  .markdown {
+    font-size: 0.92rem;
+  }
+
+  > footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    padding: 0.4rem 0 0;
+    border-top: 1px dotted var(--sand-color);
+    background: none;
+  }
+
+  .tokens {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+
+    button {
+      width: 1.8rem;
+      padding: 0.1rem;
+    }
+  }
+
+  label.used {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  &.used {
+    opacity: 0.6;
+  }
+}
+
+#character .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0 0.75rem;
+}
+
+#character .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+
+  button {
+    width: auto;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+#character :is(table.weapons, table.equipment, table.items) {
+  margin-bottom: 0.5rem;
+  /* separate, so the header's corners can round */
+  border-collapse: separate;
+  border-spacing: 0;
+
+  /* the header as a domain card's: ink, a gold rule under it, its top corners rounded */
+  thead th {
+    border-bottom: 2px solid var(--trim-color);
+    background-color: var(--ink-color);
+    color: white;
+    letter-spacing: 0.03em;
+  }
+
+  thead th:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+
+  thead th:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+
+  /* a light frame below the header, on the edge cells so it follows the rounded corners */
+  tbody td {
+    border: 0 solid var(--sand-color);
+  }
+
+  tbody td:first-child {
+    border-left-width: 1px;
+  }
+
+  tbody td:last-child {
+    border-right-width: 1px;
+  }
+
+  tbody tr:last-child td {
+    border-bottom-width: 1px;
+  }
+
+  tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0.5rem;
+  }
+
+  tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  td {
+    vertical-align: top;
+    font-size: 0.9rem;
+  }
+
+  td small {
+    display: block;
+    opacity: 0.7;
+  }
+
+  tr.equipped td:first-child {
+    box-shadow: inset 3px 0 var(--violet-color);
+  }
+
+  /* a weapon's trait, range, damage and burden, an armor's thresholds, score and marks: the
+     columns they'd fill, folded under the name */
+  td .stats {
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  /* the name takes the room, the switch or quantity and the remove button only theirs */
+  :is(th, td):not(:first-child) {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  :is(th, td):nth-child(2) {
+    text-align: center;
+  }
+}
+
+/* the Gold panel, as the printed sheet's box: the handfuls, bags and chest drawn (images/gold),
+   marked filled, in whole pixels so they space evenly, their names below; side by side with
+   dotted rules between them, and where that's too wide the handfuls and bags break into rows,
+   as the HP and Stress slots do */
+#character .gold {
+  /* no wider than the drawings need, centred in the panel */
+  .coins {
+    display: flex;
+    justify-content: space-between;
+    max-width: max-content;
+    margin-inline: auto;
+  }
+
+  .coin {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    min-width: 0;
+    padding-inline: 1.25rem;
+
+    .pips {
+      justify-content: flex-start;
+      align-items: flex-end;
+      gap: 0.25rem;
+    }
+
+    .pips input[type=checkbox] {
+      width: var(--slot-width);
+      border: none;
+      border-radius: 0;
+      background: var(--coin-image) center / contain no-repeat transparent;
+    }
+
+    .pips input[type=checkbox]:checked {
+      background: var(--coin-filled-image) center / contain no-repeat transparent;
+    }
+  }
+
+  .handfuls {
+    --coin-image: url("../images/gold/handful.svg");
+    --coin-filled-image: url("../images/gold/handful-filled.svg");
+    --slot-width: 1.375rem;
+
+    .pips input[type=checkbox] {
+      height: 1.125rem;
+    }
+  }
+
+  .bags {
+    --coin-image: url("../images/gold/bag.svg");
+    --coin-filled-image: url("../images/gold/bag-filled.svg");
+    --slot-width: 1.25rem;
+
+    .pips input[type=checkbox] {
+      height: 1.5rem;
+    }
+  }
+
+  .coin:first-child {
+    padding-left: 0;
+  }
+
+  .coin:last-child {
+    flex: none;
+    padding-right: 0;
+  }
+
+  .coin + .coin {
+    border-left: 2px dotted var(--field-rule);
+  }
+
+  .chests {
+    --coin-image: url("../images/gold/chest.svg");
+    --coin-filled-image: url("../images/gold/chest-filled.svg");
+    --slot-width: 1.625rem;
+
+    .pips input[type=checkbox] {
+      height: 1.625rem;
+    }
+  }
+}
+
+/* on a phone closer around the rules, so the slots keep more of the room */
+@media (max-width: 599px) {
+  #character .gold .coin {
+    padding-inline: 0.6rem;
+  }
+}
+
+/* broken into even rows rather than leaving one slot alone on the last: five and four where
+   the nine don't fit in a row, three rows of three where five don't (measured on a phone, where
+   the panel spans the page) */
+@media (max-width: 549px) {
+  #character .gold .pips {
+    max-width: calc(5 * var(--slot-width) + 4 * 0.25rem);
+  }
+}
+
+@media (max-width: 399px) {
+  #character .gold .pips {
+    max-width: calc(3 * var(--slot-width) + 2 * 0.25rem);
+  }
+}
+
+/* the inventory's items: the description under the name fills the row, the quantity a small
+   box beside it */
+#character table.items {
+  .markdown,
+  .markdown p {
+    font-size: 0.8rem;
+  }
+
+  input.quantity {
+    width: 4rem;
+    height: auto;
+    margin: 0 auto;
+    padding: 0.15rem 0.25rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+/* the Advancement tab: the three tiers, as the printed sheet's; except on a phone side by side,
+   ruled apart, their headings, achievements and notes on shared rows (subgrid), so each is as
+   tall as the tallest; one not reached faded */
+#character .advancement-tiers {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 600px) {
+  #character .advancement-tiers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+
+    .advancements {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      padding-inline: 0.75rem;
+    }
+
+    /* the achievement's text in the middle of its taller plate */
+    .achievement {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .advancements:first-child {
+      padding-left: 0;
+    }
+
+    .advancements:last-child {
+      padding-right: 0;
+    }
+
+    .advancements + .advancements {
+      border-left: 1px solid color-mix(in srgb, var(--trim-color) 50%, transparent);
+    }
+  }
+}
+
+#character .advancements {
+  h4 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  /* what the tier's first level brings by itself: the printed sheet's dark plate */
+  .achievement {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    background-color: var(--dark-color);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .note {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  &.locked > :not(h4) {
+    opacity: 0.5;
+  }
+
+  /* both of a level's advancements: the pair in a heavy frame */
+  .advancement.double .pips {
+    justify-self: end;
+    gap: 0.15rem;
+    padding: 0.1rem;
+    border: 2px solid var(--dark-color);
+    border-radius: 4px;
+  }
+}
+
+/* an advancement option, and a companion upgrade (Features tab) alike: its boxes, then its text */
+#character :is(.advancements .advancement, .upgrades .upgrade) {
+  display: grid;
+  grid-template-columns: 3.75rem 1fr;
+  align-items: start;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.3;
+
+  /* the boxes at the right, as printed, beside the text's first line */
+  .pips {
+    justify-content: flex-end;
+    padding-top: 0.05rem;
+  }
+}
+
+/* removing from a list: a quiet trash icon, which asks first (EP.confirm) */
+#character button.remove {
+  display: inline-flex;
+  width: auto;
+  margin: 0;
+  padding: 0.2rem;
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: var(--light-brown-color);
+  line-height: 1;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:hover {
+    color: var(--brick-color);
+  }
+}
+
+/* ---- 13.9 Small Screens ---- */
+
+/* a phone or a narrow window: the tabs become a menu over the round button in the bottom right
+   corner, and the sheet leaves room under its last panel for the button; with no tabs between them,
+   room between the header and the first panels' ribbons */
+@media (max-width: 767px) {
+  #character.sheet {
+    padding-bottom: 5.5rem;
+  }
+
+  #character .sheet-header {
+    margin-bottom: calc(var(--panel-gap) + 1.25rem);
+  }
+
+  #character .sections-button {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 101;
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    padding: 0;
+    border: 2px solid var(--trim-color);
+    border-radius: 50%;
+    background-color: var(--violet-color);
+    box-shadow: 0 0.2rem 0.75rem rgb(0 0 0 / 0.5);
+    color: white;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  #character.sheet .tab-bar.band-tabs {
+    position: fixed;
+    inset: auto 1rem 5.25rem auto;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: min(16rem, calc(100vw - 2rem));
+    margin: 0;
+    padding: 0.75rem;
+    border: 2px solid var(--trim-color);
+    border-radius: 0.75rem;
+    background-color: var(--ink-color);
+    box-shadow: 0 0.3rem 1.5rem rgb(0 0 0 / 0.6);
+    overflow: visible;
+
+    &:not(:popover-open) {
+      display: none;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      min-width: 0;
+      padding-block: 0.5rem;
+    }
+  }
+}
+
+/* a phone: three traits a row, the panel buttons under the heading */
+@media (max-width: 599px) {
+  #character.sheet {
+    --panel-gap: 1.4rem;
+  }
+
+  /* the level above the Downtime button in one column, so the plate keeps the width */
+  #character .sheet-title {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+
+    &:not(:has(> .portrait)) {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .portrait {
+      grid-row: 1 / span 2;
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+
+    .plate {
+      grid-row: 1 / span 2;
+      grid-column: -3 / -2;
+    }
+
+    .level {
+      grid-row: 1;
+      grid-column: -2;
+      align-self: end;
+    }
+
+    .downtime-button {
+      grid-row: 2;
+      grid-column: -2;
+      justify-self: center;
+      align-self: start;
+    }
+
+    h1 {
+      --pico-font-size: 1.5rem;
+    }
+
+    .level .value {
+      width: 3rem;
+      font-size: 1.3rem;
+    }
+
+    /* the domains' icons left out for the name's room; the heritage line still names them */
+    .domains {
+      display: none;
+    }
+
+    /* no wider than the shield */
+    .level .label {
+      min-width: 3.5rem;
+      padding-inline: 0.3rem;
+    }
+  }
+
+  #character .traits {
+    grid-template-columns: minmax(0, 1fr) repeat(2, auto minmax(0, 1fr));
+
+    /* none at the end of the first row */
+    .divider:nth-child(6) {
+      display: none;
+    }
+
+    .verbs {
+      display: none;
+    }
+  }
+
+  /* Evasion, Armor and the slots in their three columns */
+  #character .defense {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem 0.4rem;
+    justify-items: center;
+  }
+
+  #character :is(.health, .companion, .strange-patterns) .track {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  #character .panel-header {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+
+    h3,
+    > :not(h3) {
+      grid-column: 1;
+      justify-self: center;
+    }
+  }
 }

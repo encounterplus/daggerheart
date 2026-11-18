@@ -1,0 +1,6 @@
+{
+  // the sheet is its own build project: the app serves only its build output
+  "root": "dist",
+  "api": 1,
+  "entities": ["Character"]
+}
