@@ -5,16 +5,16 @@
       src="{% if image %}{{image|resolvePath}}{% else %}{{env.systemURL|default: '/'}}images/empty.png{% endif %}"
       alt="" />
 
-    <!-- class banner painted over the image -->
+    <!-- class banner painted over the image; image files are named by the class slug ("Blood Hunter" -> blood-hunter) -->
     <div class="card-header">
-      <img class="card-banner" src="{{env.systemURL|default: '/'}}images/banners/subclass/{{data.class|lowercase}}-banner.webp" alt="" />
+      <img class="card-banner" src="{{env.systemURL|default: '/'}}images/banners/subclass/{{data.class|lowercase|split: ' '|join: '-'}}-banner.webp" alt="" />
     </div>
 
     <div class="card-spacer"></div>
 
     <div class="card-content">
       <div class="card-divider">
-        <img src="{{env.systemURL|default: '/'}}images/dividers/subclass/{{data.class|lowercase}}-divider.webp" alt="" />
+        <img src="{{env.systemURL|default: '/'}}images/dividers/subclass/{{data.class|lowercase|split: ' '|join: '-'}}-divider.webp" alt="" />
         <span class="card-type">{{data.class}}</span>
       </div>
 
