@@ -2645,6 +2645,7 @@ section.questions {
 
   &[data-domain=arcana] { --domain-icon: url("../images/domains/arcana.svg"); }
   &[data-domain=blade] { --domain-icon: url("../images/domains/blade.svg"); }
+  &[data-domain=blood] { --domain-icon: url("../images/domains/blood.svg"); }
   &[data-domain=bone] { --domain-icon: url("../images/domains/bone.svg"); }
   &[data-domain=codex] { --domain-icon: url("../images/domains/codex.svg"); }
   &[data-domain=dread] { --domain-icon: url("../images/domains/dread.svg"); }

@@ -115,7 +115,8 @@
     "sage": "Domain.Sage",
     "splendor": "Domain.Splendor",
     "valor": "Domain.Valor",
-    "dread": "Domain.Dread"
+    "dread": "Domain.Dread",
+    "blood": "Domain.Blood"
   },
   "DomainCardType": {
     "ability": "DomainCardType.Ability",
