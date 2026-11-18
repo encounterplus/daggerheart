@@ -1686,8 +1686,8 @@ section.questions {
     }
   }
 
-  /* the token in a gold ring, as the sheet's portrait */
-  .banner .token {
+  /* the image in a gold ring, as the sheet's portrait */
+  .banner .portrait {
     float: none;
     flex: none;
     margin: 0;

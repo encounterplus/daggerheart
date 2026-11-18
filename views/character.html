@@ -6,10 +6,10 @@
 <main id="character" class="container-fluid">
 
   <section class="stat-block">
-    {# the plate: token, name, class and heritage, the domains' icons and the level #}
+    {# the plate: portrait (the image, as on the sheet), name, class and heritage, the domains' icons and the level #}
     <header class="banner">
-      {% if token %}
-      <a class="token" href="{{token|resolvePath}}" target="_blank"><img src="{{token|resolvePath}}" width="80" height="80" alt="" /></a>
+      {% if image %}
+      <a class="portrait" href="{{image|resolvePath}}" target="_blank"><img src="{{image|resolvePath}}" width="80" height="80" alt="" /></a>
       {% endif %}
       <div class="name">
         <hgroup>
@@ -181,12 +181,6 @@
   {% if notes %}
   <h4>{{'Common.Notes'|l}}</h4>
   {{notes|md}}
-  {% endif %}
-
-  {% if image %}
-  <div class="artwork">
-    <a href="{{image|resolvePath}}" target="_blank"><img src="{{image|resolvePath}}" /></a>
-  </div>
   {% endif %}
 
   {% include "footer.html" %}
