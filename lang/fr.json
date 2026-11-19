@@ -152,7 +152,7 @@
   "Character.Project": "Projet",
   "Character.ProjectComplete": "Terminé",
   "Character.Projects": "Projets",
-  "Character.ProjectsHint": "Projets à long terme convenus avec le MJ : chacun est un compte à rebours que le temps mort Travailler sur un projet fait avancer.",
+  "Character.ProjectsHint": "Projets à long terme convenus avec le MJ : chacun est un compte à rebours que la pause Travailler sur un projet fait avancer.",
   "Character.Pronouns": "Pronoms",
   "Character.RecallForStress": "Rappeler ({stress} Stress)",
   "Character.RecallTooMuchStress": "Rappeler {name} coche {stress} Stress, plus qu'il n'en reste.",
